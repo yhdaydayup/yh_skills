@@ -38,12 +38,14 @@ cp -r /tmp/yh_skills/equity-research <工作区>/.cursor/skills/equity-research
 | `assets/report-skeleton.html` | 报告骨架，起新报告一律复制它 |
 | `scripts/validate_report.py` | 内容与规范校验，零 error 才能交付 |
 | `scripts/render_check.js` | 浏览器渲染终检，零 FAIL 才能交付 |
+| `scripts/check_skill_docs.py` | 改完本 skill 跑，查交叉引用与文件登记 |
 
 ## 交付前必须跑
 
 ```bash
 python3 scripts/validate_report.py <报告.html>   # 零 error
 node    scripts/render_check.js  <报告.html>     # 零 FAIL
+python3 scripts/check_skill_docs.py             # 改完 skill 本身再跑这个
 ```
 
 `render_check.js` 需要 Playwright 的 chromium；环境里常只装了完整 chromium 而没有 headless shell，

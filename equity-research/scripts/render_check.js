@@ -3,7 +3,7 @@
  *
  *   node render_check.js <报告.html> [...]
  *
- * 检查项对应 references/report-structure.md「七、终检清单」：
+ * 检查项对应 references/report-structure.md「终检」：
  *   图表全部实例化、无零宽画布、无死锚点、无横向溢出、无 JS 报错、
  *   目录高亮可用、折叠块内画布展开后宽度非 0。
  *

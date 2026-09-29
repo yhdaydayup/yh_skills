@@ -132,6 +132,20 @@ class Report:
             self.err('折叠', 'details 内有 canvas 但缺少 toggle → Chart.resize()：'
                              '折叠态下画布尺寸为 0，Chart.js 不会自愈')
 
+    def check_tag_balance(self):
+        """标签配对。批量改 HTML 最容易在这里翻车，而且浏览器会静默兜住，眼睛看不出来。
+
+        真实事故：用 `caliber.rstrip('<br/>')` 想去掉尾部换行标签，忘了 rstrip 是按
+        **字符集**剥离，把段末的 `</b>` 一起吃掉了。页面照常渲染，两个校验脚本也全绿，
+        只有手工数标签才发现。所以这条必须机器来数。
+        """
+        for tag in ('b', 'div', 'details', 'summary', 'table', 'tr', 'td', 'th', 'details'):
+            op = len(re.findall(r'<%s\b' % tag, self.body, re.I))
+            cl = len(re.findall(r'</%s>' % tag, self.body, re.I))
+            if op != cl:
+                self.err('标签', f'<{tag}> 开 {op} 个、闭 {cl} 个，差 {op - cl}——'
+                                 f'批量替换很可能吃掉了闭合标签（rstrip 按字符集剥离是经典坑）')
+
     def check_headings(self):
         for lv in HEADING_LEVELS:
             hits = []
