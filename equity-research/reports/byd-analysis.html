@@ -83,6 +83,16 @@ border-bottom:1px solid var(--line);padding:9px 0;margin-bottom:8px;display:flex
 .toc a{font-size:12.5px;color:var(--dim);text-decoration:none;padding:5px 13px;border-radius:16px;border:1px solid transparent;white-space:nowrap}
 .toc a:hover{color:var(--txt);background:var(--panel)}
 .toc a.on{color:var(--c);border-color:var(--c);background:rgba(74,168,255,.1)}
+h3.lt{text-align:left}
+details.fold{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:12px 0}
+details.fold>summary{cursor:pointer;padding:11px 15px;font-size:12.8px;color:var(--dim);list-style:none;display:flex;align-items:baseline;gap:8px}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:'\25B8';color:var(--c);font-size:11px;flex-shrink:0}
+details[open].fold>summary::before{content:'\25BE'}
+details.fold>summary:hover{color:var(--txt)}
+details.fold>summary b{color:var(--txt);font-weight:600}
+details.fold>.fb{padding:0 15px 15px}
+details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;padding:0}
 h2{scroll-margin-top:62px}
 h2 .lead{display:block;font-size:12.5px;color:var(--dim);font-weight:400;margin-top:5px}
 h3.sub2{font-size:16px;color:var(--txt);text-align:left;font-weight:600;margin:34px 0 14px;
@@ -135,7 +145,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="kpi"><div class="l">海外收入占比</div><div class="v" style="color:var(--good)">52.6%</div><div class="n">1H26 · 首次过半</div></div>
 </div>
 
-<h3>1.1　核心指标五年趋势</h3>
+<h3 class="sub2" id="s1-1">1.1　核心指标五年趋势</h3>
 <div class="card">
   <div class="cw xl"><canvas id="cCore"></canvas></div>
   <div class="note"><b>七条线全部归一化到 FY2021 = 100，纵轴取对数。</b>对数轴上相同的垂直距离代表相同的涨跌幅，所以七条线的斜率可以直接横向比较——这正是这张图要回答的第二个问题。鼠标悬停显示各年的原始数值与单位。
@@ -146,7 +156,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 
 <div class="flag warn"><b class="ft">本节总结</b>净现金只有 114 亿，占市值 1.8%，所以扣净现金前后的市盈率几乎一样（22.0× → 21.6×）——这家公司不存在「资产打折」这种安全垫。当前 22 倍市盈率处在五年区间的中位偏上，而对应的盈利能力是五年最差的一年。</div>
 
-<h3>2.1　真实市盈率：净现金调整几乎不改变结论</h3>
+<h3 class="sub2" id="s2-1">2.1　真实市盈率：净现金调整几乎不改变结论</h3>
 <div class="card">
   <div class="tscroll"><table>
     <thead><tr><th>项目</th><th>2026-06-30 金额（亿元）</th><th>口径说明</th></tr></thead>
@@ -175,7 +185,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="kpi"><div class="l">真实市盈率</div><div class="v" style="font-size:22px">21.6<span style="font-size:14px">×</span></div><div class="n">（市值 − 净现金）÷ TTM 净利</div></div>
 </div>
 
-<h3>2.2　五年估值区间：现在贵不贵</h3>
+<h3 class="sub2" id="s2-2">2.2　五年估值区间：现在贵不贵</h3>
 <div class="grid2">
   <div class="card"><div class="cw"><canvas id="cPe"></canvas></div>
   <div class="note"><b>市盈率</b>。FY2021 的 217 倍是分母异常——那年净利只有 30.45 亿、净利率 1.4%，不具可比性，图上已用对数轴压缩。真正的可比区间是 FY2022 起的 18.9×–31.4×，现在 22.0× 在中位偏上。</div></div>
@@ -194,10 +204,14 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
       <tr class="hl"><td><b>现在</b></td><td><b>78.10</b></td><td><b>6,483</b></td><td><b>294.3</b><span class="uu"> TTM</span></td><td><b>22.0×</b></td><td><b>2,608.2</b></td><td><b>2.49×</b></td><td><b>9.7%</b><span class="uu"> 年化</span></td><td><b>0.50%</b></td><td>—</td></tr>
     </tbody>
   </table></div>
-  <div class="note">H 股收盘价为前复权口径（已按 2025 年 7 月送转 ×3 还原），市值 = 91.17 亿股 × H 股收盘价 × 当年末 HKD/CNY 汇率，各年汇率分别取 0.817 / 0.892 / 0.909 / 0.939 / 0.910，现价一行取 0.9105。市净率以含永续债的归母权益为分母，与五年主要财务数据表口径一致；若改用扣永续债口径，现价对应 2.70×。加权 ROE 为年报披露的加权平均净资产收益率，现价一行用 1H26 的 4.86% 年化。</div>
+  <details class="fold"><summary><b>口径 · 市值的复权、汇率与每股指标处理</b></summary>
+<div class="fb">
+<div class="note" style="border-top:none;padding-top:6px">H 股收盘价为前复权口径（已按 2025 年 7 月送转 ×3 还原），市值 = 91.17 亿股 × H 股收盘价 × 当年末 HKD/CNY 汇率，各年汇率分别取 0.817 / 0.892 / 0.909 / 0.939 / 0.910，现价一行取 0.9105。市净率以含永续债的归母权益为分母，与五年主要财务数据表口径一致；若改用扣永续债口径，现价对应 2.70×。加权 ROE 为年报披露的加权平均净资产收益率，现价一行用 1H26 的 4.86% 年化。</div>
+</div>
+</details>
 </div>
 
-<h3>2.3　A 股与 H 股的价差不是套利机会</h3>
+<h3 class="sub2" id="s2-3">2.3　A 股与 H 股的价差不是套利机会</h3>
 <div class="card">
   <div class="pill"><div>A 股 002594.SZ 收盘（2026-09-15）</div><div class="s">￥84.30</div></div>
   <div class="pill"><div>同日 H 股 1211.HK 收盘</div><div class="s">HK$78.95 ≈ ￥71.89</div></div>
@@ -209,7 +223,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 
 <div class="flag ok"><b class="ft">本节总结</b>比亚迪只有一门主业：汽车占收入 80%、占分部利润 76%。电子代工占收入 20%，但分部利润在 1H26 只剩 1.9 亿，几乎不再贡献。真正的变化发生在地区上——境外收入占比从 FY2022 的 21.6% 升到 1H26 的 52.6%，首次过半；同时境外毛利率从低于境内 16 个百分点，反超到高于境内 6 个百分点。</div>
 
-<h3>3.1　分业务：一门主业加一门在萎缩的代工</h3>
+<h3 class="sub2" id="s3-1">3.1　分业务：一门主业加一门在萎缩的代工</h3>
 <div class="grid2">
   <div class="card"><div class="cw"><canvas id="cSegRev"></canvas></div>
   <div class="note"><b>对外收入绝对值。</b>「对外收入」就是利润表上的营业收入，只统计卖给集团外部客户的部分；分部之间互相供货的收入（1H26 为 147.2 亿）在合并时已抵销，不计入。</div></div>
@@ -238,7 +252,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <br/><br/><b>「调整和抵销」这一行要单独看。</b>FY2024 的 91.0 亿和 FY2025 的 85.9 亿分别占当年利润总额的 18% 和 22%，主要是未分摊至分部的总部费用、投资收益与内部交易抵销。这意味着<b>把两个分部利润相加并不等于公司利润</b>，用分部利润做估值加总时必须把这一块单独处理。</div>
 </div>
 
-<h3>3.2　分地区：境外收入在 1H26 首次过半</h3>
+<h3 class="sub2" id="s3-2">3.2　分地区：境外收入在 1H26 首次过半</h3>
 <div class="grid2">
   <div class="card"><div class="cw"><canvas id="cGeoRev"></canvas></div>
   <div class="note"><b>绝对值。</b>境内收入在 FY2024 见顶于 5,552 亿，FY2025 下滑 11.2%，1H26 再降 30.7%。境外收入则连续四年增长，1H26 同比 +33.9%。两条线在 1H26 交叉。</div></div>
@@ -267,7 +281,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="note">收入按客户所处区域统计。境内、境外收入占比可由同行两个金额除以其合计直接验算。FY2023 的境内、境外毛利率由 FY2024 年报披露的当年毛利率与同比增减推算。</div>
 </div>
 
-<h3>3.3　销量、出口与单车收入</h3>
+<h3 class="sub2" id="s3-3">3.3　销量、出口与单车收入</h3>
 <div class="grid2">
   <div class="card"><div class="cw"><canvas id="cVol"></canvas></div>
   <div class="note"><b>销量与海外销量。</b>总销量 FY2025 增速已降到 7.7%，1H26 转为 −15.7%。海外销量则从 FY2022 的 4.5 万辆增至 FY2025 的 105.0 万辆，1H26 同比再增 67.9%。</div></div>
@@ -314,12 +328,16 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 
 <div class="flag warn"><b class="ft">本节总结</b>比亚迪在中国新能源汽车的市占率 FY2024 见顶 33.2%，FY2025 降至 27.9%，1H26 进一步降到 26.2%——两年丢掉 7 个百分点。同期出口份额升到 18.1%，位居行业第二。地位没有崩塌，但「国内绝对领先」这个前提已经不成立了。</div>
 
-<h3>5.1　中国新能源汽车市占率</h3>
+<h3 class="sub2" id="s5-1">5.1　中国新能源汽车市占率</h3>
 <div class="card">
   <div class="cw tall"><canvas id="cShare"></canvas></div>
-  <div class="note"><b>口径：</b>分子＝比亚迪新能源汽车销量，分母＝中汽协口径的中国新能源汽车年度销量（1H26 改用乘联会累计批发量，因为中汽协半年数据口径不同）。<br/>
+  <details class="fold"><summary><b>口径 · 国内新能源份额的分子分母，含逐年验算</b></summary>
+<div class="fb">
+<div class="note" style="border-top:none;padding-top:6px"><b>口径：</b>分子＝比亚迪新能源汽车销量，分母＝中汽协口径的中国新能源汽车年度销量（1H26 改用乘联会累计批发量，因为中汽协半年数据口径不同）。<br/>
   <b>这个算法可以验证：</b>用同一算法算出的 FY2022 为 27.1%、FY2023 为 31.9%，与比亚迪年报原文自行披露的「27.1%」「31.9%」完全一致，说明分子分母匹配无误。<br/>
   <b>1H26 的 26.2%</b>＝比亚迪 177.74 万辆 ÷ 行业新能源批发 678.78 万辆（乘联会）。作为对照，1H25 同口径约为 32%。</div>
+</div>
+</details>
 </div>
 <div class="card">
   <div class="tscroll"><table>
@@ -350,24 +368,28 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   两个口径可以互相勾稽：FY2025 国内零售 348.5 万 ＋ 海外 104.6 万 ＝ 453.1 万，对批发 454.5 万，差 0.3%（渠道库存变动）；1H26 为 99.1 ＋ 79.2 ＝ 178.3 万，对 177.7 万，同样吻合。</div>
 </div>
 
-<h3>5.2　出口地位：行业第二，增速不是最快</h3>
+<h3 class="sub2" id="s5-2">5.2　出口地位：行业第二，增速不是最快</h3>
 <div class="card">
   <div class="tscroll"><table>
     <thead><tr><th>企业</th><th>1H26 出口<span class="uu"> 万辆</span></th><th>同比</th><th>出口份额</th></tr></thead>
     <tbody>
       <tr><td>奇瑞</td><td>93.16</td><td>+70.9%</td><td>21.9%</td></tr>
       <tr class="hl"><td><b>比亚迪</b></td><td><b>76.93</b></td><td><b>+73.6%</b></td><td><b>18.1%</b></td></tr>
-      <tr><td>吉利</td><td>47.25</td><td>+158.3%</td><td>—</td></tr>
+      <tr><td>吉利</td><td>47.25</td><td>+158.3%</td><td>11.1%</td></tr>
       <tr><td>上汽</td><td>40.42</td><td>+66.6%</td><td>9.5%</td></tr>
-      <tr><td>零跑</td><td>9.63</td><td>+372.6%</td><td>—</td></tr>
+      <tr><td>零跑</td><td>9.63</td><td>+372.6%</td><td>2.3%</td></tr>
     </tbody>
   </table></div>
-  <div class="note"><b>口径：</b>分子与分母均为乘联分会的<b>乘用车</b>出口（含 CKD，不含商用车），1H26 行业分母为 <b>425.4 万辆</b>，各家份额可用同行的出口量除以它验算。<br/>
-  <b>换一个分母，份额会明显不同，所以必须写清用的是哪个。</b>比亚迪 1H26 自报出口 79.2 万辆（含新能源商用车，半年报引中汽协），按中汽协<b>全行业</b>汽车出口 509.6 万辆算是 <b>15.5%</b>；按中汽协<b>新能源汽车</b>出口 235.5 万辆算是 <b>33.6%</b>。三个数字都成立，回答的是三个不同问题：在乘用车出口里占 18.1%，在全部汽车出口里占 15.5%，在新能源汽车出口里占 33.6%。本报告正文其他位置提到出口份额时，默认指第一个。<br/>
-  比亚迪的出口增速（+73.6%）高于上汽、略高于奇瑞，但低于吉利和零跑——出口这条赛道上比亚迪领先但不独占。在新能源出口这个更窄的口径上，FY2025 的份额是 <b>40.0%</b>（104.6 万辆 ÷ 中汽协新能源出口 261.5 万辆），年报援引中汽协数据称比亚迪位列中国新能源汽车出口榜首，且是前十大整车出口企业中增速最快的。</div>
+  <details class="fold"><summary><b>口径 · 出口份额有三个分母，本报告默认用哪一个</b></summary>
+<div class="fb">
+<div class="note" style="border-top:none;padding-top:6px"><b>口径：</b>分子与分母均为乘联分会的<b>乘用车</b>出口（含 CKD，不含商用车），1H26 行业分母为 <b>425.4 万辆</b>，各家份额可用同行的出口量除以它验算。<br/>
+  <b>换一个分母，份额会明显不同，所以必须写清用的是哪个。</b>比亚迪 1H26 自报出口 79.2 万辆（含新能源商用车，半年报引中汽协），按中汽协<b>全行业</b>汽车出口 509.6 万辆算是 <b>15.5%</b>；按中汽协<b>新能源汽车</b>出口 235.5 万辆算是 <b>33.6%</b>。三个数字都成立，回答的是三个不同问题：在乘用车出口里占 18.1%，在全部汽车出口里占 15.5%，在新能源汽车出口里占 33.6%。本报告正文其他位置提到出口份额时，默认指第一个。</div>
+</div>
+</details>
+  <div class="note">比亚迪的出口增速（+73.6%）高于上汽、略高于奇瑞，但低于吉利和零跑——出口这条赛道上比亚迪领先但不独占。在新能源出口这个更窄的口径上，FY2025 的份额是 <b>40.0%</b>（104.6 万辆 ÷ 中汽协新能源出口 261.5 万辆），年报援引中汽协数据称比亚迪位列中国新能源汽车出口榜首，且是前十大整车出口企业中增速最快的。</div>
 </div>
 
-<h3>5.3　国内竞争格局：1H26 批发销量对比</h3>
+<h3 class="sub2" id="s5-3">5.3　国内竞争格局：1H26 批发销量对比</h3>
 <div class="card">
   <div class="cw"><canvas id="cRival"></canvas></div>
   <div class="note">乘联会 1H26 累计批发量。比亚迪仍是绝对第一，体量是第二名吉利的 2.2 倍，但它是<b>唯一负增长的主要厂商</b>。在国内零售口径上，吉利 102.1 万辆已反超比亚迪 99.09 万辆。</div>
@@ -383,19 +405,27 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
       <tr><td>特斯拉中国</td><td>46.8</td><td>+28.4%</td><td>不披露</td><td>不披露</td><td>不披露</td></tr>
     </tbody>
   </table></div>
-  <div class="note">销量为各公司自身口径（比亚迪为新能源汽车合计；吉利为集团总销量，另有宝腾 9.5 万辆未计入；奇瑞为五大品牌合计；特斯拉中国为乘联会批发量）。收入与利润率取自各公司港交所中期业绩公告；吉利、奇瑞、零跑的收入含非整车业务。净利率＝归母净利 ÷ 收入，奇瑞用期内利润口径（归母口径为 6.0%）。
-  <br/><br/><b>这张表同时支持两个相反的判断，所以要一起看。</b>空方看销量与利润：比亚迪是唯一销量和利润双降的头部厂商（销量 −15.7%、归母净利 −20.5%），而吉利、奇瑞销量微增，零跑销量大增。多方看单车盈利：<b>比亚迪汽车分部毛利率 22.3% 仍是可比公司中最高的，且同比还提升了 1.98 个百分点</b>，高出吉利 4.4 个、奇瑞 6.2 个、零跑 10.6 个百分点。<br/>
+  <details class="fold"><summary><b>口径 · 同业对比中各家销量与财务数据的来源</b></summary>
+<div class="fb">
+<div class="note" style="border-top:none;padding-top:6px">销量为各公司自身口径（比亚迪为新能源汽车合计；吉利为集团总销量，另有宝腾 9.5 万辆未计入；奇瑞为五大品牌合计；特斯拉中国为乘联会批发量）。收入与利润率取自各公司港交所中期业绩公告；吉利、奇瑞、零跑的收入含非整车业务。净利率＝归母净利 ÷ 收入，奇瑞用期内利润口径（归母口径为 6.0%）。</div>
+</div>
+</details>
+  <div class="note"><b>这张表同时支持两个相反的判断，所以要一起看。</b>空方看销量与利润：比亚迪是唯一销量和利润双降的头部厂商（销量 −15.7%、归母净利 −20.5%），而吉利、奇瑞销量微增，零跑销量大增。多方看单车盈利：<b>比亚迪汽车分部毛利率 22.3% 仍是可比公司中最高的，且同比还提升了 1.98 个百分点</b>，高出吉利 4.4 个、奇瑞 6.2 个、零跑 10.6 个百分点。<br/>
   <b>结合起来的结论是：压力来自销量和国内收入（中国区收入 −30.7%），不是单车赚钱能力下降。</b>这也是第七节把「境外毛利率能否守住 20% 以上」列为唯一「达成」项的原因——比亚迪的产品盈利能力没有被价格战打垮，被打垮的是国内的量。</div>
 </div>
 <h2 id="s6">六、质量与现金：这一章是全篇的重点<span class="lead">净现金蒸发、自由现金流转负、账期政策的连锁反应、ROE 拆解</span></h2>
 
 <div class="flag"><b class="ft">本节总结</b>FY2025 是比亚迪财务模式改变的一年。净现金从 +1,127 亿降到 +195 亿，一年蒸发 932 亿；自由现金流从 +361 亿翻到 −977 亿；有息负债从 306 亿增到 1,105 亿；派息率从 30% 砍回 10%。四件事指向同一个原因：资本开支涨到 1,568 亿的同时，供应商账期被压缩，释放出去 549 亿应付账款。</div>
 
-<h3>6.1　净现金一年蒸发 932 亿</h3>
+<h3 class="sub2" id="s6-1">6.1　净现金一年蒸发 932 亿</h3>
 <div class="card">
   <div class="cw tall"><canvas id="cNetCash"></canvas></div>
-  <div class="note"><b>口径：</b>类现金＝货币资金＋交易性金融资产（公司披露该科目全部为理财及其他产品）；有息负债＝短期借款＋一年内到期的非流动负债＋长期借款＋应付债券，不含租赁负债与永续债。六个期间用同一口径，可横向比较。<br/>
-  <b>注意两条线的运动方式不同。</b>类现金五年里一直在 560—1,433 亿之间，FY2025 只降了 133 亿；真正的变化在有息负债——从 FY2024 的 306 亿跳到 FY2025 的 1,105 亿，一年增加 799 亿。<b>净现金的消失不是因为花掉了现金，而是因为新增了 799 亿有息负债。</b></div>
+  <details class="fold"><summary><b>口径 · 类现金与有息负债的构成，六个期间同一口径</b></summary>
+<div class="fb">
+<div class="note" style="border-top:none;padding-top:6px"><b>口径：</b>类现金＝货币资金＋交易性金融资产（公司披露该科目全部为理财及其他产品）；有息负债＝短期借款＋一年内到期的非流动负债＋长期借款＋应付债券，不含租赁负债与永续债。六个期间用同一口径，可横向比较。</div>
+</div>
+</details>
+  <div class="note"><b>注意两条线的运动方式不同。</b>类现金五年里一直在 560—1,433 亿之间，FY2025 只降了 133 亿；真正的变化在有息负债——从 FY2024 的 306 亿跳到 FY2025 的 1,105 亿，一年增加 799 亿。<b>净现金的消失不是因为花掉了现金，而是因为新增了 799 亿有息负债。</b></div>
 </div>
 <div class="card">
   <div class="tscroll"><table>
@@ -412,11 +442,15 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
       <tr class="hl"><td><b>净现金</b><span class="uu"> 亿元</span></td><td><b>+220.8</b></td><td><b>+528.9</b></td><td><b>+806.0</b></td><td><b>+1,126.7</b></td><td><b>+194.6</b></td><td><b>+113.9</b></td></tr>
     </tbody>
   </table></div>
-  <div class="note">每一列的净现金都可以用同列的类现金合计减去有息负债合计验算。FY2023 数据取自 FY2024 年报的经重述比较数。
+  <details class="fold"><summary><b>验算 · 净现金可自行核对，以及与年报资本负债比率的口径差异</b></summary>
+<div class="fb">
+<div class="note" style="border-top:none;padding-top:6px">每一列的净现金都可以用同列的类现金合计减去有息负债合计验算。FY2023 数据取自 FY2024 年报的经重述比较数。
   <br/><br/><b>年报自己的资本负债比率是另一个口径。</b>年报「五年主要财务数据之比较」披露的资本负债比率为 FY2021 −15%、FY2022 −26%、FY2023 −44%、FY2024 −36%、FY2025 <b>+25%</b>（负值表示净现金），定义是「总借贷扣除现金及现金等价物 ÷ 净资产（扣除少数股东权益）」。用本表口径自算 FY2025 约为 −8%（即净现金 194.6 亿 ÷ 归母权益 2,462.7 亿）。两者差异来自年报的「总借贷」包含租赁负债与永续债等本表未计入的项目，且「现金及现金等价物」不含理财产品。<b>两个口径的方向完全一致——FY2025 都是五年里首次从净现金转向负债端，只是幅度不同。</b></div>
 </div>
+</details>
+</div>
 
-<h3>6.2　自由现金流：五年来第一次转负，而且是大幅转负</h3>
+<h3 class="sub2" id="s6-2">6.2　自由现金流：五年来第一次转负，而且是大幅转负</h3>
 <div class="card">
   <div class="cw tall"><canvas id="cFcf"></canvas></div>
   <div class="note"><b>自由现金流＝经营活动现金流净额 − 购建固定资产、无形资产和其他长期资产支付的现金。</b>两项均为现金流量表直接披露值。<br/>
@@ -426,7 +460,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 
 <div class="flag"><b class="ft">那 977 亿的缺口是怎么填上的</b>FY2025 有息负债净增 799 亿；2025 年 3 月按每股 335.2 港元配售 1.298 亿股新 H 股，募集净额 433.83 亿港元、折合人民币约 401 亿元（年报称其为全球汽车行业有史以来最大规模的闪电配售，董事长报告中表述为「56 亿美元」）；同时把派息率从 30% 砍回 10%，少付 88 亿现金分红。三项合计 1,288 亿元，足以覆盖缺口。<b>FY2025 的扩张是靠债权人和新股东出的钱，不是靠自己赚的钱。</b></div>
 
-<h3>6.3　供应链占款：账期在缩，但票据在涨</h3>
+<h3 class="sub2" id="s6-3">6.3　供应链占款：账期在缩，但票据在涨</h3>
 <div class="card">
   <div class="cw tall"><canvas id="cPay"></canvas></div>
   <div class="note"><b>左轴</b>是应付账款与应付票据的余额（亿元），<b>右轴</b>是周转天数（天）＝期末余额 ÷ 当期营业成本 × 当期天数。两者单位不同，所以分列两轴，各自的单位写在轴标题上。右轴画了两条：只算应付账款，以及应付账款加应付票据。<br/>
@@ -452,7 +486,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 <div class="flag warn"><b class="ft">1H26 的 1,287 亿类现金，对应 2,298 亿应付款</b>供应链占款是类现金的 1.8 倍。比亚迪账上的现金不是留存利润堆出来的自有资金，主要是尚未支付给供应商的货款。这个结构在账期稳定时没有问题，但账期只要再被压缩，现金就会继续流出——FY2025 已经演示过一次，代价是 549 亿。<b>这也是为什么「净现金 114 亿」这个数字不能当成安全垫来看。</b></div>
 <div class="flag"><b class="ft">534 亿应付票据里有多少是商业承兑汇票，公开资料查不到</b>半年报附注 25 只给了应付票据总额一行，<b>没有拆分银行承兑汇票与商业承兑汇票</b>。这个区分在 2026 年 9 月之后变得重要：工信部与市场监管总局当月印发的《关于推动汽车企业规范供应商账款支付 优化账期管理的通知》明确规定，「不得强迫或变相强迫供应商接受商业承兑汇票、<b>供应链票据</b>等非现金支付方式」，使用时「应合理控制使用比例，并在合同中明确约定贴现成本的承担方式」，且<b>支付时间以现汇或银行承兑汇票签发时间为准</b>——商业承兑汇票不算已付款。文件同时建立第三方评估公开发布机制，并明确将「应付账款规模大、故意拉长账期」的车企列为联合约谈对象。<br/>比亚迪的供应链票据平台运营主体「深圳迪链科技有限公司」出现在年报的所得税税率附注中（属合并范围内子公司），但报告未披露其业务规模或承兑余额。<b>在拆分口径披露出来之前，这 534 亿的性质无法判断</b>——它既可能是正常的银行承兑，也可能是把账期成本转嫁给供应商的工具，两者对现金流的含义完全不同。</div>
 
-<h3>6.4　ROE 拆解：三个因子同时恶化</h3>
+<h3 class="sub2" id="s6-4">6.4　ROE 拆解：三个因子同时恶化</h3>
 <div class="card">
   <div class="cw tall"><canvas id="cDupont"></canvas></div>
   <div class="note"><b>以 FY2024（ROE 峰值年）为 100 归一化</b>，这样能直接看出从峰值到现在每个因子分别退了多少。四条线用同一基准，斜率可以横向比较。<br/>
@@ -472,7 +506,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="note">净利率＝归母净利 ÷ 营业收入；总资产周转率＝营业收入 ÷ 期初期末平均总资产；权益乘数＝平均总资产 ÷ 平均归母权益。三者相乘即为 ROE，可由同列三个数字直接验算。1H26 一列将半年的收入与利润乘 2 年化。<b>自算 ROE 与年报披露的加权平均 ROE 差异在 1.2 个百分点以内</b>（FY2024 差异最大，因为年报的加权平均按月加权，而本表用简单平均），说明拆解口径可靠。</div>
 </div>
 
-<h3>6.5　分红：派息率从 30% 砍回 10%</h3>
+<h3 class="sub2" id="s6-5">6.5　分红：派息率从 30% 砍回 10%</h3>
 <div class="card">
   <div class="cw"><canvas id="cPayout"></canvas></div>
   <div class="tscroll" style="margin-top:14px"><table>
@@ -485,13 +519,41 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
       <tr><td>FY2025</td><td>3.58</td><td>32.64</td><td>326.2</td><td>10.0%</td><td>0.358</td></tr>
     </tbody>
   </table></div>
-  <div class="note">派息率一列可由同行的分红总额除以归母净利验算。「每 10 股派息」为各年实际公告口径，FY2021—FY2024 基于送转前股本（约 29—30 亿股），FY2025 基于送转后的 91.17 亿股，因此不可直接比较；最后一列已统一还原到送转后口径。<br/>
+  <details class="fold"><summary><b>口径 · 派息率验算与送转前后股本的还原</b></summary>
+<div class="fb">
+<div class="note" style="border-top:none;padding-top:6px">派息率一列可由同行的分红总额除以归母净利验算。「每 10 股派息」为各年实际公告口径，FY2021—FY2024 基于送转前股本（约 29—30 亿股），FY2025 基于送转后的 91.17 亿股，因此不可直接比较；最后一列已统一还原到送转后口径。</div>
+</div>
+</details>
+  <div class="note">
   <b>FY2025 净利只降了 19%，分红降了 73%。</b>派息率在 FY2023、FY2024 连续两年稳定在 30%，FY2025 回到 FY2021 的 10%。结合前两节，这不是分红政策的随机波动，而是资金紧张下的选择。</div>
+</div>
+
+<h3 class="sub2" id="s6-6">6.6　派息覆盖倍数：五年从 92 倍降到不覆盖</h3>
+<div class="card">
+  <div class="tscroll"><table>
+    <thead><tr><th>年度</th><th>自由现金流<span class="uu"> 亿元</span></th><th>分红总额<span class="uu"> 亿元</span></th><th>覆盖倍数</th></tr></thead>
+    <tbody>
+      <tr><td>FY2021</td><td>281.3</td><td>3.06</td><td>91.9x</td></tr>
+      <tr><td>FY2022</td><td>433.8</td><td>33.25</td><td>13.0x</td></tr>
+      <tr><td>FY2023</td><td>476.4</td><td>90.12</td><td>5.3x</td></tr>
+      <tr><td>FY2024</td><td>360.9</td><td>120.77</td><td>3.0x</td></tr>
+      <tr><td><b>FY2025</b></td><td><b class="r">−976.7</b></td><td><b>32.64</b></td><td><b class="r">不覆盖</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">覆盖倍数＝自由现金流 ÷ 当年分红总额，两列分别取自 6.2 与 6.5 节，可用同行两个数字相除验算。<br/>
+  <b>这条序列是全篇最直接的一个指标。</b>FY2021 的分红只用掉当年自由现金流的 1%，FY2024 已用掉三分之一，FY2025 则是自由现金流 −977 亿的同时仍派出 32.6 亿——<b class="r">这 32.6 亿不是当年赚出来的</b>：同年有息负债净增 799 亿、H 股配售净额约 401 亿（见 6.2 节）。<br/>
+  倍数从 3.0 倍直接跌到不覆盖、而不是缓慢下滑，说明<b>派息率砍到 10% 是被现金流逼出来的，不是主动调整分配政策</b>。反过来说，只要自由现金流不回正，当前这个 10% 的派息率也谈不上安全边际。</div>
+  <details class="fold"><summary><b>口径 · 自由现金流的定义，以及为什么没做 IFRS 16 还原</b></summary>
+  <div class="fb">
+  <div class="note" style="border-top:none;padding-top:6px">自由现金流＝经营活动现金流净额 − 购建固定资产、无形资产和其他长期资产支付的现金，两项均为现金流量表直接披露值，与 6.2 节同一口径。<br/>
+  租赁负债本金偿还额未单独披露，故未按 IFRS 16 还原。比亚迪租赁负债合计 86.1 亿，即便全额还原也不改变任何一年的结论方向。</div>
+  </div>
+  </details>
 </div>
 
 <h2 id="s7">七、操作与风险<span class="lead">买什么价、看什么信号、最可能出错的地方</span></h2>
 
-<h3>7.1　如果要买，什么价格</h3>
+<h3 class="sub2" id="s7-1">7.1　如果要买，什么价格</h3>
 <div class="card">
   <div class="tscroll"><table>
     <thead><tr><th>情景</th><th>FY2026E 归母净利<span class="uu"> 亿元</span></th><th>给予市盈率</th><th>对应市值<span class="uu"> 亿元</span></th><th>对应 H 股价<span class="uu"> HK$</span></th><th>相对现价</th></tr></thead>
@@ -506,7 +568,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <b>结论：现价已经对应乐观情景。</b>市场给的 22 倍市盈率，隐含的是「FY2026 净利回到 300 亿」这个假设，而上半年实际只有 123.25 亿、年化 246 亿。要证明现价合理，下半年净利必须达到 177 亿、比上半年高 44%。这在国内销量仍在下滑的背景下需要很强的证据。</div>
 </div>
 
-<h3>7.2　跟踪清单</h3>
+<h3 class="sub2" id="s7-2">7.2　跟踪清单</h3>
 <div class="card">
   <div class="pill"><div><b>自由现金流是否回正</b>　看季报的经营活动现金流净额与购建长期资产支出。FY2025 −977 亿、1H26 −73.7 亿，缺口在收窄。</div><div class="s" style="color:var(--bad)">未达成</div></div>
   <div class="pill"><div><b>国内新能源市占率是否企稳</b>　看乘联会月度批发份额。FY2024 峰值 33.2%，1H26 已降到 26.2%，需要连续两个季度不再下滑。</div><div class="s" style="color:var(--bad)">未达成</div></div>
@@ -516,7 +578,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="pill"><div><b>派息率是否回到 30%</b>　这是管理层对自身现金状况最直接的表态。FY2025 已砍到 10%。</div><div class="s" style="color:var(--bad)">未达成</div></div>
 </div>
 
-<h3>7.3　风险</h3>
+<h3 class="sub2" id="s7-3">7.3　风险</h3>
 <div class="flag"><b class="ft">国内份额继续流失</b>1H26 国内零售 −38.5%，是主要厂商中跌幅最大的，吉利已在零售口径上反超。国内市场贡献 1H26 收入的 47.4%，若份额继续下滑，海外增长不足以对冲。</div>
 <div class="flag"><b class="ft">汇率</b>1H26 财务费用从上年同期的净收益 32.5 亿变为净支出 51.0 亿，前后相差 83.4 亿，其中汇兑由收益 31.6 亿转为损失 47.0 亿。境外收入占比已过半，汇率对利润的影响只会更大。这也是归母净利下滑 20.5%、而扣除非经常性损益后只下滑 9.0% 的主要原因。</div>
 <div class="flag"><b class="ft">电子业务失速</b>电子分部利润总额从 1H25 的 13.3 亿降到 1H26 的 1.9 亿，降幅 85%；毛利率从 7.71% 降到 5.04%。该分部仍占收入 20%，但已基本不贡献利润。年报归因为「大客户个别机型需求变化」。</div>
@@ -714,6 +776,22 @@ new Chart(document.getElementById('cPayout'),{type:'line',
    y1:Object.assign({position:'right',min:0,max:40,
      title:{display:true,text:'派息率（%）',color:DIM,font:{size:10.5}},
      grid:{display:false},ticks:{color:DIM}})}}});
+
+/* ---- 折叠块展开时必须重算画布：details 关闭时 canvas 尺寸为 0，Chart.js 不会自愈 ---- */
+document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle',()=>{
+  if(!d.open) return;
+  d.querySelectorAll('canvas').forEach(c=>{const ch=Chart.getChart(c); if(ch) ch.resize();});
+}));
+
+/* ---- 目录跟随当前区块高亮 ---- */
+(function(){
+  const links=[...document.querySelectorAll('.toc a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(secs.length!==links.length) return;
+  const mark=()=>{let i=0;secs.forEach((sc,k)=>{if(sc.getBoundingClientRect().top<=90)i=k;});
+    links.forEach((a,k)=>a.classList.toggle('on',k===i));};
+  mark(); addEventListener('scroll',mark,{passive:true});
+})();
 </script>
 
 <div id="bgwmcolor" style="width: 100%; height: 100%; z-index: 9999999; left: 0px; top: 0px; position: fixed; background-image: url(&#34;https://lf16-img-sign.bytehwm-row.com/obj/eesecsvc-maliva/v5/2.0/1/7eaa3d109f63434aa9935f3dcd067349.png?algorithm=V5&amp;app_id=0&amp;tenant_id=&amp;version=2.0&amp;x-expires=1790877428&amp;x-signature=FLmkgWP9tbVC6chJj00qUOWr7c4%3D&#34;); background-repeat: repeat; pointer-events: none;"></div></body></html>

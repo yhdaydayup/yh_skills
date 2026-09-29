@@ -144,6 +144,29 @@ class Report:
                                  f'应改用层级样式类（如 h3.sub2）：{"、".join(hits[:4])}'
                                  + ('…' if len(hits) > 4 else ''))
 
+    def check_section_heading_level(self):
+        """小节标题（「N.M　」开头）必须带层级类，不能用裸 h3——那和图表标题同级，读者分不出来。"""
+        bare = [self.text_of(m.group(1))
+                for m in re.finditer(r'<h3>(\d\.\d\u3000[^<]*)</h3>', self.body)]
+        if bare:
+            self.err('层级', f'{len(bare)} 个小节标题用的是裸 h3，与图表标题同级不可区分，'
+                             f'改成 h3.sub2 并补锚点：{"、".join(x[:20] for x in bare[:3])}'
+                             + ('…' if len(bare) > 3 else ''))
+
+    def check_numeral_corruption(self):
+        """章节号全局替换（如 4.1 → 四、）会顺手改掉正文里的同形数字。
+
+        判据：顿号与后面的单位之间留着空格。原文是「4.1 次/天」，替换后就成了「四、 次/天」，
+        而正常的中文分条（「一、万洲的份额…」）顿号后面不会有空格。所以这里必须用保留空格的
+        文本来判，不能用 text_of——它会把空格全吃掉，「一、万」就成了误报。
+        """
+        raw = re.sub(r'<[^>]+>', '', self.body)
+        unit = r'(次/天|亿|万|元|%|倍|辆|头|吨|家|港元|美元|个|次|天)'
+        for m in re.finditer(r'[一二三四五六七八九十]、[ \u00a0\t]+' + unit, raw):
+            ctx = re.sub(r'\s+', ' ', raw[max(0, m.start() - 24):m.end() + 10])
+            self.err('数字', f'「{m.group(0)}」像是章节重编号时把正文数字一起替换了'
+                             f'（如 4.1 → 四、）。上下文：…{ctx}…')
+
     def check_wording(self):
         text = self.text_of(self.body)
         for pat, why in BLACKLIST:
