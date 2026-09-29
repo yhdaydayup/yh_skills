@@ -120,7 +120,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 <nav class="toc">
   <a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a>
   <a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a>
-  <a href="#s7">七、操作与风险</a>
+  <a href="#s7">七、未来判断</a><a href="#s8">八、操作与风险</a>
 </nav>
 
 <!-- ============ s1 投资结论：≥5% 篇幅，第一句就是判断 ============ -->
@@ -142,7 +142,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 
 <div class="card">
   <h3>核心指标五年趋势 — 七项指标统一归一化到 FY2021 = 100</h3>
-  <p class="wfhint">全部序列换算成指数、<b>取消右轴</b>；原值在 tooltip 里。
+  <p class="wfhint">全部序列换算成指数、<b>取消右轴</b>；<b>把鼠标停在线上任意一个圆点，会浮出该点的原始数值</b>（手机上点一下圆点）。
     虚线为 PE／PB。【全正值时可用对数刻度，此时等距离即等涨跌幅】</p>
   <div class="cw xl"><canvas id="cCore"></canvas></div>
   <div class="note">【只写图上看不到的：为什么会这样、意味着什么。不要把图上的线逐条念一遍。】</div>
@@ -250,7 +250,77 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 </div>
 
 <!-- ============ s7 操作与风险 ============ -->
-<h2 id="s7">七、操作与风险<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
+<!-- ============ s7 未来判断 ============ -->
+<h2 id="s7">七、未来判断<span class="lead">领先指标、投入要挣回多少、三情景</span></h2>
+
+<!-- 证据标准（写给起稿的人，不是给读者的，所以放注释里不占篇幅配额）：
+     这一章最容易滑向编故事。年报／中报通常不提供正式业绩指引，
+     所以不要替公司写「公司预计……」。只用两类材料：
+     ①报表里已经发生、但收入尚未确认的领先指标；
+     ②把已知数字按写明的假设往前推的算术。
+     凡假设一律写进括号，读者能换一个假设自己重算。
+     成稿时把这段的要点用一句话写进正文，告诉读者这一章的证据边界。 -->
+<div class="note">【一句话说明这一章的证据边界：用了哪些领先指标、哪些数是推的、假设写在哪。】</div>
+
+<h3 class="sub2" id="s7-1">7.1　领先指标</h3>
+<div class="card">
+  <h3>【领先指标名】与它相当于几个月的收入</h3>
+  <p class="wfhint">【说明这个科目为什么先于收入变动。候选：递延收入／合约负债（预付费业务）、
+    在手订单（制造业）、预收款、在建工程转固。<b>把鼠标停在线上任意一个圆点，会浮出该点的原始数值。</b>】</p>
+  <div class="grid2">
+    <div class="card" style="border:none;padding:0"><h3>绝对值（亿元）</h3>
+      <div class="cw"><canvas id="cLead"></canvas></div></div>
+    <div class="card" style="border:none;padding:0"><h3>相当于几个月的收入</h3>
+      <div class="cw"><canvas id="cLeadM"></canvas></div></div>
+  </div>
+  <div class="note">【绝对值与「折合月数」拆两张单轴图，不要挂右轴。
+    折合月数是为了剔除公司自身增长，否则绝对值涨只是因为盘子大了。
+    <b>必须写明这个指标覆盖哪块业务、不覆盖哪块</b>——它通常只对预付费业务有效。】</div>
+</div>
+
+<h3 class="sub2" id="s7-2">7.2　已投入的钱要挣回多少</h3>
+<div class="card">
+  <h3>折旧：资本开支进入损益表的通道（亿元）</h3>
+  <div class="cw tall"><canvas id="cDep"></canvas></div>
+  <div class="note">【资本开支不进利润表，通过折旧逐年进。看<b>资本开支 ÷ 折旧</b>的倍数：
+    倍数越高，说明已花掉的钱里还没开始计折旧的越多，未来利润压力越大。】</div>
+</div>
+<div class="card">
+  <h3>把经营利润顶回原位，需要多少新增收入</h3>
+  <div class="tscroll"><table>
+    <thead><tr><th>折旧年限假设</th><th>年化新增折旧<span class="uu">亿元</span></th><th>占经营利润</th><th>需新增收入<span class="uu">亿元</span></th><th>相当于收入增长</th></tr></thead>
+    <tbody>
+      <tr><td>N 年（激进）</td><td>0.0</td><td>0.0%</td><td>0.0</td><td>0.0%</td></tr>
+      <tr class="hl"><td>N 年（基准）</td><td>0.0</td><td>0.0%</td><td>0.0</td><td>0.0%</td></tr>
+      <tr><td>N 年（保守）</td><td>0.0</td><td>0.0%</td><td>0.0</td><td>0.0%</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">【算法写全：新增折旧 ＝ 资本开支 ÷ 年限（直线、无残值）；
+    需新增收入 ＝ 新增折旧 ÷ 毛利率；再除以收入得所需增速。<b>把公司自己的折旧年限政策原文引出来</b>，
+    说明为什么取这个基准。这一步把「投入值不值」变成可检验的算术题。】</div>
+</div>
+
+<h3 class="sub2" id="s7-3">7.3　已验证与未验证</h3>
+<div class="note" style="margin-bottom:12px">【把管理层的说法拆成两堆，每条标出处。
+  <b>只列利好的前瞻章等于软文，反向信号必须写。</b>】</div>
+<div class="flag good"><b class="ft">已验证：【已经能在分部收入或利润率上看到的】</b>【数字＋出处】</div>
+<div class="flag warn"><b class="ft">未验证：【只有用户数／排名／「意愿高」，没有收入数字的】</b>
+  【说明缺什么数据才能验证】</div>
+<div class="flag"><b class="ft">反向信号：【在缩的那一块】</b>【数字＋出处】</div>
+
+<h3 class="sub2" id="s7-4">7.4　三情景</h3>
+<div class="card">
+  <h3>三种情景下的 FY20XX 【估值指标】（现价不变）</h3>
+  <div class="cw tall"><canvas id="cScn"></canvas></div>
+  <div class="note">【把<b>现状值</b>和<b>历史极值</b>也画成柱一起对比——读者要看的是「相对今天是好是坏」。
+    结论写在图下，三档各自的假设明细收进折叠。】</div>
+  <details class="fold">
+    <summary>三种情景各自假设了什么，以及怎么算的</summary>
+    <div class="fb"><div class="note" style="border:none">【公共假设 ＋ 三档各自假设 ＋ 算式】</div></div>
+  </details>
+</div>
+
+<h2 id="s8">八、操作与风险<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
 
 <h3 class="sub2">7.1 五年转折点</h3>
 <div class="tl">
@@ -288,6 +358,11 @@ const ax=(t)=>({...grid,title:{display:true,text:t,color:DIM}});
 /* tension 必须为 0：样条在 5–6 个点之间会造出不存在的峰谷（charting.md「五条红线」第 4 条） */
 const L=(o)=>Object.assign({tension:0,pointRadius:4,borderWidth:2.5,fill:false},o);
 const Y5=['FY2021','FY2022','FY2023','FY2024','FY2025'],Y6=[...Y5,'1H26'];
+/* 绝对值流量指标（收入、利润、现金流、资本开支）不能把半年数与完整财年画在一条线上——
+   末端陡降会被读成业务萎缩。统一换成最近十二个月 = FY2025 − 1H25 + 1H26，用 YT 做标签。
+   存量（净现金、净资产、月活、递延收入）和比率（毛利率、市盈率、均价）用 Y6 时点值即可。
+   YP 用于估值类图：末列是「现价」而不是财年末。 */
+const YT=[...Y5,'最近12个月'],YP=[...Y5,'现价'];
 
 /* ---------- 通用趋势图 ---------- */
 function trend(id,labels,ds,unit,digits,opt){
@@ -451,6 +526,45 @@ sharePie('cS1',0,GOLD,'0%');
 sharePie('cS2',0,C,'0%');
 sharePie('cS3',0,PUR,'0%');
 
+/* ---------- 七、未来判断 ---------- */
+
+/* 领先指标是资产负债表科目（存量），半年列用时点值正确，不必换十二个月口径。
+   下一行的豁免标记见 charting.md「五条红线」第 5 条。 */
+/*时点*/
+new Chart(document.getElementById('cLead'),{type:'bar',
+ data:{labels:Y6,datasets:[{label:'【领先指标】',data:[0,0,0,0,0,0],
+   backgroundColor:C+'88',borderColor:C,borderWidth:1.5,borderRadius:4}]},
+ options:{plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>' 【领先指标】'+c.parsed.y.toFixed(2)+' 亿元'}}},
+  scales:{x:gridNo,y:{...ax('亿元'),beginAtZero:true}}}});
+
+/* 绝对值与折合月数拆两张单轴图，不挂右轴：
+   量级差异大的多指标同图一律不用双轴，读者会照着左轴读右轴序列。 */
+/*时点*/
+trend('cLeadM',Y6,[{label:'相当于几个月的收入',data:[0,0,0,0,0,0],
+  borderColor:GOLD,borderWidth:3.4}],'个月',2,
+ {plugins:{legend:{display:false}},scales:{x:gridNo,y:ax('折合月数')}});
+
+/* 折旧与资本开支都是流量，用十二个月口径的 YT 标签 */
+trend('cDep',YT,[
+  {label:'资本开支',data:[0,0,0,0,0,0],borderColor:BAD,borderWidth:3.4},
+  {label:'折旧',data:[null,null,null,0,0,0],borderColor:GOLD,borderWidth:3.4}
+],'亿元',1,{plugins:{legend:{labels:{color:TXT,padding:10}}},
+  scales:{x:gridNo,y:{...ax('亿元'),beginAtZero:true}}});
+
+/* 情景图：把现状与历史极值也画成柱，读者要看的是相对今天是好是坏。
+   baseline() 只画横线，横向条形图用不了，多画两根柱比写竖线插件直白。 */
+new Chart(document.getElementById('cScn'),{type:'bar',
+ data:{labels:['今天（现价）','历史极值','悲观','基准','乐观'],
+  datasets:[{label:'【估值指标】',data:[0,0,0,0,0],
+   backgroundColor:[DIM+'cc',DIM+'44',WARN+'cc',C+'ee',GOOD+'cc'],
+   borderColor:[DIM,DIM+'99',WARN,C,GOOD],borderWidth:1,borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>' 【估值指标】'+c.parsed.x.toFixed(2)+' 倍'}}},
+  scales:{y:{...gridNo,ticks:{color:DIM,font:{size:11}}},
+   x:{...grid,title:{display:true,text:'前两根为现状与历史，后三根为情景',color:DIM},
+    beginAtZero:true,ticks:{color:DIM,callback:v=>v+'x'}}}}});
+
 /* ---------- 折叠块展开必须重算画布 ---------- */
 document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle',()=>{
   if(!d.open) return;
@@ -479,7 +593,8 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
   使用方式：
   1. 复制本文件重命名为 <ticker>-analysis.html
   2. 替换 header 的定价基准（取价日、收盘价、汇率、总股本）
-  3. 七个区块逐个填；考据类内容放进 details.fold，折叠标题写成结论句
+  3. 八个区块逐个填；考据类内容放进 details.fold，折叠标题写成结论句
+     s7「未来判断」的证据标准比别的章严，见 references/report-structure.md 一
   4. python3 ../scripts/validate_report.py <ticker>-analysis.html   必须零 error
   5. 浏览器终检（见 references/report-structure.md 七）
 -->

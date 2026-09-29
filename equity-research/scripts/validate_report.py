@@ -16,7 +16,13 @@ import re
 import sys
 from collections import Counter
 
-SECTIONS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7']
+SECTIONS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8']
+
+# 七区块升八区块的历史欠账标记。腾讯那份被评「通篇聚焦过去的总结，缺少对未来企业发展的判断」，
+# 说明原来的七区块结构本身不含前瞻判断，于是新增「七、未来三年的判断」。
+# 三份早于这次改版的报告还没补这一章：不静默豁免，降级成 WARN 并每次都报出来，
+# 直到补完为止。报告里要显式写上这个标记，理由跟着标记走——不说就等于漏改。
+LEGACY_7BLOCK = 'legacy-7block'
 
 # references/wording.md 「黑话黑名单」
 BLACKLIST = [
@@ -28,6 +34,16 @@ BLACKLIST = [
     (r'派家底', '比喻代替事实：改为「派的是账上存量现金」'),
     (r'天花板', '比喻代替事实：改为「回报上限」'),
     (r'击穿', '比喻代替事实：改为「不足以让集团整体转亏」'),
+    (r'代价写在', '比喻代替事实：改为直说什么数在恶化，如「但自由现金流在倒退」'),
+    # 英文术语混在中文里也算黑话。「代价写在现金流上」被用户批「这个就是黑话，谁看得懂」，
+    # 同一轮里又自己写出 price in / agent / token——写时顺手，读时全是坎。
+    (r'\bprice\s*(in|进)', '中英夹杂：改为「已经计入了一部分」'),
+    (r'(?<![A-Za-z])token(?![A-Za-z])', '中英夹杂：改为「模型调用量」或按语境译出'),
+    (r'(?<![A-Za-z])agent(?![A-Za-z])', '中英夹杂：改为「智能体」'),
+    # 界面术语要写成读者能照做的动作。用户看到「原值在 tooltip 里」的反应是「tooltip 在哪？」
+    (r'tooltip', '界面术语：读者不知道它指什么，改写成动作——'
+                 '「把鼠标停在线上任意一个圆点，会浮出该点的原始数值」'),
+    (r'(?<![A-Za-z])hover(?![A-Za-z])', '界面术语：改为「把鼠标停在……上」'),
     (r'一图看全貌', '虚标题：删掉'),
     (r'钱(到底)?是谁赚的', '口语化设问：改为「收入和利润分别来自哪里」'),
     (r'本质上(是|只是)', '虚化实词：删掉「本质上」，判断反而更硬'),
@@ -89,7 +105,13 @@ class Report:
     def check_skeleton(self):
         ids = [sid for sid, _ in self.blocks()]
         if ids != SECTIONS:
-            self.err('骨架', f'h2 的 id 必须是 {SECTIONS}，实际是 {ids}（见 report-structure.md「七区块骨架」）')
+            legacy = re.search(LEGACY_7BLOCK + r'[：:]\s*([^\n>]*)', self.raw)
+            if legacy and ids == SECTIONS[:6] + ['s7']:
+                self.warn('骨架', f'仍是七区块，缺「未来判断」章节（欠账原因：{legacy.group(1).strip()}）。'
+                                  f'这不是豁免，是待补项——补完后删掉 {LEGACY_7BLOCK} 标记')
+            else:
+                self.err('骨架', f'h2 的 id 必须是 {SECTIONS}，实际是 {ids}'
+                                 f'（见 report-structure.md「八区块骨架」）')
         toc = re.findall(r'<a href="#(s\d)"', self.body)
         if toc and toc != ids:
             self.err('骨架', f'吸顶目录与区块不一致：目录 {toc} vs 区块 {ids}')

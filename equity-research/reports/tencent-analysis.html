@@ -122,7 +122,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 <nav class="toc">
   <a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a>
   <a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a>
-  <a href="#s7">七、操作与风险</a>
+  <a href="#s7">七、未来三年的判断</a><a href="#s8">八、操作与风险</a>
 </nav>
 
 <!-- ============ s1 投资结论 ============ -->
@@ -137,7 +137,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
     同期主业没有走弱：1H26 收入 4,012.4 亿元同比 +10.1%，经营利润 +14.4%，毛利率 57.2% 是六期最高，
     营销服务收入 +20.9%。两个主赛道的份额都在提升——本土游戏从 FY2021 的 43.4% 升到 FY2025 的 46.8%，
     互联网广告从 16.3% 升到 20.0%。<br/>
-    <b>代价写在现金流上：</b>最近十二个月资本开支 1,375.4 亿元同比增长 57.2%，
+    <b>但自由现金流在倒退：</b>最近十二个月资本开支 1,375.4 亿元同比增长 57.2%，
     真实自由现金流倒退 27.4% 至 1,235.2 亿元，派息加回购的覆盖倍数从 1.54 倍降到 1.20 倍。
     这笔投入是行业性的——阿里同期单季资本开支同比 +75%、自由现金流净流出 446.7 亿元，
     腾讯的缺口只有它的 31%。</div>
@@ -156,7 +156,8 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 
 <div class="card">
   <h3>核心指标五年趋势 — 七项指标统一归一化到 FY2021 = 100</h3>
-  <p class="wfhint">全部序列换算成指数、<b>取消右轴</b>，原值在 tooltip 里。虚线为市盈率与市净率。
+  <p class="wfhint">全部序列换算成指数、<b>取消右轴</b>；<b>把鼠标停在线上任意一个圆点，会浮出该点的原始数值</b>
+    （手机上点一下圆点）。虚线为市盈率与市净率。
     全部为正值，故用对数刻度——等距离即等涨跌幅，斜率才可比。
     末列<b>「现价·TTM」</b>指股价与市盈率、市净率取 2026-09-28，流量指标取最近十二个月。</p>
   <div class="cw xl"><canvas id="cCore"></canvas></div>
@@ -404,6 +405,18 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 </div>
 
 <h3 class="sub2" id="s4-2">4.2　AI 资本开支周期</h3>
+
+<div class="note" style="margin-bottom:14px"><b>这笔钱买了什么——以下全部引自腾讯自己的披露，不是推测。</b><br/>
+  <b>①口径。</b>中报与年报对资本开支的定义一字相同：「主要包括对 <b>IT 基础设施（含计算机设备、零部件及软件）、
+  数据中心、土地使用权、办公物业及知识产权（不含媒体内容）</b>的投入」。所以这不是买楼，主体是算力硬件与机房。<br/>
+  <b>②用途。</b>FY2025 年报在第四季度自由现金流一段里注明，当季 224 亿元资本开支「<b>主要用于支持我们的 AI 投入</b>」。
+  1H26 中报进一步点名了具体去向：经营现金流中包含「<b>大额 AI 相关预付款，用于提供基础设施以支持混元模型升级、
+  WorkBuddy 与 CodeBuddy 的推理需求、微信 AI 项目，以及各产品与服务的 AI 能力建设，并满足外部对云服务日益增长的需求</b>」。<br/>
+  <b>③管理层自述的目的。</b>1H26 中报「业务回顾与展望」写道：「在基础设施层面，我们大幅加大了算力采购，
+  <b>这将使我们能够在未来把应用与模型的使用量转化为收入</b>。」——注意「未来」二字：
+  <b>这笔开支对应的收入尚未发生</b>，这正是它目前只体现为现金流出的原因，也是本报告
+  <a class="xr" href="#s7">第七章</a>要单独判断的事。</div>
+
 <div class="tscroll"><table>
   <thead><tr><th>公司</th><th>期间</th><th>资本开支<span class="uu">亿元</span></th><th>同比</th><th>经营活动现金流<span class="uu">亿元</span></th><th>自由现金流<span class="uu">亿元</span></th></tr></thead>
   <tbody>
@@ -584,9 +597,138 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 </details>
 
 <!-- ============ s7 操作与风险 ============ -->
-<h2 id="s7">七、操作与风险<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
+<!-- ============ s7 未来三年的判断 ============ -->
+<h2 id="s7">七、未来三年的判断<span class="lead">领先指标、资本开支要挣回多少、三种情景</span></h2>
 
-<h3 class="sub2" id="s7-1">7.1　五年转折点</h3>
+<div class="note"><b>先说这一章的证据标准。</b>腾讯的年报和中报<b>不提供正式业绩指引</b>，
+  所以下面没有任何一句「公司预计……」是我替它说的。这一章只用两类东西：
+  <b>①报表里已经发生、但收入尚未确认的领先指标</b>；<b>②把已知数字按写明的假设往前推的算术</b>。
+  凡是假设，都在括号里写出来，读者可以换一个假设自己重算。判断可以错，但不能无从复核。</div>
+
+<h3 class="sub2" id="s7-1">7.1　领先指标：递延收入</h3>
+<div class="card">
+  <h3>递延收入（流动）与它相当于几个月的收入</h3>
+  <p class="wfhint">递延收入是<b>用户已经付钱、但公司还没确认为收入</b>的部分（游戏点券余额、会员预付费等），
+    记在流动负债里。它是少数几个能提前看到收入的科目——今天的递延收入就是明天的收入。
+    <b>把鼠标停在柱子或圆点上，会浮出该点的原始数值。</b></p>
+  <div class="grid2">
+    <div class="card" style="border:none;padding:0"><h3>递延收入（亿元）</h3>
+      <div class="cw"><canvas id="cDef"></canvas></div></div>
+    <div class="card" style="border:none;padding:0"><h3>相当于几个月的收入</h3>
+      <div class="cw"><canvas id="cDefM"></canvas></div></div>
+  </div>
+  <div class="note"><b>这是本报告能找到的、最硬的一条向上信号。</b>递延收入六个月从 1,103.1 亿涨到 1,336.8 亿，
+    <b>增长 21.2%，而同期收入只增长 10.1%</b>——蓄水池的填充速度是放水速度的 2.1 倍。
+    换算成月数，它从相当于 1.76 个月的收入升到 2.03 个月，是六期里的最高值，
+    且明显高于 FY2023 低点的 1.70 个月。<br/>
+    <b>为什么这条比收入增速更靠前：</b>收入要等服务交付才能确认，递延收入在收到钱的当期就入账。
+    它先动、收入后动。FY2024 递延收入先涨 16.2%，FY2025 收入随后涨 13.9%，是上一轮同样的顺序。<br/>
+    <b>这条指标的边界：</b>它只覆盖预付费性质的业务（主要是游戏与订阅），
+    <b>广告和金融科技基本不走这个科目</b>，所以它预示的是增值服务这一块，不是全公司。</div>
+</div>
+
+<h3 class="sub2" id="s7-2">7.2　这笔资本开支要挣回多少收入</h3>
+<div class="card">
+  <h3>折旧：资本开支进入损益表的通道（亿元）</h3>
+  <div class="cw tall"><canvas id="cDep"></canvas></div>
+  <div class="note"><b>最近十二个月资本开支 1,375.4 亿，同期折旧只有 331.0 亿，前者是后者的 4.16 倍。</b>
+    已经花掉的钱里，绝大部分的折旧还没开始计——未来几年折旧会持续爬坡，
+    这是已经锁定的事实，不依赖任何假设。</div>
+  <details class="fold">
+    <summary>资本开支是怎么变成利润表上的成本的</summary>
+    <div class="fb"><div class="note" style="border:none">
+      资本开支本身不进利润表，<b>它通过折旧一年一年地进</b>。所以「资本开支大增」不会立刻压垮利润，
+      但会在随后几年持续压。这个过程已经开始：物业厂房及设备折旧 1H26 为 178.9 亿，同比增长 57.3%，
+      幅度与资本开支的增幅相当。折旧线从 FY2024 才起画，是因为 FY2023 及以前的年报
+      未单独披露可比口径的该项数字。</div></div>
+  </details>
+</div>
+
+<div class="card">
+  <h3>把经营利润顶回原位，需要多少新增收入</h3>
+  <div class="tscroll"><table>
+    <thead><tr><th>折旧年限假设</th><th>年化新增折旧<span class="uu">亿元</span></th><th>占 TTM 经营利润</th><th>需新增收入<span class="uu">亿元</span></th><th>相当于收入增长</th></tr></thead>
+    <tbody>
+      <tr><td>3 年（激进）</td><td>458.5</td><td class="neg">17.7%</td><td>808.6</td><td class="neg">10.3%</td></tr>
+      <tr class="hl"><td>4 年（基准）</td><td>343.9</td><td class="neg">13.3%</td><td>606.4</td><td class="neg">7.7%</td></tr>
+      <tr><td>5 年（保守）</td><td>275.1</td><td class="neg">10.6%</td><td>485.1</td><td class="neg">6.2%</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>算法写全，读者可自行换假设重算：</b>只计最近十二个月这一笔资本开支 1,375.4 亿元，
+    直线折旧、不留残值，年化新增折旧 ＝ 1,375.4 ÷ 年限；再用 TTM 毛利率 56.7% 倒推
+    「需新增收入 ＝ 新增折旧 ÷ 56.7%」；最后除以 TTM 收入 7,884.8 亿得到所需增速。
+    腾讯的折旧政策原文是<b>「计算机及其他营运设备 2～10 年」</b>，算力硬件通常落在短端，故以 4 年为基准。<br/>
+    <b>这张表把「AI 投入值不值」变成了一道可检验的算术题：</b>基准假设下，
+    <b>腾讯需要每年多做约 606 亿元收入（约 7.7% 的增速）才能把经营利润顶回原位</b>。
+    参照系是：TTM 收入增速为 10.1%，营销服务单季增速 22%。<b>所以这个门槛不算高，但也没有计入任何余量</b>——
+    而且这只是<b>已花掉的这一笔</b>；若资本开支继续以 57% 的速度增长，门槛会同步抬高。</div>
+</div>
+
+<h3 class="sub2" id="s7-3">7.3　钱正在变成什么：已验证与未验证</h3>
+<div class="note" style="margin-bottom:12px">把管理层的说法拆成<b>已经出现在数字里的</b>和<b>还只是叙事的</b>两堆。
+  下面每一条都标了出处与证据强度。左边这堆构成买入的理由，右边这堆是需要继续跟踪的。</div>
+
+<div class="flag good"><b class="ft">已验证：AI 已经在广告里变现</b>
+  营销服务 2026 年第二季度收入 436 亿元、<b>同比 +22%</b>，中报明确归因于
+  「AI 驱动的广告推荐模型升级」「自动化投放工具 AIM+ 升级」与「微信生态闭环营销能力整合」。
+  这是唯一一块<b>已经能在分部收入上看到 AI 贡献</b>的业务，不是叙事。</div>
+
+<div class="flag good"><b class="ft">已验证：折旧已经落地，利润率反而还在创新高</b>
+  1H26 折旧同比 +57.3% 的情况下，毛利率仍录得 57.2% 的六期最高、经营利润 +14.4%。
+  <b>这说明当前的投入强度还不足以让盈利能力转向</b>，公司仍有承受空间。</div>
+
+<div class="flag warn"><b class="ft">未验证：应用有用户，但没有收入数字</b>
+  中报称 WorkBuddy（AI 办公）与 CodeBuddy（AI 编程）「用户高速增长」且为中国同类第一
+  （脚注：易观，按中国 PC 端 AI 原生办公智能体的月交互量，2026 年 6 月），
+  混元 Hy3 于 2026 年 7 月发布、在 OpenRouter 平台上的模型调用量进入全球前三（脚注：自 2026-07-07 起）。
+  <b>但中报没有披露这两个产品的任何收入、付费用户数或 ARPU</b>，只说「付费意愿高」。
+  用户领先不等于收入，这一条目前只能记作潜力。</div>
+
+<div class="flag warn"><b class="ft">未验证：微信内的 AI 入口还在小范围测试</b>
+  中报称已对微信内的智能体「小微」（基于自研 WeLM 模型）开始<b>小规模原型测试</b>。
+  微信 14.39 亿月活是腾讯最大的分发资产，但「小规模原型测试」这个措辞本身说明<b>离规模变现还很远</b>，
+  三年内能否兑现是这笔投资最大的不确定项。</div>
+
+<div class="flag"><b class="ft">反向信号：订阅基本盘在缩</b>
+  收费增值服务订阅数 2.59 亿，<b>同比 −2%、环比 −3%</b>；QQ 移动端月活 5.20 亿同比 −2%。
+  在讲 AI 增量的同时，<b>旧的付费基本盘在轻微收缩</b>，这一条不应被忽略。</div>
+
+<div class="flag"><b class="ft">反向信号：AI 的成本已经开始咬毛利率</b>
+  营销服务分部毛利率从上年同期的 58% 降到 57%，中报直言是
+  「包括折旧在内的、与扩张 AI 基础设施相关的更高成本」部分抵消了收入增长。
+  <b>增收与增本是同一件事的两面，目前增收略胜，但差距在收窄。</b></div>
+
+<h3 class="sub2" id="s7-4">7.4　三年情景：主业市盈率会走到哪</h3>
+<div class="card">
+  <h3>三种情景下的 FY2028 主业市盈率（现价不变）</h3>
+  <div class="cw tall"><canvas id="cScn"></canvas></div>
+  <div class="note"><b>即便在悲观情景下，三年后的主业市盈率 9.7 倍仍低于今天的 10.6 倍。</b>
+    也就是说现价已经把「AI 投入完全打水漂」这种可能性计入了一部分。
+    悲观值接近五年区间下沿 9.4 倍，意味着<b>下行空间主要来自估值倍数继续收缩，而不是盈利崩塌</b>；
+    这也是本报告给买入评级、却把仓位建议写成「分批」的原因。</div>
+  <details class="fold">
+    <summary>三种情景各自假设了什么，以及怎么算的</summary>
+    <div class="fb"><div class="note" style="border:none">
+      <b>公共假设：</b>股价保持 HK$439.80 不变、股本与汇率不变，故主业企业价值恒为 24,887.3 亿元；
+      以 TTM 归母净利 2,355.1 亿元为起点，按各情景的年化增速复合三年；投资组合与净现金假设不变
+      （实际会波动，见 <a class="xr" href="#s8-3">8.3</a> 第二条风险）。<br/>
+      <b>乐观（净利年化 +15%）：</b>AI 在广告之外再打开一块收入，云恢复双位数增长，
+      FY2028 归母净利 3,582 亿，主业市盈率 6.9 倍。<br/>
+      <b>基准（+10%）：</b>延续 TTM 的 10.1% 收入增速，AI 投入刚好被新增收入消化，
+      FY2028 归母净利 3,135 亿，主业市盈率 7.9 倍。<br/>
+      <b>悲观（+3%）：</b>AI 收入不及预期、折旧按 3 年年限全额压上、订阅继续流失，
+      FY2028 归母净利 2,574 亿，主业市盈率 9.7 倍。</div></div>
+  </details>
+</div>
+
+<div class="note"><b>这一章不构成预测，只构成检验框架。</b>三年后回看，真正要对的不是上面哪个数，
+  而是这三个问题的答案：递延收入是否延续了领先于收入的态势；资本开支/经营现金流的比重是否从 45% 回落；
+  WorkBuddy、CodeBuddy、小微里<b>是否有任何一个开始披露收入</b>。
+  第三个问题最重要——<b>从「披露用户」到「披露收入」这个动作本身，就是变现开始的信号</b>。</div>
+
+<h2 id="s8">八、操作与风险<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
+
+<h3 class="sub2" id="s8-1">8.1　五年转折点</h3>
 <div class="tl">
   <div class="ti"><div class="d">FY2021</div><div class="t">上市投资公允值见五年峰值，年末仍是净负债</div>
     <div class="x">上市投资 9,828.4 亿元为六期最高；净负债 202.4 亿元；分派京东股份作为实物特别股息；
@@ -604,12 +746,13 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
     <div class="x">收入 7,517.7 亿元同比 +13.9%，毛利率 56.2%，Non-IFRS 归母净利 2,596.3 亿元；
       本土游戏份额回到 46.8% 的五年高点；年末股价 599.00 港元为五年峰值，主业市盈率 16.8 倍。</div></div>
   <div class="ti crit"><div class="d">1H26</div><div class="t">资本开支半年超上年全年，第二季度自由现金流转负</div>
-    <div class="x">资本开支 956.1 亿元，半年超过 FY2025 全年的 874.8 亿；第二季度自由现金流 −138.0 亿元；
+    <div class="x">资本开支 956.1 亿元，半年超过 FY2025 全年的 874.8 亿（<b>钱花在算力硬件与数据中心</b>，
+      用途与一手出处见 <a class="xr" href="#s4-2">4.2</a>）；第二季度自由现金流 −138.0 亿元；
       净现金从 2026-03-31 的 1,468.6 亿降到 6 月末的 581.9 亿；上市投资公允值从 6,727.0 亿降到 4,872.0 亿；
       归母权益减少 183.0 亿。同期经营面反向：收入 +10.1%、经营利润 +14.4%、毛利率 57.2% 创新高。</div></div>
 </div>
 
-<h3 class="sub2" id="s7-2">7.2　买入框架</h3>
+<h3 class="sub2" id="s8-2">8.2　买入框架</h3>
 <div class="pill"><span>价格条件：主业市盈率回到 10 倍以内</span><span class="s u">HK$420 以下</span></div>
 <div class="pill"><span>价格条件：区间上沿，可分批建仓</span><span class="s u">HK$400–440</span></div>
 <div class="pill"><span>基本面条件：连续两个季度自由现金流转正，且资本开支同比增速回落到 30% 以内</span><span class="s g">更重要</span></div>
@@ -621,7 +764,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   价格条件按现价基准换算：市值 ＝ 90.92 亿股 × 股价 × 0.85577，主业企业价值 ＝ 市值 − 581.9 − 8,751.0，
   再除以 TTM 归母净利 2,355.1 亿元。读者可用同一算式代入任意股价自行复算。</div>
 
-<h3 class="sub2" id="s7-3">7.3　风险</h3>
+<h3 class="sub2" id="s8-3">8.3　风险</h3>
 <div class="flag"><b class="ft">资本开支挤掉自由现金流</b>
   最近十二个月资本开支 1,375.4 亿元，同比 FY2025 全年增长 57.2%，而经营活动现金流只增长 0.9%，
   真实自由现金流因此倒退 27.4% 至 1,235.2 亿元。1H26 半年资本开支 956.1 亿一项就超过 FY2025 全年，
@@ -643,7 +786,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   腾讯本土游戏份额已到 46.8% 的五年高点，继续提份额的空间小于前两年，
   这一块的增长将更依赖赛道本身而不是份额转移。国际游戏和营销服务不受此限制。</div>
 
-<h3 class="sub2" id="s7-4">7.4　跟踪点</h3>
+<h3 class="sub2" id="s8-4">8.4　跟踪点</h3>
 <div class="flag warn"><b class="ft">2026 年第三季度业绩（约 2026 年 11 月）</b>
   看两个数：资本开支绝对额是否低于第二季度的 593.0 亿元；自由现金流是否转正。
   腾讯自报剔除算力采购预付款后第二季度自由现金流本应为 +376 亿元，
@@ -917,6 +1060,52 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
 
 /* ---------- 吸顶目录跟随高亮 ---------- */
 (function(){
+
+/* ── 七、未来三年的判断 ── */
+
+/* 递延收入是资产负债表科目，属存量，1H26 用时点值正确，不必换十二个月口径。
+   下一行的豁免标记见 charting.md「五条红线」第 5 条。 */
+/* 绝对值与折合月数拆成两张单轴图，不用双轴：
+   量级差异大的多指标同图一律不挂右轴，读者会照着左轴读右轴序列
+   （charting.md「量级差异大的多指标同图」）。 */
+/*时点*/
+new Chart(document.getElementById('cDef'),{type:'bar',
+ data:{labels:Y6,datasets:[{label:'递延收入（流动）',
+   data:[878.46,822.16,861.68,1000.97,1103.09,1336.76],
+   backgroundColor:C+'88',borderColor:C,borderWidth:1.5,borderRadius:4}]},
+ options:{plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>' 递延收入 '+c.parsed.y.toFixed(2)+' 亿元'}}},
+  scales:{x:gridNo,y:{...ax('亿元'),beginAtZero:true}}}});
+
+/*时点*/
+trend('cDefM',Y6,[{label:'相当于几个月的收入',
+  data:[1.88,1.78,1.70,1.82,1.76,2.03],borderColor:GOLD,borderWidth:3.4}],
+ '个月',2,{plugins:{legend:{display:false}},
+  scales:{x:gridNo,y:{...ax('折合月数'),min:1.5,max:2.2}}});
+
+/* 折旧与资本开支：都是流量，故用 YT 十二个月口径 */
+trend('cDep',YT,[
+  {label:'资本开支',data:[293.02,226.79,210.08,629.27,874.82,1375.4],borderColor:BAD,borderWidth:3.4},
+  {label:'物业厂房及设备折旧',data:[null,null,null,211.41,265.80,330.96],borderColor:GOLD,borderWidth:3.4}
+],'亿元',1,{plugins:{legend:{labels:{color:TXT,padding:10}}},
+  scales:{x:gridNo,y:{...ax('亿元'),beginAtZero:true}}});
+
+/* 三年情景：现价不变，只有分母在动。
+   把「今天」和「五年下沿」也画成柱，读者一眼能看出三种情景全部低于今天——
+   baseline() 只画横线、用不了横向条形图，多加一根柱比为它写个竖线插件更直白。 */
+new Chart(document.getElementById('cScn'),{type:'bar',
+ data:{labels:['今天（现价·最近12个月）','五年区间下沿（历史最低）',
+   '悲观　净利年化 +3%','基准　净利年化 +10%','乐观　净利年化 +15%'],
+  datasets:[{label:'主业市盈率',data:[10.57,9.40,9.67,7.94,6.95],
+   backgroundColor:[DIM+'cc',DIM+'44',WARN+'cc',C+'ee',GOOD+'cc'],
+   borderColor:[DIM,DIM+'99',WARN,C,GOOD],borderWidth:1,borderRadius:4}]},
+ options:{indexAxis:'y',
+  plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>' 主业市盈率 '+c.parsed.x.toFixed(2)+' 倍'}}},
+  scales:{y:{...gridNo,ticks:{color:DIM,font:{size:11}}},
+   x:{...grid,title:{display:true,text:'主业市盈率（倍）· 前两根为现状与历史，后三根为 FY2028 情景',color:DIM},
+    beginAtZero:true,ticks:{color:DIM,callback:v=>v+'x'}}}}});
+
   const links=[...document.querySelectorAll('.toc a')];
   const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
   if(secs.length!==links.length) return;
