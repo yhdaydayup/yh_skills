@@ -1,12 +1,21 @@
 # yh_skills
 
-个人 Agent Skill 仓库。每个顶层目录是一个独立 skill，入口是该目录下的 `SKILL.md`。
+个人 Agent Skill 仓库。顶层每个目录是一个独立 skill，入口是该目录下的 `SKILL.md`；
+`tools/` 下放不属于 skill 的独立工具。
 
 ## Skills
 
 | Skill | 用途 |
 |---|---|
 | [`equity-research`](equity-research/) | 生成单只股票的独立投资分析报告（自包含 HTML 看板），含报告骨架与交付前双校验脚本 |
+
+## 工具
+
+| 工具 | 用途 |
+|---|---|
+| [`tools/page-comment`](tools/page-comment/) | Chrome 扩展：在网页上选中文字或点元素直接写批注，导出成带章节、选择器和原文的反馈清单。读长报告时逐条标问题用 |
+
+`tools/` 里的东西不是 skill，Agent 不会自动加载，按各自 README 安装。
 
 ## 安装
 
