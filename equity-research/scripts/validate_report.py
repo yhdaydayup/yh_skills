@@ -1,0 +1,315 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""股票分析报告交付前校验。
+
+用法：
+    python3 validate_report.py <报告.html> [...]
+    python3 validate_report.py --quiet <报告.html>      # 只输出 error
+
+退出码：有 error 返回 1，只有 warn 返回 0。
+
+每条规则都对应一次真实的评审打回，规则来源见 ../references/ 下同名章节。
+"""
+
+import argparse
+import re
+import sys
+from collections import Counter
+
+SECTIONS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7']
+
+# references/wording.md 「黑话黑名单」
+BLACKLIST = [
+    (r'压着[一二三四五六七八九十\d]+家', '比喻代替事实：「压着 N 家公司」'),
+    (r'[三四五]根(独立)?支柱', '比喻代替事实：「支柱」→「买入逻辑有三条」'),
+    (r'彼此不依赖', '无信息量：删除，不要补充说明'),
+    (r'不需要同时兑现', '无信息量：与「彼此不依赖」同义重复'),
+    (r'白送', '比喻代替事实：改为「没有计入」'),
+    (r'派家底', '比喻代替事实：改为「派的是账上存量现金」'),
+    (r'天花板', '比喻代替事实：改为「回报上限」'),
+    (r'击穿', '比喻代替事实：改为「不足以让集团整体转亏」'),
+    (r'一图看全貌', '虚标题：删掉'),
+    (r'钱(到底)?是谁赚的', '口语化设问：改为「收入和利润分别来自哪里」'),
+    (r'本质上(是|只是)', '虚化实词：删掉「本质上」，判断反而更硬'),
+    (r'换句话说', '无功能连接词：删掉'),
+    (r'值得注意的是', '无功能开场：删掉'),
+    (r'不难看出', '无功能开场：删掉'),
+    (r'需要公允地', '作者自评：读者要事实，不要表演中立'),
+    (r'这一屏读完就能决策', '对读者的承诺：做到了不用说'),
+    (r'这[张组](图|数据)(揭示|提供|说明)了', '元评论开场：直接说事实'),
+    (r'(早前|上一?)版本(的差异|此前)', '草稿残留：读者不关心上一版'),
+    (r'本表刻意', '编排说明：读者不关心编排意图'),
+]
+
+# references/report-structure.md 「折叠策略」
+EMPTY_SUMMARY = [r'^详细数据', r'^更多(说明|数据|细节)', r'^补充说明$', r'^附录', r'^数据明细']
+
+HEADING_LEVELS = ['h2', 'h3', 'h4', 'h5']
+
+
+class Report:
+    def __init__(self, path):
+        self.path = path
+        self.raw = open(path, encoding='utf-8').read()
+        self.errors = []
+        self.warns = []
+        # 去掉 script / style，避免代码里的字符串被当正文
+        self.body = re.sub(r'<(script|style)\b.*?</\1>', '', self.raw, flags=re.S | re.I)
+        self.scripts = '\n'.join(re.findall(r'<script>(.*?)</script>', self.raw, re.S))
+
+    def err(self, rule, msg):
+        self.errors.append((rule, msg))
+
+    def warn(self, rule, msg):
+        self.warns.append((rule, msg))
+
+    # ---------- 工具 ----------
+
+    @staticmethod
+    def text_of(html):
+        t = re.sub(r'<[^>]+>', '', html)
+        t = re.sub(r'&[a-z]+;|&#\d+;', '', t)
+        return re.sub(r'\s+', '', t)
+
+    def visible_text(self, html):
+        """常态可见字数：剔除 details 内部。"""
+        return self.text_of(re.sub(r'<details\b.*?</details>', '', html, flags=re.S | re.I))
+
+    def blocks(self):
+        """按 h2 切分出七个区块的 HTML。"""
+        marks = [(m.group(1), m.start()) for m in re.finditer(r'<h2 id="([^"]+)"', self.body)]
+        out = []
+        for i, (sid, pos) in enumerate(marks):
+            end = marks[i + 1][1] if i + 1 < len(marks) else len(self.body)
+            out.append((sid, self.body[pos:end]))
+        return out
+
+    # ---------- 规则 ----------
+
+    def check_skeleton(self):
+        ids = [sid for sid, _ in self.blocks()]
+        if ids != SECTIONS:
+            self.err('骨架', f'h2 的 id 必须是 {SECTIONS}，实际是 {ids}（见 report-structure.md 一）')
+        toc = re.findall(r'<a href="#(s\d)"', self.body)
+        if toc and toc != ids:
+            self.err('骨架', f'吸顶目录与区块不一致：目录 {toc} vs 区块 {ids}')
+        if not re.search(r'class="toc"', self.body):
+            self.warn('骨架', '缺少吸顶目录 nav.toc')
+
+    def check_quota(self):
+        blocks = self.blocks()
+        if not blocks:
+            return
+        lens = {sid: len(self.visible_text(h)) for sid, h in blocks}
+        total = sum(lens.values())
+        if not total:
+            return
+        for sid, n in lens.items():
+            share = n / total
+            if share > 0.35:
+                self.err('篇幅', f'{sid} 常态可见字数占 {share:.0%}，上限 35%'
+                                 f'（{n}/{total} 字，先折叠考据再考虑删）')
+        s1 = lens.get('s1', 0) / total
+        if s1 < 0.05:
+            self.err('篇幅', f'结论区块 s1 只占 {s1:.1%}，下限 5%——结论被论据淹没')
+        if total > 16000:
+            self.warn('篇幅', f'常态可见共 {total} 字，建议控制在 12,000–15,000')
+
+    def check_folding(self):
+        summaries = re.findall(r'<summary[^>]*>(.*?)</summary>', self.body, re.S)
+        for s in summaries:
+            t = self.text_of(s)
+            for pat in EMPTY_SUMMARY:
+                if re.search(pat, t):
+                    self.err('折叠', f'折叠标题是空标签「{t[:30]}」，必须写成结论句')
+        if not summaries:
+            self.warn('折叠', '全文没有折叠块：考据类内容（分母出处、口径推导、逐年原始数列）应收进 details.fold')
+        # details 内有图表时必须有 resize 处理
+        has_canvas_in_details = any(
+            '<canvas' in m.group(0)
+            for m in re.finditer(r'<details\b.*?</details>', self.body, re.S | re.I))
+        if has_canvas_in_details and 'resize()' not in self.scripts:
+            self.err('折叠', 'details 内有 canvas 但缺少 toggle → Chart.resize()：'
+                             '折叠态下画布尺寸为 0，Chart.js 不会自愈')
+
+    def check_headings(self):
+        for lv in HEADING_LEVELS:
+            hits = []
+            for m in re.finditer(r'<%s\b([^>]*)>(.*?)</%s>' % (lv, lv), self.body, re.S):
+                mm = re.search(r'font-size\s*:\s*([\d.]+px)', m.group(1))
+                if mm:
+                    hits.append(f'{self.text_of(m.group(2))[:24]}（{mm.group(1)}）')
+            if hits:
+                self.err('层级', f'{len(hits)} 处 {lv} 用 inline style 覆盖字号，'
+                                 f'应改用层级样式类（如 h3.sub2）：{"、".join(hits[:4])}'
+                                 + ('…' if len(hits) > 4 else ''))
+
+    def check_wording(self):
+        text = self.text_of(self.body)
+        for pat, why in BLACKLIST:
+            for m in re.finditer(pat, text):
+                ctx = text[max(0, m.start() - 12):m.end() + 12]
+                self.err('措辞', f'{why}　命中「{m.group(0)}」，上下文：…{ctx}…')
+
+    def check_units(self):
+        text = self.text_of(self.body)
+        # 一份报告一个货币一个量级
+        mags = [u for u in ['百万美元', '亿美元'] if u in text]
+        if len(mags) > 1:
+            self.err('单位', f'同一报告混用 {mags}——统一到一个量级（历史上一次返工换算了 144 个数字）')
+        mags2 = [u for u in ['百万元', '亿元'] if u in text]
+        if len(mags2) > 1:
+            self.warn('单位', f'同时出现 {mags2}，确认是否混用了量级')
+        # 表头声称整表同一单位（只有括号里确实是货币/量级时才算）
+        unit_tok = r'(元|美元|港元|HK\$|美分|万头|万吨|万辆|百万|亿|千元)'
+        for m in re.finditer(r'<th[^>]*>(.*?)</th>', self.body, re.S):
+            t = self.text_of(m.group(1))
+            mm = re.match(r'^(指标|项目|科目)（(.+)）$', t)
+            if mm and re.search(unit_tok, mm.group(2)):
+                self.err('单位', f'表头「{t}」声称整表同一单位，但表内通常混着倍数/百分比/报价货币；'
+                                 f'改为单位跟着行标签走（span.uu）')
+
+    def check_anchors(self):
+        ids = set(re.findall(r'\bid="([^"]+)"', self.body))
+        for href in set(re.findall(r'href="#([^"]+)"', self.body)):
+            if href not in ids:
+                self.err('锚点', f'死锚点 #{href}')
+        # 裸章节号交叉引用
+        for m in re.finditer(r'(见|详见|参见)(下文)?第[一二三四五六七八九十\d]+章', self.text_of(self.body)):
+            self.warn('锚点', f'裸章节号交叉引用「{m.group(0)}」：重排后必定失效，改成锚点链接 a.xr')
+        for m in re.finditer(r'(如下表|见下表|见上图|如上图)', self.text_of(self.body)):
+            self.warn('锚点', f'相对位置引用「{m.group(0)}」：重排后必定失效')
+
+    def check_charts(self):
+        canvases = re.findall(r'<canvas id="([^"]+)"', self.body)
+        dup = [k for k, v in Counter(canvases).items() if v > 1]
+        if dup:
+            self.err('图表', f'canvas id 重复：{dup}')
+        for cid in canvases:
+            if f"'{cid}'" not in self.scripts and f'"{cid}"' not in self.scripts:
+                self.err('图表', f'canvas #{cid} 没有对应的 Chart 实例——会渲染成空白')
+        if not canvases:
+            self.warn('图表', '报告没有任何图表')
+
+        # 归一化合并趋势图：禁止双轴、禁止 tension
+        for blk in self.split_charts():
+            if '（指数）' not in blk:
+                continue
+            if "yAxisID:'y1'" in blk.replace(' ', '') or 'yAxisID:"y1"' in blk.replace(' ', ''):
+                self.err('图表', '同一张图里既有「（指数）」序列又有 y1 右轴：'
+                                 '要么全部归一化，要么不要合并（charting.md 三）')
+            if re.search(r'tension:\s*\.?\d', blk) and not re.search(r'tension:\s*0\b', blk):
+                self.err('图表', '归一化合并趋势图的 tension 必须为 0：'
+                                 '样条在 5–6 个点之间会造出不存在的峰谷')
+            if 'logarithmic' in blk and re.search(r'data:\s*\[[^\]]*(?<![\d.])-\d', blk):
+                self.err('图表', '对数刻度不能表示负值——改用线性轴并后移基准年')
+
+        # 桥式图读法必须在画布之前
+        if 'wfAid' in self.scripts:
+            for m in re.finditer(r'<canvas id="(\w*[wW][fF]\w*|cEv\w*)"', self.body):
+                head = self.body[max(0, m.start() - 700):m.start()]
+                if 'wfhint' not in head:
+                    self.err('图表', f'桥式图 #{m.group(1)} 的读法不在画布之前：'
+                                     f'中间柱悬空必被当成 bug，说明要放在标题正下方')
+
+        # 构成类不要用饼图
+        for blk in self.split_charts():
+            if "type:'doughnut'" not in blk.replace(' ', '') and "type:'pie'" not in blk.replace(' ', ''):
+                continue
+            if re.search(r'(构成|占比分布|收入结构|业务结构)', blk):
+                self.warn('图表', '构成类用了饼图：改成「绝对值＋占比」两张并排折线，'
+                                  '饼图只给静态切面（charting.md 一）')
+
+    def split_charts(self):
+        """粗粒度切分每个 new Chart(...) 调用的源码。"""
+        out, s = [], self.scripts
+        for m in re.finditer(r'new Chart\(', s):
+            i = s.find('{', m.end())
+            if i < 0:
+                continue
+            d = 0
+            for k in range(i, len(s)):
+                if s[k] == '{':
+                    d += 1
+                elif s[k] == '}':
+                    d -= 1
+                    if d == 0:
+                        out.append(s[m.start():k + 1])
+                        break
+        return out
+
+    def check_five_years(self):
+        fy = sorted(set(re.findall(r'FY20(\d\d)', self.raw)))
+        if len(fy) < 5:
+            self.err('五年', f'只出现了 {len(fy)} 个财年标签（{fy}）：'
+                             f'所有趋势至少 5 个完整财年 + 最近中报')
+
+    def check_pricing_basis(self):
+        head = re.search(r'<header>(.*?)</header>', self.body, re.S)
+        h = self.text_of(head.group(1)) if head else ''
+        if not re.search(r'20\d\d-\d\d-\d\d', h):
+            self.err('定价基准', '页首缺少取价日（YYYY-MM-DD）')
+        if not re.search(r'(收盘|现价)', h):
+            self.err('定价基准', '页首缺少现价／收盘价')
+        if not re.search(r'(总股本|已发行股)', h):
+            self.warn('定价基准', '页首缺少总股本，读者无法复算市值')
+        if not re.search(r'(USD/|HKD/|/HKD|/CNY|汇率)', h):
+            self.warn('定价基准', '页首缺少汇率，跨币种数字无法复核')
+
+    def check_valuation(self):
+        text = self.text_of(self.body)
+        if '真实' not in text or not re.search(r'(市盈率|PE)', text):
+            self.err('估值', '缺少真实市盈率口径（扣净现金或加回净负债），只给名义 PE 不合格')
+        has_cover = re.search(r'(覆盖倍数|覆盖\s*[\d.]+\s*倍)', text)
+        # 股息是论据之一时必须给覆盖倍数；派息可忽略的公司只提示
+        if not has_cover:
+            if re.search(r'(股息率|派息率)', text):
+                self.err('现金流', '报告把股息作为论据但没给覆盖倍数——'
+                                   '分母必须是还原租赁本金付款后的真实自由现金流')
+            else:
+                self.warn('现金流', '没有派息覆盖倍数：若派息对本案不重要请在正文说明')
+        if re.search(r'(自由现金流|FCF)', text) and '租赁' not in text:
+            self.warn('现金流', '提到自由现金流但全文未出现「租赁」：'
+                                'IFRS 16 下租赁本金付款计入筹资活动，不还原会系统性高估')
+
+    def check_market_share(self):
+        text = self.text_of(self.body)
+        if not re.search(r'(市占率|份额)', text):
+            return
+        if not re.search(r'(÷|/)', text):
+            self.warn('份额', '份额没有给出「分子 ÷ 分母」，读者无法自行验算（market-share.md 三）')
+        if '吨' in text and '头' in text and not re.search(r'(头数口径|物理量口径|胴体重)', text):
+            self.warn('份额', '同时出现吨与头但未声明口径：分子分母单位必须一致')
+
+    def run(self):
+        for name in dir(self):
+            if name.startswith('check_'):
+                getattr(self, name)()
+        return self
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('paths', nargs='+')
+    ap.add_argument('--quiet', action='store_true', help='只输出 error')
+    a = ap.parse_args()
+
+    bad = False
+    for p in a.paths:
+        r = Report(p).run()
+        print(f'\n=== {p} ===')
+        for rule, msg in r.errors:
+            print(f'  ERROR [{rule}] {msg}')
+        if not a.quiet:
+            for rule, msg in r.warns:
+                print(f'  WARN  [{rule}] {msg}')
+        if r.errors:
+            bad = True
+            print(f'  → {len(r.errors)} error, {len(r.warns)} warn　未通过')
+        else:
+            print(f'  → 0 error, {len(r.warns)} warn　通过')
+    return 1 if bad else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

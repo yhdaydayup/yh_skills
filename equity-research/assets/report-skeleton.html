@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>【公司名】【代码】 — 独立投资分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2333;--line:#30363d;--txt:#e6edf3;--dim:#8b949e;
+--c:#4aa8ff;--c2:#7aa2f7;--good:#3fb950;--warn:#d29922;--bad:#f85149;--gold:#ffd93d;--pur:#bc8cff;--cy:#39d0d8;--pk:#f7768e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;line-height:1.7;padding:28px 16px 80px}
+.wrap{max-width:1180px;margin:0 auto}
+header{text-align:center;padding:20px 0 28px;border-bottom:2px solid var(--c);margin-bottom:30px}
+header h1{font-size:32px;font-weight:700;color:var(--c)}
+header .en{font-size:13px;color:var(--dim);letter-spacing:2px;margin-top:4px}
+header .sub{color:var(--dim);font-size:12.5px;margin-top:12px}
+header .px{margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.pxb{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 18px;font-size:13px}
+.pxb b{font-size:20px;margin-left:8px;color:var(--c)}
+h2{font-size:20px;margin:46px 0 18px;padding-left:12px;border-left:4px solid var(--c)}
+h3{font-size:16px;color:var(--dim);font-weight:600;margin-bottom:12px;text-align:center}
+h4{font-size:15px;color:var(--c);font-weight:600;text-align:left;margin:24px 0 8px}
+h5{font-size:12.5px;color:var(--txt);font-weight:600;text-align:left;margin:14px 0 6px}
+h4 .sub,h5 .sub{color:var(--dim);font-weight:400;font-size:12px}
+.vc{border-radius:12px;padding:24px;border:1px solid var(--line);border-left:5px solid var(--good);background:var(--panel)}
+.vc .tag{display:inline-block;font-size:12px;padding:4px 14px;border-radius:20px;font-weight:700;margin-bottom:10px;background:rgba(63,185,80,.16);color:var(--good)}
+.vc h4{font-size:21px;margin-bottom:8px}
+.vc .why{font-size:14px;color:var(--dim);margin-top:10px}
+.vc .zone{margin-top:16px;font-size:13.5px;background:var(--panel2);padding:12px 16px;border-radius:8px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px;text-align:center}
+.kpi .l{font-size:11.5px;color:var(--dim);margin-bottom:7px}
+.kpi .v{font-size:26px;font-weight:700;line-height:1.3}
+.kpi .n{font-size:11px;color:var(--dim);margin-top:5px}
+.u{color:var(--c)}.g{color:var(--good)}.w{color:var(--warn)}.r{color:var(--bad)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:980px){.grid3{grid-template-columns:1fr}}
+@media(max-width:980px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.cw{position:relative;height:300px}.cw.tall{height:350px}.cw.xl{height:420px}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:6px 0 2px}
+@media(max-width:980px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+.pcell{text-align:center;min-width:0}
+.pcell .pt{font-size:10.5px;color:var(--dim);line-height:1.3;min-height:28px}
+.pcell .pt b{display:block;color:var(--txt);font-size:11.5px;font-weight:600}
+.pcell .pw{position:relative;height:124px;margin-top:2px;min-width:0}
+.pcell .pwl{position:relative;height:160px;margin-top:2px;min-width:0}
+.note{font-size:12.3px;color:var(--dim);margin-top:12px;padding-top:11px;border-top:1px dashed var(--line)}
+.note b{color:var(--txt)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.tscroll{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--panel);font-weight:500}
+.uu{color:var(--dim);font-weight:400;font-size:10px;margin-left:3px}
+thead th{color:var(--dim);font-weight:600;font-size:11.5px;background:var(--panel)}
+tbody tr:hover td{background:rgba(255,255,255,.028)}
+tr.hl td{background:rgba(74,168,255,.08)}tr.hl td:first-child{background:rgba(74,168,255,.12)}
+.pos{color:var(--good)}.neg{color:var(--bad)}
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.ti{position:relative;padding:11px 0 11px 16px}
+.ti::before{content:'';position:absolute;left:-24px;top:18px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2.5px solid var(--c)}
+.ti.crit::before{border-color:var(--bad);box-shadow:0 0 0 4px rgba(248,81,73,.15)}
+.ti.good::before{border-color:var(--good)}
+.ti .d{font-size:11.5px;color:var(--dim);font-weight:600}
+.ti .t{font-size:14.5px;font-weight:600;margin:2px 0 3px}
+.ti .x{font-size:12.5px;color:var(--dim)}
+.mrow{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12.5px}
+.mrow .nm{width:80px;color:var(--dim);flex-shrink:0}
+.mbar{flex:1;height:9px;background:var(--panel2);border-radius:5px;overflow:hidden}
+.mbar i{display:block;height:100%;border-radius:5px;background:var(--c)}
+.mrow .sc{width:28px;text-align:right;font-weight:600}
+.wfhint{font-size:11.5px;color:var(--dim);text-align:center;line-height:1.5;margin:0 0 6px}
+.wfhint b{color:var(--txt)}
+.flag{background:var(--panel2);border-left:3px solid var(--bad);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0;font-size:13px}
+.flag.warn{border-left-color:var(--warn)}.flag.ok{border-left-color:var(--good)}
+.flag>b.ft{display:block;margin-bottom:3px}
+.pill{display:grid;grid-template-columns:1fr auto;gap:10px;padding:11px 14px;background:var(--panel2);border-radius:8px;margin-bottom:9px;font-size:13px;align-items:center}
+.pill .s{font-weight:700;font-size:12px;white-space:nowrap}
+footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim);text-align:center;line-height:1.9}
+
+.toc{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--line);padding:9px 0;margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.toc a{font-size:12.5px;color:var(--dim);text-decoration:none;padding:5px 13px;border-radius:16px;border:1px solid transparent;white-space:nowrap}
+.toc a:hover{color:var(--txt);background:var(--panel)}
+.toc a.on{color:var(--c);border-color:var(--c);background:rgba(74,168,255,.1)}
+h2{scroll-margin-top:62px}
+h2 .lead{display:block;font-size:12.5px;color:var(--dim);font-weight:400;margin-top:5px}
+h3.sub2{font-size:16px;color:var(--txt);text-align:left;font-weight:600;margin:34px 0 14px;
+padding-left:10px;border-left:3px solid var(--line);scroll-margin-top:66px}
+a.xr{color:var(--c);text-decoration:none;border-bottom:1px dotted var(--c)}
+details.fold{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:12px 0}
+details.fold>summary{cursor:pointer;padding:11px 15px;font-size:12.8px;color:var(--dim);list-style:none;display:flex;align-items:baseline;gap:8px}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:'\25B8';color:var(--c);font-size:11px;flex-shrink:0}
+details[open].fold>summary::before{content:'\25BE'}
+details.fold>summary:hover{color:var(--txt)}
+details.fold>summary b{color:var(--txt);font-weight:600}
+details.fold>.fb{padding:0 15px 15px}
+details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;padding:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>【公司名】</h1>
+  <div class="en">【ENGLISH NAME】 · 【代码】</div>
+  <div class="sub">独立投资分析 · 近五年趋势 · 数据源：港交所披露易原始年报及中期报告、【其他一手来源】</div>
+  <div class="px">
+    <div class="pxb">现价 <b>HK$0.00</b></div>
+    <div class="pxb" style="color:var(--dim)">2026-00-00 收盘 · USD/HKD 0.000 · 总股本 0.00 亿股</div>
+  </div>
+  <div class="sub"><b>本报告金额一律用「【货币＋量级，全文唯一】」；股价与每股股息用交易所报价货币。</b>
+    【如有送转／分拆导致口径断裂，在此说明还原方式】</div>
+</header>
+
+<nav class="toc">
+  <a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a>
+  <a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a>
+  <a href="#s7">七、操作与风险</a>
+</nav>
+
+<!-- ============ s1 投资结论：≥5% 篇幅，第一句就是判断 ============ -->
+<h2 id="s1">一、投资结论<span class="lead">评级、估值锚点、买入理由</span></h2>
+
+<div class="vc">
+  <span class="tag">买入 / 观望 / 回避</span>
+  <h4>【一句话判断，直接给结论，不要铺垫】</h4>
+  <div class="why">【为什么。用事实，不用比喻。】</div>
+  <div class="zone">参考买入区间：<b>HK$0.0–0.0</b>　【对应的 PB／股息率／真实 PE】</div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="l">真实市盈率</div><div class="v u">0.0x</div><div class="n">扣净现金后</div></div>
+  <div class="kpi"><div class="l">市净率</div><div class="v">0.00x</div><div class="n">最新中报净资产</div></div>
+  <div class="kpi"><div class="l">股息覆盖倍数</div><div class="v g">0.00x</div><div class="n">真实自由现金流口径</div></div>
+  <div class="kpi"><div class="l">ROE</div><div class="v">0.0%</div><div class="n">FY2025</div></div>
+</div>
+
+<div class="card">
+  <h3>核心指标五年趋势 — 七项指标统一归一化到 FY2021 = 100</h3>
+  <p class="wfhint">全部序列换算成指数、<b>取消右轴</b>；原值在 tooltip 里。
+    虚线为 PE／PB。【全正值时可用对数刻度，此时等距离即等涨跌幅】</p>
+  <div class="cw xl"><canvas id="cCore"></canvas></div>
+  <div class="note">【只写图上看不到的：为什么会这样、意味着什么。不要把图上的线逐条念一遍。】</div>
+</div>
+
+<!-- ============ s2 估值 ============ -->
+<h2 id="s2">二、估值<span class="lead">真实市盈率、资产负债表、五年指标总表</span></h2>
+
+<h3 class="sub2">2.1 真实市盈率</h3>
+<div class="tscroll"><table>
+  <thead><tr><th>口径</th><th>数值</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>名义市盈率</td><td>0.0x</td><td>市值 ÷ 归母净利</td></tr>
+    <tr class="hl"><td>扣净现金后</td><td>0.0x</td><td>（市值 − 净现金）÷ 归母净利</td></tr>
+    <tr><td>加回租赁负债</td><td>0.0x</td><td>重租赁行业建议采用此口径</td></tr>
+  </tbody>
+</table></div>
+<div class="note">【说明选哪个口径、为什么。净负债公司的 PE 要向上调，不要机械套公式。】</div>
+
+<h3 class="sub2">2.2 资产负债表拆解</h3>
+<div class="card">
+  <h3>企业价值桥式图</h3>
+  <p class="wfhint">首尾两根柱是<b>绝对金额</b>，中间几根表示<b>增减量</b>，每根从上一根的终点起跳，因此不落地。
+    算式：0.0 − 0.0 + 0.0 = 0.0</p>
+  <div class="cw"><canvas id="cEv"></canvas></div>
+</div>
+
+<h3 class="sub2">2.3 五年指标总表</h3>
+<div class="tscroll"><table>
+  <thead><tr><th>指标</th><th>FY2021</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>1H26</th></tr></thead>
+  <tbody>
+    <tr><td>营业收入<span class="uu">亿元</span></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>归母净利<span class="uu">亿元</span></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>每股股息<span class="uu">HK$</span></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr class="hl"><td>ROE<span class="uu">%</span></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+  </tbody>
+</table></div>
+<div class="note">单位跟着行标签走，不写在表头——表里混着金额、报价货币、百分比和倍数。</div>
+
+<!-- ============ s3 生意结构 ============ -->
+<h2 id="s3">三、生意结构<span class="lead">收入和利润分别来自哪里、护城河</span></h2>
+
+<h3 class="sub2">3.1 分业务</h3>
+<div class="grid2">
+  <div class="card"><h3>分业务收入</h3><div class="cw"><canvas id="cBiz"></canvas></div></div>
+  <div class="card"><h3>分业务收入占比</h3><div class="cw"><canvas id="cBizPct"></canvas></div></div>
+</div>
+<div class="note">构成用「绝对值＋占比」两张并排折线，<b>不用饼图</b>——饼图只给一个静态切面，
+  看不出五年演变。占比分母＝当年各分项之和。分部收入一律用<b>对外收入</b>。</div>
+
+<h3 class="sub2">3.2 分地区</h3>
+<div class="grid2">
+  <div class="card"><h3>分地区收入</h3><div class="cw"><canvas id="cGeo"></canvas></div></div>
+  <div class="card"><h3>分地区收入占比</h3><div class="cw"><canvas id="cGeoPct"></canvas></div></div>
+</div>
+
+<h3 class="sub2">3.3 护城河</h3>
+<div class="grid2">
+  <div class="card"><h3>护城河五维</h3><div class="cw"><canvas id="cMoat"></canvas></div></div>
+  <div class="card">
+    <h4>结论</h4>
+    <div class="note" style="border:none;padding:0;margin:0">【宽／中等／窄，以及在变宽还是变窄。每条判断都要有硬证据。】</div>
+  </div>
+</div>
+
+<!-- ============ s4 行业现状 ============ -->
+<h2 id="s4">四、行业现状<span class="lead">赛道总量、周期位置、政策、竞对同期表现</span></h2>
+<div class="card"><h3>竞对 1H26 收入同比</h3><div class="cw"><canvas id="cPeer"></canvas></div></div>
+<div class="note">竞对对照是必需项：只看公司自己的数字会把行业性问题误判成公司性问题。</div>
+
+<!-- ============ s5 行业地位 ============ -->
+<h2 id="s5">五、行业地位<span class="lead">在各个市场分别占多少份额</span></h2>
+
+<div class="flag ok"><b class="ft">本节总结</b>【三句话结论 + 关键数字。不写「不想看细节可以跳过」这类铺垫。】</div>
+
+<h3 class="sub2">5.1 地区构成</h3>
+<div class="note">分母是公司自身，合计 100%。回答「集团对各地区的依赖度」。用折线趋势。</div>
+
+<h3 class="sub2">5.2 区域市占率</h3>
+<div class="pgrid">
+  <div class="pcell"><div class="pt"><b>市场 A</b>口径</div><div class="pw"><canvas id="cS1"></canvas></div></div>
+  <div class="pcell"><div class="pt"><b>市场 B</b>口径</div><div class="pw"><canvas id="cS2"></canvas></div></div>
+  <div class="pcell"><div class="pt"><b>市场 C</b>口径</div><div class="pw"><canvas id="cS3"></canvas></div></div>
+</div>
+<div class="note">分母是彼此独立的外部市场，<b>各饼之间不能加总</b>，所以一个市场一个饼。
+  能做趋势的份额一律改成折线趋势图——份额趋势比份额切面重要。</div>
+
+<details class="fold">
+  <summary><b>份额分母全部来自官方统计，逐年数列与反推方法如下</b></summary>
+  <div class="fb"><div class="note" style="border:none">【分母出处、反推方法、误差范围。折叠标题写成结论句，不写「详细数据」。】</div></div>
+</details>
+
+<!-- ============ s6 质量与现金 ============ -->
+<h2 id="s6">六、质量与现金<span class="lead">ROE 来源、真实自由现金流、派息覆盖</span></h2>
+
+<div class="card">
+  <h3>自由现金流瀑布 — 从经营现金流还原到真实自由现金流</h3>
+  <p class="wfhint">IFRS 16 下<b>租赁本金付款计入筹资活动，不减少经营现金流</b>，
+    所以「经营现金流 − 资本开支」会系统性高估。中间柱表示扣减量，从上一根终点起跳。</p>
+  <div class="cw"><canvas id="cFcf"></canvas></div>
+  <div class="note">派息 0.0 ÷ 真实自由现金流 0.0 = <b>覆盖 0.00 倍</b>。
+    【低于 1.0 倍意味着在动用存量现金或举债派息，要指出资金来源。】</div>
+</div>
+
+<!-- ============ s7 操作与风险 ============ -->
+<h2 id="s7">七、操作与风险<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
+
+<h3 class="sub2">7.1 五年转折点</h3>
+<div class="tl">
+  <div class="ti crit"><div class="d">FY20XX</div><div class="t">【事件】</div><div class="x">【数据表现】</div></div>
+  <div class="ti"><div class="d">FY20XX</div><div class="t">【事件】</div><div class="x">【数据表现】</div></div>
+</div>
+
+<h3 class="sub2">7.2 买入框架</h3>
+<div class="pill"><span>【价格条件】</span><span class="s u">HK$0.0 以下</span></div>
+<div class="pill"><span>【基本面条件，通常比价格条件更重要】</span><span class="s g">连续两期确认</span></div>
+
+<h3 class="sub2">7.3 风险与跟踪点</h3>
+<div class="flag"><b class="ft">风险</b>【可证伪的下行风险，逐条给证据】</div>
+<div class="flag warn"><b class="ft">跟踪点</b>【下一个验证窗口是什么、看哪个数】</div>
+
+<footer>
+  本报告基于公开披露信息，不构成投资建议。数据截至 2026-00-00，会随市场变化。
+</footer>
+
+</div>
+
+<script>
+const C='#4aa8ff',C2='#7aa2f7',DIM='#8b949e',LINE='#30363d',TXT='#e6edf3';
+const GOOD='#3fb950',WARN='#d29922',BAD='#f85149',GOLD='#ffd93d',PUR='#bc8cff',CY='#39d0d8',PK='#f7768e';
+Chart.defaults.color=DIM;
+Chart.defaults.font.family='-apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.font.size=11;
+Chart.defaults.plugins.legend.labels.boxWidth=12;
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+Chart.defaults.maintainAspectRatio=false;
+
+const grid={grid:{color:LINE,drawBorder:false},ticks:{color:DIM}};
+const gridNo={grid:{display:false},ticks:{color:DIM}};
+const ax=(t)=>({...grid,title:{display:true,text:t,color:DIM}});
+const L=(o)=>Object.assign({tension:.32,pointRadius:4,borderWidth:2.5,fill:false},o);
+const Y5=['FY2021','FY2022','FY2023','FY2024','FY2025'],Y6=[...Y5,'1H26'];
+
+/* ---------- 通用趋势图 ---------- */
+function trend(id,labels,ds,unit,digits,opt){
+  const d=digits==null?1:digits;
+  new Chart(document.getElementById(id),{type:'line',
+    data:{labels,datasets:ds.map(x=>L(x))},
+    options:Object.assign({interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:TXT,padding:10}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: `+
+          (c.parsed.y==null?'—':c.parsed.y.toFixed(d))+` ${unit}`}}},
+      scales:{x:gridNo,y:ax(unit)}},opt||{})});
+}
+
+/* ---------- 构成趋势：占比分母＝当年各分项之和 ---------- */
+function mkTrend(id,src,cols,pct,unit,digits){
+  const ks=Object.keys(src), d=digits==null?1:digits, u=unit||'亿元';
+  const sum=Y5.map((_,j)=>ks.reduce((a,k)=>a+src[k][j],0));
+  new Chart(document.getElementById(id),{type:'line',
+    data:{labels:Y5,datasets:ks.map((k,i)=>L({label:k,borderColor:cols[i],borderWidth:3,
+      data:pct?src[k].map((v,j)=>+(v/sum[j]*100).toFixed(1)):src[k]}))},
+    options:{interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:TXT,padding:12}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+'：'+
+          (pct?c.parsed.y+'%':c.parsed.y.toFixed(d)+' '+u)}}},
+      scales:{x:gridNo,y:{...grid,beginAtZero:true,
+        ticks:{color:DIM,callback:v=>pct?v+'%':v}}}}});
+}
+
+/* ---------- 基准线：线在数据下层，标签在上层 ---------- */
+function baseline(id,val,txt,side){return{id,
+  beforeDatasetsDraw(c){
+    const ys=c.scales.y; if(!ys) return;
+    const y=ys.getPixelForValue(val),{left,right}=c.chartArea,x=c.ctx;
+    x.save();x.strokeStyle=DIM;x.lineWidth=1;x.setLineDash([3,3]);x.globalAlpha=.6;
+    x.beginPath();x.moveTo(left,y);x.lineTo(right,y);x.stroke();x.restore();},
+  afterDatasetsDraw(c){
+    const ys=c.scales.y; if(!ys) return;
+    const y=ys.getPixelForValue(val),{left,right}=c.chartArea,x=c.ctx;
+    x.save();x.font='500 9.5px -apple-system,"PingFang SC",sans-serif';
+    const w=x.measureText(txt).width;
+    const bx=side==='below'?right-w-8:left+3, by=side==='below'?y+1:y-14;
+    x.fillStyle='#0d1117';x.fillRect(bx,by,w+5,13);
+    x.globalAlpha=.85;x.fillStyle=DIM;x.textAlign='left';x.textBaseline='top';
+    x.fillText(txt,bx+2,by+2);x.restore();}};}
+const base100=baseline('base100',100,'FY2021 基准 = 100','below');
+
+/* ---------- 桥式图：连接线 + 增减标签 ---------- */
+function wfMeta(d){let r=null;return d.map(v=>{
+  if(v[0]===0){r=v[1];return{tot:true,lv:v[1],delta:v[1]};}
+  const s=(v[0]===r)?v[0]:v[1],e=(v[0]===r)?v[1]:v[0];r=e;
+  return{tot:false,lv:e,delta:e-s};});}
+const wfAid={id:'wfAid',afterDatasetsDraw(c,_a,o){
+  const m=c.getDatasetMeta(0),d=c.data.datasets[0].data,M=wfMeta(d),ys=c.scales.y,x=c.ctx;
+  x.save();
+  x.strokeStyle=TXT;x.lineWidth=1.4;x.globalAlpha=.5;
+  x.font='500 9.5px -apple-system,"PingFang SC",sans-serif';x.textBaseline='bottom';
+  for(let i=0;i<d.length-1;i++){
+    const B=d[i+1],lv=M[i].lv;
+    if(lv!==B[0]&&lv!==B[1])continue;
+    const dup=M[i].tot||M[i+1].tot;
+    const a=m.data[i],b=m.data[i+1],yy=ys.getPixelForValue(lv);
+    const x1=a.x+(a.width||0)/2,x2=b.x-(b.width||0)/2;
+    x.beginPath();x.moveTo(x1,yy);x.lineTo(x2,yy);x.stroke();
+    x.globalAlpha=.75;x.fillStyle=DIM;x.textAlign='center';
+    if(!dup) x.fillText(lv.toFixed(1),(x1+x2)/2,yy-3);
+    x.globalAlpha=.5;
+  }
+  x.globalAlpha=1;x.textAlign='center';x.textBaseline='bottom';
+  x.font='600 10.5px -apple-system,"PingFang SC",sans-serif';
+  M.forEach((s,i)=>{const el=m.data[i];
+    x.fillStyle=s.tot?TXT:(s.delta>0?BAD:GOOD);
+    x.fillText((s.tot?'':(s.delta>0?'+':'−'))+o.fmt(Math.abs(s.delta)),el.x,Math.min(el.y,el.base)-4);});
+  x.restore();}};
+const wfTip=u=>({callbacks:{label:c=>{
+  const M=wfMeta(c.chart.data.datasets[0].data)[c.dataIndex];
+  return M.tot?` ${M.delta.toFixed(1)} ${u}`
+   :` 该步 ${M.delta>0?'+':'−'}${Math.abs(M.delta).toFixed(1)} ${u}　→ 累计 ${M.lv.toFixed(1)}`;}}});
+function waterfall(id,labels,data,cols,unit){
+  new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[{data,backgroundColor:cols,borderRadius:3,borderSkipped:false}]},
+    options:{layout:{padding:{top:22}},
+      plugins:{legend:{display:false},tooltip:wfTip(unit),wfAid:{fmt:v=>v.toFixed(1)}},
+      scales:{x:gridNo,y:ax(unit)}},
+    plugins:[wfAid]});
+}
+
+/* ---------- 扇形小倍数：一个市场一个饼 ---------- */
+const ctrTxt={id:'ctrTxt',afterDraw(c,a,o){
+  const{ctx,chartArea:{left,right,top,bottom}}=c;
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle=o.color;ctx.font='600 15px -apple-system,"PingFang SC",sans-serif';
+  ctx.fillText(o.text,(left+right)/2,(top+bottom)/2);ctx.restore();}};
+function sharePie(id,share,color,label,note){
+  new Chart(document.getElementById(id),{type:'doughnut',
+    data:{labels:['本公司','该市场其余部分'],
+      datasets:[{data:[share,100-share],backgroundColor:[color,'#1c2128'],
+        borderColor:'#0d1117',borderWidth:1.5}]},
+    options:{cutout:'64%',plugins:{legend:{display:false},
+      ctrTxt:{text:label,color},
+      tooltip:{callbacks:{label:c=>c.dataIndex===0
+        ? ` 本公司：${label}${note||''}` : ` 其余：${(100-share).toFixed(1)}%`}}}},
+    plugins:[ctrTxt]});
+}
+
+/* ======== 以下为示例数据，全部替换为一手年报数值 ======== */
+
+const RAW={'股价':[0,0,0,0,0],'营业收入':[0,0,0,0,0],'归母净利':[0,0,0,0,0],
+ '每股股息':[0,0,0,0,0],'PE':[0,0,0,0,0],'PB':[0,0,0,0,0]};
+const UNIT={'股价':'HK$','营业收入':'亿元','归母净利':'亿元','每股股息':'HK$','PE':'倍','PB':'倍'};
+const DEC={'每股股息':3,'PB':2,'股价':2};
+/* tension 必须为 0：样条在 5–6 个点之间会造出不存在的峰谷 */
+const CORE=v=>Object.assign({tension:0,pointRadius:3.5,borderWidth:2.5,fill:false},v);
+new Chart(document.getElementById('cCore'),{type:'line',
+ data:{labels:Y5,datasets:[
+  CORE({label:'股价（指数）',    data:[100,100,100,100,100],borderColor:C,borderWidth:3.4}),
+  CORE({label:'营业收入（指数）',data:[100,100,100,100,100],borderColor:CY}),
+  CORE({label:'归母净利（指数）',data:[100,100,100,100,100],borderColor:GOLD}),
+  CORE({label:'每股股息（指数）',data:[100,100,100,100,100],borderColor:PK,borderWidth:3.4}),
+  CORE({label:'PE（指数）',      data:[100,100,100,100,100],borderColor:PUR,borderDash:[6,4],borderWidth:2}),
+  CORE({label:'PB（指数）',      data:[100,100,100,100,100],borderColor:BAD,borderDash:[6,4],borderWidth:2})]},
+ options:{interaction:{mode:'index',intersect:false},
+  plugins:{legend:{labels:{color:TXT,padding:9}},
+   tooltip:{callbacks:{label:c=>{
+     const n=c.dataset.label.replace('（指数）',''),r=RAW[n][c.dataIndex];
+     const d=DEC[n]==null?1:DEC[n];
+     return r===null?` ${n}: n.m.`:` ${n}: ${r.toFixed(d)} ${UNIT[n]}　（指数 ${c.parsed.y}）`;}}}},
+  scales:{x:gridNo,y:ax('指数（FY2021 = 100）')}},
+ plugins:[base100]});
+
+waterfall('cEv',['总市值','− 净现金','＋ 租赁负债','企业价值'],
+  [[0,100],[80,100],[80,95],[0,95]],[C,GOOD,BAD,PUR],'亿元');
+
+waterfall('cFcf',['经营现金流','− 资本开支','− 租赁本金及利息','− 已付利息','真实自由现金流'],
+  [[0,100],[70,100],[60,70],[55,60],[0,55]],[C,BAD,BAD,BAD,GOOD],'亿元');
+
+const BIZ={'主业':[0,0,0,0,0],'第二曲线':[0,0,0,0,0]};
+mkTrend('cBiz',BIZ,[C,GOOD],false,'亿元');
+mkTrend('cBizPct',BIZ,[C,GOOD],true);
+
+const GEOG={'中国':[0,0,0,0,0],'北美':[0,0,0,0,0],'欧洲':[0,0,0,0,0]};
+mkTrend('cGeo',GEOG,[GOLD,C,PUR],false,'亿元');
+mkTrend('cGeoPct',GEOG,[GOLD,C,PUR],true);
+
+new Chart(document.getElementById('cMoat'),{type:'radar',
+ data:{labels:['品牌','转换成本','成本优势','有效规模','定价权'],
+  datasets:[{label:'评分',data:[3,2,4,3,2],borderColor:C,backgroundColor:C+'33',pointBackgroundColor:C}]},
+ options:{plugins:{legend:{display:false}},
+  scales:{r:{min:0,max:5,ticks:{stepSize:1,color:DIM,backdropColor:'transparent',font:{size:9}},
+   grid:{color:LINE},angleLines:{color:LINE},pointLabels:{color:TXT,font:{size:12}}}}}});
+
+new Chart(document.getElementById('cPeer'),{type:'bar',
+ data:{labels:['本公司','竞对 A','竞对 B','竞对 C'],
+  datasets:[{label:'1H26 收入同比',data:[0,0,0,0],
+   backgroundColor:[C+'ee',GOLD+'bb',WARN+'bb',BAD+'cc'],borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>'收入同比 '+c.parsed.x+'%'}}},
+  scales:{y:{...gridNo,ticks:{color:DIM,font:{size:11}}},
+   x:{...grid,title:{display:true,text:'1H26 收入同比增速'},ticks:{color:DIM,callback:v=>v+'%'}}}}});
+
+sharePie('cS1',0,GOLD,'0%');
+sharePie('cS2',0,C,'0%');
+sharePie('cS3',0,PUR,'0%');
+
+/* ---------- 折叠块展开必须重算画布 ---------- */
+document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle',()=>{
+  if(!d.open) return;
+  d.querySelectorAll('canvas').forEach(c=>{const ch=Chart.getChart(c); if(ch) ch.resize();});
+}));
+
+/* ---------- 吸顶目录跟随高亮 ---------- */
+(function(){
+  const links=[...document.querySelectorAll('.toc a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(secs.length!==links.length) return;
+  const mark=()=>{let i=0;secs.forEach((s,k)=>{if(s.getBoundingClientRect().top<=90)i=k;});
+    links.forEach((a,k)=>a.classList.toggle('on',k===i));};
+  mark(); addEventListener('scroll',mark,{passive:true});
+})();
+</script>
+
+<!--
+  这是报告骨架，不是成品。它已经通过 validate_report.py（0 error）和 render_check.js，
+  也就是说结构、样式、图表原语、目录高亮、折叠块 resize 都是对的——
+  你只需要替换内容，不要重搭结构。
+
+  为什么必须复制它而不是手抄：第三份报告手工拼装，同时漏掉了目录高亮脚本、
+  全部折叠块、派息覆盖倍数三项。
+
+  使用方式：
+  1. 复制本文件重命名为 <ticker>-analysis.html
+  2. 替换 header 的定价基准（取价日、收盘价、汇率、总股本）
+  3. 七个区块逐个填；考据类内容放进 details.fold，折叠标题写成结论句
+  4. python3 ../scripts/validate_report.py <ticker>-analysis.html   必须零 error
+  5. 浏览器终检（见 references/report-structure.md 七）
+-->
+</body>
+</html>
