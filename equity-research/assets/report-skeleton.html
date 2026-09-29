@@ -285,7 +285,8 @@ Chart.defaults.maintainAspectRatio=false;
 const grid={grid:{color:LINE,drawBorder:false},ticks:{color:DIM}};
 const gridNo={grid:{display:false},ticks:{color:DIM}};
 const ax=(t)=>({...grid,title:{display:true,text:t,color:DIM}});
-const L=(o)=>Object.assign({tension:.32,pointRadius:4,borderWidth:2.5,fill:false},o);
+/* tension 必须为 0：样条在 5–6 个点之间会造出不存在的峰谷（charting.md「五条红线」第 4 条） */
+const L=(o)=>Object.assign({tension:0,pointRadius:4,borderWidth:2.5,fill:false},o);
 const Y5=['FY2021','FY2022','FY2023','FY2024','FY2025'],Y6=[...Y5,'1H26'];
 
 /* ---------- 通用趋势图 ---------- */

@@ -228,16 +228,13 @@ class Report:
         if not canvases:
             self.warn('图表', '报告没有任何图表')
 
-        # 归一化合并趋势图：禁止双轴、禁止 tension
+        # 归一化合并趋势图：禁止双轴
         for blk in self.split_charts():
             if '（指数）' not in blk:
                 continue
             if "yAxisID:'y1'" in blk.replace(' ', '') or 'yAxisID:"y1"' in blk.replace(' ', ''):
                 self.err('图表', '同一张图里既有「（指数）」序列又有 y1 右轴：'
                                  '要么全部归一化，要么不要合并（charting.md「合并趋势图」）')
-            if re.search(r'tension:\s*\.?\d', blk) and not re.search(r'tension:\s*0\b', blk):
-                self.err('图表', '归一化合并趋势图的 tension 必须为 0：'
-                                 '样条在 5–6 个点之间会造出不存在的峰谷')
             if 'logarithmic' in blk and re.search(r'data:\s*\[[^\]]*(?<![\d.])-\d', blk):
                 self.err('图表', '对数刻度不能表示负值——改用线性轴并后移基准年')
 
@@ -256,6 +253,77 @@ class Report:
             if re.search(r'(构成|占比分布|收入结构|业务结构)', blk):
                 self.warn('图表', '构成类用了饼图：改成「绝对值＋占比」两张并排折线，'
                                   '饼图只给静态切面（charting.md「选型表」）')
+
+    def check_tension(self):
+        """折线的 tension 必须为 0——所有折线，不只是归一化合并趋势图。
+
+        原来这条只查带「（指数）」的那张图，而 charting.md 里被到处复制的 `L()` 默认值是 `.32`，
+        于是三份报告的全部折线都带着样条假峰谷交付。腾讯那份的份额图被拉出一个不存在的圆顶、
+        覆盖倍数图凸出到高于两端，**两个脚本当时都是全绿，是截图目视才发现的**。
+        5–6 个点的折线没有任何理由用样条，所以这条升级为全局检查。
+        """
+        for m in re.finditer(r'tension:\s*([\d.]+)', self.scripts):
+            if float(m.group(1)) != 0:
+                ctx = re.sub(r'\s+', ' ', self.scripts[max(0, m.start() - 70):m.end()])[-70:]
+                self.err('图表', f'tension = {m.group(1)}，必须为 0：'
+                                 f'样条在 5–6 个点之间会造出不存在的峰谷。上下文：…{ctx}…')
+
+    def check_halfyear_flow(self):
+        """绝对值流量图不能把半年数和五个完整财年画在同一条线上。
+
+        `1H26` 只有六个月，画在年度序列后面末端必然腰斩，读者第一眼读到「业务萎缩」。
+        腾讯那份的分部收入图初版就是这样，四条线在 FY2025 之后集体跳水。
+        正解是换成最近十二个月（FY2025 − 1H25 + 1H26）。
+        存量（净现金、净资产、月活）和比率（毛利率、市盈率）没有这个问题。
+
+        机器判不了「这个序列是流量还是存量」，所以查的是一个客观事实：
+        **金额单位的折线，其标签数组最后一项是不是半年标签**。用对了 TTM 口径，
+        最后一项自然是「最近12个月」，检查不会响；确属存量（净现金、净资产）就在调用前
+        标一个 /*时点*/ 注释显式豁免——把口径写进源码本身，比脚本猜更可靠。
+
+        注意不能扫 split_charts()：那个切的是 `new Chart(`，而绝大多数图由 trend() 辅助函数
+        生成，26 张图只切得出 7 块，按块查等于漏掉全部。这里改扫辅助函数的**调用点**。
+        """
+        # 解析标签数组的定义，供把 Y6 这类标识符还原成实际标签
+        # 抓任意 `标识符=[...]`，不要求前缀 const——`const Y5=[..],Y6=[..];` 里
+        # Y6 是第二个声明符，只认 const 会把它整个漏掉
+        labeldefs = dict(re.findall(r'\b(\w+)\s*=\s*(\[[^\]\n]*\])', self.scripts))
+        HALF = re.compile(r"1H\d\d|上半年|H1\b")
+        MONEY = re.compile(r'亿|万元|百万|美元|元\b')
+
+        for m in re.finditer(r'\b(?:mk)?[Tt]rend\(\s*[\'"](\w+)[\'"]\s*,\s*([^,]+?)\s*,', self.scripts):
+            cid, lab = m.group(1), m.group(2).strip()
+            resolved = labeldefs.get(lab, lab)
+            # 只看最后一项：中间出现 1H 是正常的季度序列，末项才决定末端会不会腰斩
+            items = re.findall(r"'([^']*)'", resolved)
+            if not items or not HALF.search(items[-1]):
+                continue
+            args = self.balanced(self.scripts, m.start())
+            unit = re.findall(r"\]\s*,\s*'([^']*)'", args)
+            if not unit or not MONEY.search(unit[0]):
+                continue
+            if re.search(r'时点|比率', self.scripts[max(0, m.start() - 160):m.start()]):
+                continue
+            self.warn('图表', f'图 #{cid} 是金额单位（{unit[0]}）而标签末项为「{items[-1]}」：'
+                              f'流量指标请换成最近十二个月口径（FY − 1H上年 + 1H本年），'
+                              f'否则末端腰斩会被读成业务萎缩；'
+                              f'确属存量（净现金、净资产、月活）或比率（均价、单产）'
+                              f'请在调用前加 /*时点*/ 或 /*比率*/ 注释豁免'
+                              f'（charting.md「五条红线」第 5 条）')
+
+    @staticmethod
+    def balanced(s, start):
+        """从 start 处的调用取到配对右括号为止的完整实参文本。"""
+        i = s.find('(', start)
+        d = 0
+        for k in range(i, len(s)):
+            if s[k] == '(':
+                d += 1
+            elif s[k] == ')':
+                d -= 1
+                if d == 0:
+                    return s[i:k + 1]
+        return s[i:i + 2000]
 
     def split_charts(self):
         """粗粒度切分每个 new Chart(...) 调用的源码。"""

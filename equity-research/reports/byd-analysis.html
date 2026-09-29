@@ -697,7 +697,7 @@ trend('cGm',['FY2023','FY2024','FY2025','1H26'],[
 trend('cVol',Y5,[
   {label:'总销量',data:[72.1,180.2,302.4,427.2,460.2],borderColor:C,borderWidth:3.2},
   {label:'海外销量',data:[null,4.5,25.2,41.7,105.0],borderColor:GOOD,borderWidth:3.2}],'万辆',1);
-trend('cAsp',Y6,[{label:'单车收入',data:[17.88,18.01,15.99,14.45,14.09,15.22],borderColor:GOLD,borderWidth:3.2}],'万元',2);
+/*比率*/trend('cAsp',Y6,[{label:'单车收入',data:[17.88,18.01,15.99,14.45,14.09,15.22],borderColor:GOLD,borderWidth:3.2}],'万元',2);
 
 /* ---- 5.1 市占率 ---- */
 trend('cShare',Y6,[{label:'中国新能源汽车市占率',data:[17.1,27.1,31.9,33.2,27.9,26.2],
@@ -716,7 +716,7 @@ new Chart(document.getElementById('cRival'),{type:'bar',
   scales:{x:gridNo,y:ax('1H26 累计批发量（万辆）')}}});
 
 /* ---- 6.1 净现金 ---- */
-trend('cNetCash',Y6,[
+/*时点*/trend('cNetCash',Y6,[
   {label:'类现金（货币资金＋交易性金融资产）',data:[560.6,721.0,1186.4,1432.5,1299.6,1286.8],borderColor:GOOD,borderWidth:3.2},
   {label:'有息负债',data:[339.8,192.1,380.4,305.8,1105.0,1172.9],borderColor:BAD,borderWidth:3.2},
   {label:'净现金',data:[220.8,528.9,806.0,1126.7,194.6,113.9],borderColor:C,borderWidth:3.6,borderDash:[7,4]}],'亿元',1);

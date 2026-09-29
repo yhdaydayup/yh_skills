@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>腾讯控股 0700.HK — 独立投资分析</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2333;--line:#30363d;--txt:#e6edf3;--dim:#8b949e;
+--c:#4aa8ff;--c2:#7aa2f7;--good:#3fb950;--warn:#d29922;--bad:#f85149;--gold:#ffd93d;--pur:#bc8cff;--cy:#39d0d8;--pk:#f7768e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;line-height:1.7;padding:28px 16px 80px}
+.wrap{max-width:1180px;margin:0 auto}
+header{text-align:center;padding:20px 0 28px;border-bottom:2px solid var(--c);margin-bottom:30px}
+header h1{font-size:32px;font-weight:700;color:var(--c)}
+header .en{font-size:13px;color:var(--dim);letter-spacing:2px;margin-top:4px}
+header .sub{color:var(--dim);font-size:12.5px;margin-top:12px}
+header .px{margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.pxb{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 18px;font-size:13px}
+.pxb b{font-size:20px;margin-left:8px;color:var(--c)}
+h2{font-size:20px;margin:46px 0 18px;padding-left:12px;border-left:4px solid var(--c)}
+h3{font-size:16px;color:var(--dim);font-weight:600;margin-bottom:12px;text-align:center}
+h3.lt{text-align:left}
+h4{font-size:15px;color:var(--c);font-weight:600;text-align:left;margin:24px 0 8px}
+h5{font-size:12.5px;color:var(--txt);font-weight:600;text-align:left;margin:14px 0 6px}
+h4 .sub,h5 .sub{color:var(--dim);font-weight:400;font-size:12px}
+.vc{border-radius:12px;padding:24px;border:1px solid var(--line);border-left:5px solid var(--good);background:var(--panel)}
+.vc .tag{display:inline-block;font-size:12px;padding:4px 14px;border-radius:20px;font-weight:700;margin-bottom:10px;background:rgba(63,185,80,.16);color:var(--good)}
+.vc h4{font-size:21px;margin-bottom:8px}
+.vc .why{font-size:14px;color:var(--dim);margin-top:10px}
+.vc .zone{margin-top:16px;font-size:13.5px;background:var(--panel2);padding:12px 16px;border-radius:8px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px;text-align:center}
+.kpi .l{font-size:11.5px;color:var(--dim);margin-bottom:7px}
+.kpi .v{font-size:26px;font-weight:700;line-height:1.3}
+.kpi .n{font-size:11px;color:var(--dim);margin-top:5px}
+.u{color:var(--c)}.g{color:var(--good)}.w{color:var(--warn)}.r{color:var(--bad)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:980px){.grid3{grid-template-columns:1fr}}
+@media(max-width:980px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.cw{position:relative;height:300px}.cw.tall{height:350px}.cw.xl{height:420px}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:6px 0 2px}
+@media(max-width:980px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+.pcell{text-align:center;min-width:0}
+.pcell .pt{font-size:10.5px;color:var(--dim);line-height:1.3;min-height:28px}
+.pcell .pt b{display:block;color:var(--txt);font-size:11.5px;font-weight:600}
+.pcell .pw{position:relative;height:124px;margin-top:2px;min-width:0}
+.pcell .pwl{position:relative;height:160px;margin-top:2px;min-width:0}
+.note{font-size:12.3px;color:var(--dim);margin-top:12px;padding-top:11px;border-top:1px dashed var(--line)}
+.note b{color:var(--txt)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.tscroll{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--panel);font-weight:500}
+.uu{color:var(--dim);font-weight:400;font-size:10px;margin-left:3px}
+thead th{color:var(--dim);font-weight:600;font-size:11.5px;background:var(--panel)}
+tbody tr:hover td{background:rgba(255,255,255,.028)}
+tr.hl td{background:rgba(74,168,255,.08)}tr.hl td:first-child{background:rgba(74,168,255,.12)}
+.pos{color:var(--good)}.neg{color:var(--bad)}
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.ti{position:relative;padding:11px 0 11px 16px}
+.ti::before{content:'';position:absolute;left:-24px;top:18px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2.5px solid var(--c)}
+.ti.crit::before{border-color:var(--bad);box-shadow:0 0 0 4px rgba(248,81,73,.15)}
+.ti.good::before{border-color:var(--good)}
+.ti .d{font-size:11.5px;color:var(--dim);font-weight:600}
+.ti .t{font-size:14.5px;font-weight:600;margin:2px 0 3px}
+.ti .x{font-size:12.5px;color:var(--dim)}
+.mrow{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12.5px}
+.mrow .nm{width:80px;color:var(--dim);flex-shrink:0}
+.mbar{flex:1;height:9px;background:var(--panel2);border-radius:5px;overflow:hidden}
+.mbar i{display:block;height:100%;border-radius:5px;background:var(--c)}
+.mrow .sc{width:28px;text-align:right;font-weight:600}
+.wfhint{font-size:11.5px;color:var(--dim);text-align:center;line-height:1.5;margin:0 0 6px}
+.wfhint b{color:var(--txt)}
+.flag{background:var(--panel2);border-left:3px solid var(--bad);border-radius:0 8px 8px 0;padding:12px 16px;margin:12px 0;font-size:13px}
+.flag.warn{border-left-color:var(--warn)}.flag.ok{border-left-color:var(--good)}
+.flag>b.ft{display:block;margin-bottom:3px}
+.pill{display:grid;grid-template-columns:1fr auto;gap:10px;padding:11px 14px;background:var(--panel2);border-radius:8px;margin-bottom:9px;font-size:13px;align-items:center}
+.pill .s{font-weight:700;font-size:12px;white-space:nowrap}
+footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim);text-align:center;line-height:1.9}
+
+.toc{position:sticky;top:0;z-index:50;background:rgba(13,17,23,.94);backdrop-filter:blur(10px);
+border-bottom:1px solid var(--line);padding:9px 0;margin-bottom:8px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.toc a{font-size:12.5px;color:var(--dim);text-decoration:none;padding:5px 13px;border-radius:16px;border:1px solid transparent;white-space:nowrap}
+.toc a:hover{color:var(--txt);background:var(--panel)}
+.toc a.on{color:var(--c);border-color:var(--c);background:rgba(74,168,255,.1)}
+h2{scroll-margin-top:62px}
+h2 .lead{display:block;font-size:12.5px;color:var(--dim);font-weight:400;margin-top:5px}
+h3.sub2{font-size:16px;color:var(--txt);text-align:left;font-weight:600;margin:34px 0 14px;
+padding-left:10px;border-left:3px solid var(--line);scroll-margin-top:66px}
+a.xr{color:var(--c);text-decoration:none;border-bottom:1px dotted var(--c)}
+details.fold{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin:12px 0}
+details.fold>summary{cursor:pointer;padding:11px 15px;font-size:12.8px;color:var(--dim);list-style:none;display:flex;align-items:baseline;gap:8px}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:'\25B8';color:var(--c);font-size:11px;flex-shrink:0}
+details[open].fold>summary::before{content:'\25BE'}
+details.fold>summary:hover{color:var(--txt)}
+details.fold>summary b{color:var(--txt);font-weight:600}
+details.fold>.fb{padding:0 15px 15px}
+details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;padding:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>腾讯控股</h1>
+  <div class="en">TENCENT HOLDINGS LIMITED · 0700.HK</div>
+  <div class="sub">独立投资分析 · 近五年趋势 · 数据源：腾讯 FY2021–FY2025 年报与 2026 年中期报告、港交所披露易同业公告、中国音数协游戏工委、中关村互动营销实验室</div>
+  <div class="px">
+    <div class="pxb">现价 <b>HK$439.80</b></div>
+    <div class="pxb" style="color:var(--dim)">2026-09-28 收盘 · HKD/CNY 0.85577 · 总股本 90.92 亿股</div>
+  </div>
+  <div class="sub"><b>本报告金额一律用「人民币亿元」；股价与每股股息保留港元报价，不换算。</b>
+    取价日用 2026-09-28 收盘而非 09-29 盘中价。腾讯五年内无送转、无分拆，历史每股指标与股价可直接比较。
+    四舍五入会使分项相加与合计差 0.1，不逐表加注。</div>
+</header>
+
+<nav class="toc">
+  <a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a>
+  <a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a>
+  <a href="#s7">七、操作与风险</a>
+</nav>
+
+<!-- ============ s1 投资结论 ============ -->
+<h2 id="s1">一、投资结论<span class="lead">评级、估值锚点、买入理由</span></h2>
+
+<div class="vc">
+  <span class="tag">买入</span>
+  <h4>剥掉净现金和投资组合后，主业只有 10.6 倍市盈率，接近五年区间下沿，而主业本身在加速</h4>
+  <div class="why">现价 HK$439.80 对应市值 34,220.2 亿元，名义市盈率 14.5 倍。市值里有 581.9 亿净现金和
+    8,751.0 亿投资组合，两项合计占市值 27.3%；扣掉之后的主业企业价值 24,887.3 亿元，对应 TTM 归母净利
+    2,355.1 亿元是 <b>10.6 倍</b>。五年里这个口径的区间是 9.4–16.8 倍，FY2025 年末在 16.8 倍。
+    同期主业没有走弱：1H26 收入 4,012.4 亿元同比 +10.1%，经营利润 +14.4%，毛利率 57.2% 是六期最高，
+    营销服务收入 +20.9%。两个主赛道的份额都在提升——本土游戏从 FY2021 的 43.4% 升到 FY2025 的 46.8%，
+    互联网广告从 16.3% 升到 20.0%。<br/>
+    <b>代价写在现金流上：</b>最近十二个月资本开支 1,375.4 亿元同比增长 57.2%，
+    真实自由现金流倒退 27.4% 至 1,235.2 亿元，派息加回购的覆盖倍数从 1.54 倍降到 1.20 倍。
+    这笔投入是行业性的——阿里同期单季资本开支同比 +75%、自由现金流净流出 446.7 亿元，
+    腾讯的缺口只有它的 31%。</div>
+  <div class="zone">参考买入区间：<b>HK$400–440</b>　对应主业市盈率 9.3–10.6 倍。现价已在区间上沿，
+    宜分批建仓；跌破 HK$420（主业市盈率 9.9 倍）加仓。</div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="l">名义市盈率</div><div class="v">14.5x</div><div class="n">市值 ÷ TTM 归母净利</div></div>
+  <div class="kpi"><div class="l">真实市盈率</div><div class="v u">14.3x</div><div class="n">扣净现金后</div></div>
+  <div class="kpi"><div class="l">主业市盈率</div><div class="v g">10.6x</div><div class="n">再扣投资组合后</div></div>
+  <div class="kpi"><div class="l">市净率</div><div class="v">3.01x</div><div class="n">1H26 归母权益</div></div>
+  <div class="kpi"><div class="l">派息覆盖倍数</div><div class="v w">2.97x</div><div class="n">最近 12 个月真实自由现金流口径</div></div>
+  <div class="kpi"><div class="l">ROE</div><div class="v">19.5%</div><div class="n">FY2025</div></div>
+</div>
+
+<div class="card">
+  <h3>核心指标五年趋势 — 七项指标统一归一化到 FY2021 = 100</h3>
+  <p class="wfhint">全部序列换算成指数、<b>取消右轴</b>，原值在 tooltip 里。虚线为市盈率与市净率。
+    全部为正值，故用对数刻度——等距离即等涨跌幅，斜率才可比。
+    末列<b>「现价·TTM」</b>指股价与市盈率、市净率取 2026-09-28，流量指标取最近十二个月。</p>
+  <div class="cw xl"><canvas id="cCore"></canvas></div>
+  <div class="note">两条线的分叉是本报告的出发点：Non-IFRS 归母净利五年翻了 1.2 倍，而 IFRS 归母净利五年原地不动。
+    差别全在投资损益——FY2021 的 IFRS 净利里有大额投资收益，FY2023 又反过来被投资减值拖走一半。
+    <b>用 IFRS 净利算市盈率，在不同年份会得出相反结论</b>，所以本报告的估值判断以经营口径为主、IFRS 口径为校验。<br/>
+    第二个分叉是股价与经营的背离：收入指数 140.8、Non-IFRS 净利指数 219.4、每股股息指数 331.3，
+    而股价指数只有 104.4、市净率指数 73.4——五年里公司赚钱能力翻倍，市场给的倍数反而压到了最低。</div>
+</div>
+
+<!-- ============ s2 估值 ============ -->
+<h2 id="s2">二、估值<span class="lead">三口径市盈率、资产负债表拆解、五年估值区间与指标总表</span></h2>
+
+<h3 class="sub2" id="s2-1">2.1　三个口径的市盈率</h3>
+<div class="tscroll"><table>
+  <thead><tr><th>口径</th><th>企业价值<span class="uu">亿元</span></th><th>市盈率<span class="uu">倍</span></th><th>算式与说明</th></tr></thead>
+  <tbody>
+    <tr><td>名义市盈率</td><td>34,220.2</td><td>14.5</td><td>市值 ÷ TTM 归母净利 2,355.1</td></tr>
+    <tr><td>真实市盈率</td><td>33,638.3</td><td>14.3</td><td>（市值 − 净现金 581.9）÷ 2,355.1</td></tr>
+    <tr class="hl"><td>主业市盈率</td><td>24,887.3</td><td>10.6</td><td>（市值 − 净现金 − 投资组合 8,751.0）÷ 2,355.1</td></tr>
+  </tbody>
+</table></div>
+<div class="note"><b>三个口径的差别在于扣掉什么。</b>名义市盈率把资产负债表完全忽略；真实市盈率扣掉净现金，
+  回答「为经营资产付了多少钱」；主业市盈率再扣掉投资组合，回答「为微信、游戏、广告这些自己经营的生意付了多少钱」。<br/>
+  <b>本报告以主业市盈率为主。</b>理由是净现金只占市值 1.7%，扣与不扣把 14.5 倍变成 14.3 倍，没有信息量；
+  而投资组合占 25.6%，扣与不扣是 14.3 倍与 10.6 倍的差别。腾讯是净现金公司，两个修正都是向下修；
+  净负债公司要向上修，不能机械套公式——腾讯 FY2021 与 FY2022 就是净负债，那两年的真实市盈率反而高于名义。<br/>
+  TTM 归母净利 = FY2025 全年 2,248.4 − 1H25 1,034.5 + 1H26 1,141.2 = 2,355.1 亿元。</div>
+
+<h3 class="sub2" id="s2-2">2.2　市值里装的是什么</h3>
+<div class="card">
+  <h3>从总市值拆到主业企业价值</h3>
+  <p class="wfhint">首尾两根柱是<b>绝对金额</b>，中间三根表示<b>扣减量</b>，每根从上一根的终点起跳，因此不落地。
+    算式：34,220.2 − 581.9 − 4,872.0 − 3,879.0 = 24,887.3</p>
+  <div class="cw"><canvas id="cEv"></canvas></div>
+  <div class="note">净现金按腾讯管理层讨论口径计算：现金及等价物 2,069.3 ＋ 定期存款及其他 3,042.2
+    − 借款 2,989.4 − 应付票据 1,540.2 = 581.9 亿元（2026-06-30）。<br/>
+    <b>腾讯不是控股平台。</b>扣掉的 8,751.0 亿投资组合之外，全部 7,517.7 亿元收入（FY2025）都来自集团自己直接经营的业务：
+    微信与 QQ 的社交网络、本土与国际游戏、营销服务、支付与云。投资组合不贡献收入，只通过公允值变动和分占联营损益影响利润表与权益。</div>
+</div>
+
+<details class="fold">
+  <summary><b>投资组合不构成套利机会：没有强制收敛机制，而且半年缩水了 27.6%</b></summary>
+  <div class="fb"><div class="note" style="border:none">
+    投资组合由两部分构成：上市投资公允值 4,872.0 亿元（不含合并子公司）、非上市投资账面值 3,879.0 亿元，
+    均为 2026-06-30 数据。三个问题逐条回答：<br/><br/>
+    <b>一是有没有强制收敛机制。</b>没有。腾讯历史上两次用实物分派把持股还给股东——2021 年分派京东股份、
+    2022 年按每 10 股派 1 股分派美团 B 类股份，都以特别中期股息形式进行。这说明路径存在，
+    但两次都是管理层主动决定，既无承诺也无时间表，不能当作可预期的收敛机制。<br/>
+    <b>二是能不能对冲搭成组合。</b>做不了干净的对冲。上市部分持仓分散在多个市场，
+    非上市部分 3,879.0 亿元没有公开市价，无法建立对应的空头腿。只对冲上市那一半，
+    剩下的非上市账面值和主业经营敞口都是裸露的。<br/>
+    <b>三是下行保护在哪。</b>不在投资组合上。上市投资公允值从 FY2025 年末 6,727.0 亿降到 1H26 末 4,872.0 亿，
+    半年跌 27.6%，直接压低归母权益 846.0 亿元（计入其他综合收益），使 1H26 归母权益比 FY2025 年末减少 183.0 亿，
+    尽管半年赚了 1,141.2 亿。<b>扣减项本身在波动，所以主业市盈率 10.6 倍是一个会随投资组合市值移动的读数</b>，
+    不是固定折价。下行保护来自主业现金流，不来自资产市价。
+  </div></div>
+</details>
+
+<h3 class="sub2" id="s2-3">2.3　五年估值区间</h3>
+<div class="grid2">
+  <div class="card"><h3>三口径市盈率</h3><div class="cw"><canvas id="cVal"></canvas></div>
+    <div class="note">主业市盈率在 FY2021 留空：该年年报未按「非上市投资账面值」口径披露，
+      扣减项不完整，算出来的倍数与其余各期不可比，故不猜、不填。</div></div>
+  <div class="card"><h3>市净率</h3><div class="cw"><canvas id="cPb"></canvas></div>
+    <div class="note">1H26 的 3.01 倍是六期最低。分母在扩大而不是缩水——归母权益五年从 8,063.0 亿增到 11,358.5 亿，
+      所以低市净率不是分母被派息掏空造成的。</div></div>
+</div>
+
+<h3 class="sub2" id="s2-4">2.4　五年指标总表</h3>
+<div class="tscroll"><table>
+  <thead><tr><th>指标</th><th>FY2021</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>1H26</th></tr></thead>
+  <tbody>
+    <tr><td>营业收入<span class="uu">亿元</span></td><td>5,601.2</td><td>5,545.5</td><td>6,090.1</td><td>6,602.6</td><td>7,517.7</td><td>4,012.4</td></tr>
+    <tr><td>毛利率<span class="uu">%</span></td><td>43.9</td><td>43.1</td><td>48.1</td><td>52.9</td><td>56.2</td><td>57.2</td></tr>
+    <tr><td>经营利润<span class="uu">亿元</span></td><td>1,246.6</td><td>1,108.3</td><td>1,600.7</td><td>2,081.0</td><td>2,415.6</td><td>1,346.5</td></tr>
+    <tr><td>归母净利<span class="uu">亿元</span></td><td>2,248.2</td><td>1,882.4</td><td>1,152.2</td><td>1,940.7</td><td>2,248.4</td><td>1,141.2</td></tr>
+    <tr class="hl"><td>Non-IFRS 归母净利<span class="uu">亿元</span></td><td>1,237.9</td><td>1,156.5</td><td>1,576.9</td><td>2,227.0</td><td>2,596.3</td><td>1,363.2</td></tr>
+    <tr><td>每股基本盈利<span class="uu">元</span></td><td>23.597</td><td>19.757</td><td>12.186</td><td>20.938</td><td>24.749</td><td>12.639</td></tr>
+    <tr><td>每股股息<span class="uu">HK$</span></td><td>1.60</td><td>2.40</td><td>3.40</td><td>4.50</td><td>5.30</td><td>0.00</td></tr>
+    <tr><td>经营活动现金流<span class="uu">亿元</span></td><td>1,751.9</td><td>1,460.9</td><td>2,219.6</td><td>2,585.2</td><td>3,030.5</td><td>1,540.6</td></tr>
+    <tr><td>资本开支<span class="uu">亿元</span></td><td>293.0</td><td>226.8</td><td>210.1</td><td>629.3</td><td>874.8</td><td>956.1</td></tr>
+    <tr class="hl"><td>真实自由现金流<span class="uu">亿元</span></td><td>1,027.8</td><td>804.6</td><td>1,567.8</td><td>1,504.1</td><td>1,702.1</td><td>368.5</td></tr>
+    <tr><td>派息覆盖倍数<span class="uu">倍</span></td><td>8.22</td><td>6.21</td><td>7.47</td><td>5.21</td><td>4.53</td><td>0.89</td></tr>
+    <tr><td>净现金<span class="uu">亿元</span></td><td class="neg">−202.4</td><td class="neg">−148.3</td><td>547.4</td><td>768.0</td><td>1,071.5</td><td>581.9</td></tr>
+    <tr><td>上市投资公允值<span class="uu">亿元</span></td><td>9,828.4</td><td>5,851.1</td><td>5,507.0</td><td>5,698.0</td><td>6,727.0</td><td>4,872.0</td></tr>
+    <tr><td>非上市投资账面值<span class="uu">亿元</span></td><td>未披露</td><td>3,334.0</td><td>3,373.0</td><td>3,356.0</td><td>3,631.0</td><td>3,879.0</td></tr>
+    <tr><td>归母权益<span class="uu">亿元</span></td><td>8,063.0</td><td>7,213.9</td><td>8,085.9</td><td>9,735.5</td><td>11,541.5</td><td>11,358.5</td></tr>
+    <tr><td>ROE<span class="uu">%</span></td><td>27.9</td><td>26.1</td><td>14.2</td><td>19.9</td><td>19.5</td><td>20.1</td></tr>
+    <tr><td>微信及 WeChat 合并月活<span class="uu">百万</span></td><td>1,268</td><td>1,313</td><td>1,343</td><td>1,385</td><td>1,418</td><td>1,439</td></tr>
+    <tr><td>单月活年收入<span class="uu">元</span></td><td>441.7</td><td>422.4</td><td>453.5</td><td>476.7</td><td>530.2</td><td>548.0</td></tr>
+    <tr><td>期末股价<span class="uu">HK$</span></td><td>421.10</td><td>317.23</td><td>293.60</td><td>419.80</td><td>599.00</td><td>439.80</td></tr>
+    <tr><td>已发行股本<span class="uu">亿股</span></td><td>96.08</td><td>95.69</td><td>94.83</td><td>92.25</td><td>91.20</td><td>90.92</td></tr>
+    <tr><td>名义市盈率<span class="uu">倍</span></td><td>14.7</td><td>14.2</td><td>21.7</td><td>18.8</td><td>21.8</td><td>14.5</td></tr>
+    <tr><td>真实市盈率<span class="uu">倍</span></td><td>14.8</td><td>14.3</td><td>21.3</td><td>18.4</td><td>21.4</td><td>14.3</td></tr>
+    <tr class="hl"><td>主业市盈率<span class="uu">倍</span></td><td>未披露</td><td>9.4</td><td>13.6</td><td>13.7</td><td>16.8</td><td>10.6</td></tr>
+    <tr><td>市净率<span class="uu">倍</span></td><td>4.10</td><td>3.71</td><td>3.10</td><td>3.74</td><td>4.26</td><td>3.01</td></tr>
+  </tbody>
+</table></div>
+<div class="note">单位跟着行标签走，不写在表头——表里混着金额、报价货币、百分比、倍数和用户数。
+  末列为 2026-06-30 中报；股价、市盈率、市净率三行取 2026-09-28，其中市盈率用 TTM 净利、
+  单月活年收入用 TTM 收入 7,884.8 亿元。<br/>
+  三项勾稽已核对：各分部收入相加等于营业收入（六期差额均为零）；归母权益 ＋ 少数股东权益 ＋ 总负债 = 总资产（六期差额均为零）；
+  归母净利 ÷ 每股基本盈利得到的加权股数与期末已发行股本同量级。</div>
+
+<h3 class="sub2" id="s2-5">2.5　最近十二个月口径</h3>
+<div class="note" style="border-top:none;margin-top:0"><b>绝对值流量指标的图表一律用这一列，不用 1H26 半年数。</b>
+  半年数与完整财年画在同一条折线上，末端会陡降一半，读者会当成业务萎缩。
+  最近十二个月 ＝ FY2025 全年 − 1H25 + 1H26，与前五列同为十二个月口径，可直接比高低。
+  资产负债表科目与用户数没有这个问题，仍取 2026-06-30 时点值。</div>
+<div class="tscroll"><table>
+  <thead><tr><th>最近十二个月<span class="uu">2025-07 至 2026-06</span></th><th>金额</th><th>FY2025 全年</th><th>变化</th></tr></thead>
+  <tbody>
+    <tr class="hl"><td>营业收入<span class="uu">亿元</span></td><td>7,884.8</td><td>7,517.7</td><td class="pos">+4.9%</td></tr>
+    <tr><td>增值服务<span class="uu">亿元</span></td><td>3,803.0</td><td>3,692.8</td><td class="pos">+3.0%</td></tr>
+    <tr><td>　游戏<span class="uu">亿元</span></td><td>2,530.4</td><td>2,415.8</td><td class="pos">+4.7%</td></tr>
+    <tr><td>　社交网络<span class="uu">亿元</span></td><td>1,272.6</td><td>1,277.0</td><td class="neg">−0.3%</td></tr>
+    <tr><td>营销服务<span class="uu">亿元</span></td><td>1,590.9</td><td>1,449.7</td><td class="pos">+9.7%</td></tr>
+    <tr><td>金融科技及企业服务<span class="uu">亿元</span></td><td>2,391.6</td><td>2,294.3</td><td class="pos">+4.2%</td></tr>
+    <tr><td>其他<span class="uu">亿元</span></td><td>99.2</td><td>80.8</td><td class="pos">+22.8%</td></tr>
+    <tr><td>毛利率<span class="uu">%</span></td><td>56.7</td><td>56.2</td><td class="pos">+0.5pp</td></tr>
+    <tr><td>经营利润<span class="uu">亿元</span></td><td>2,585.4</td><td>2,415.6</td><td class="pos">+7.0%</td></tr>
+    <tr><td>归母净利<span class="uu">亿元</span></td><td>2,355.1</td><td>2,248.4</td><td class="pos">+4.7%</td></tr>
+    <tr><td>Non-IFRS 归母净利<span class="uu">亿元</span></td><td>2,715.7</td><td>2,596.3</td><td class="pos">+4.6%</td></tr>
+    <tr><td>经营活动现金流<span class="uu">亿元</span></td><td>3,058.5</td><td>3,030.5</td><td class="pos">+0.9%</td></tr>
+    <tr class="hl"><td>资本开支<span class="uu">亿元</span></td><td>1,375.4</td><td>874.8</td><td class="neg">+57.2%</td></tr>
+    <tr><td>购建无形资产<span class="uu">亿元</span></td><td>250.5</td><td>254.0</td><td>−1.4%</td></tr>
+    <tr><td>租赁本金付款<span class="uu">亿元</span></td><td>71.5</td><td>67.8</td><td>+5.5%</td></tr>
+    <tr><td>已付利息<span class="uu">亿元</span></td><td>125.9</td><td>131.8</td><td>−4.5%</td></tr>
+    <tr class="hl"><td>真实自由现金流<span class="uu">亿元</span></td><td>1,235.2</td><td>1,702.1</td><td class="neg">−27.4%</td></tr>
+    <tr><td>派息现金<span class="uu">亿元</span></td><td>415.9</td><td>375.4</td><td>+10.8%</td></tr>
+    <tr><td>回购金额<span class="uu">亿元</span></td><td>610.4</td><td>733.1</td><td>−16.7%</td></tr>
+    <tr><td>派息覆盖倍数<span class="uu">倍</span></td><td>2.97</td><td>4.53</td><td class="neg">−34.4%</td></tr>
+    <tr class="hl"><td>派息加回购覆盖倍数<span class="uu">倍</span></td><td>1.20</td><td>1.54</td><td class="neg">−22.1%</td></tr>
+    <tr><td>资本开支占经营活动现金流<span class="uu">%</span></td><td>45.0</td><td>28.9</td><td class="neg">+16.1pp</td></tr>
+    <tr><td>ROE<span class="uu">%</span></td><td>20.7</td><td>19.5</td><td class="pos">+1.2pp</td></tr>
+  </tbody>
+</table></div>
+<div class="note">「变化」列是最近十二个月对 FY2025 全年的变动，两列口径一致。
+  ROE 的分母用 2026-06-30 归母权益 11,358.5 亿元。
+  <b>这张表是全部绝对值流量图表的数据来源</b>，正文引用的每个十二个月口径数字都能在这里找到同源。</div>
+
+<!-- ============ s3 生意结构 ============ -->
+<h2 id="s3">三、生意结构<span class="lead">收入和利润分别来自哪里、用户基数、护城河</span></h2>
+
+<h3 class="sub2" id="s3-1">3.1　分业务</h3>
+<div class="grid2">
+  <div class="card"><h3>分业务收入</h3><div class="cw"><canvas id="cSeg"></canvas></div></div>
+  <div class="card"><h3>分业务收入占比</h3><div class="cw"><canvas id="cSegPct"></canvas></div></div>
+</div>
+<div class="note">构成用「绝对值＋占比」两张并排折线，不用饼图——饼图只给一个静态切面，看不出五年演变。
+  占比分母 ＝ 当年各分项之和，合计恒为 100%。<br/>
+  <b>口径变化已核对。</b>「网络广告」在 FY2024 年报起改称「营销服务」。FY2024 年报列示的 FY2023 营销服务收入 1,014.8 亿元，
+  与 FY2023 年报列示的网络广告收入 1,014.8 亿元完全相同，是纯改名，数字未变，五年序列可直接连用。<br/>
+  这里用的是<b>对外收入</b>：即该分部卖给集团外部客户的收入，已扣除卖给集团内其他分部的部分。
+  各分部对外收入之和等于合并利润表的营业收入；用「总分部收入」相加会因分部间互相卖货而重复计算。<br/>
+  <b>三个分部的方向不同。</b>营销服务占比五年从 15.8% 升到 20.2%，是唯一持续上升的；
+  金融科技及企业服务 FY2023 见顶 33.5% 后回落到 30.3%；增值服务从 52.1% 降到 48.2%，但绝对值一直在涨。
+  收入增量的结构决定了毛利率：营销服务的边际成本远低于支付与云，它的占比上升正是毛利率从 43.9% 走到 57.2% 的主要来源。</div>
+
+<h3 class="sub2" id="s3-2">3.2　增值服务内部：游戏与社交网络</h3>
+<div class="grid2">
+  <div class="card"><h3>增值服务拆分</h3><div class="cw"><canvas id="cVas"></canvas></div></div>
+  <div class="card"><h3>增值服务拆分占比</h3><div class="cw"><canvas id="cVasPct"></canvas></div></div>
+</div>
+<div class="tscroll"><table>
+  <thead><tr><th>增值服务细分</th><th>FY2021</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>1H26</th></tr></thead>
+  <tbody>
+    <tr><td>本土市场游戏<span class="uu">亿元</span></td><td>1,288</td><td>1,239</td><td>1,267</td><td>1,397</td><td>1,642</td><td>未拆分</td></tr>
+    <tr><td>国际市场游戏<span class="uu">亿元</span></td><td>455</td><td>468</td><td>532</td><td>580</td><td>774</td><td>未拆分</td></tr>
+    <tr class="hl"><td>游戏合计<span class="uu">亿元</span></td><td>1,742.7</td><td>1,706.7</td><td>1,798.8</td><td>1,976.7</td><td>2,415.8</td><td>1,301.2</td></tr>
+    <tr><td>社交网络<span class="uu">亿元</span></td><td>1,173.0</td><td>1,169.0</td><td>1,185.0</td><td>1,215.0</td><td>1,277.0</td><td>644.1</td></tr>
+    <tr><td>增值服务合计<span class="uu">亿元</span></td><td>2,915.7</td><td>2,875.7</td><td>2,983.8</td><td>3,191.7</td><td>3,692.8</td><td>1,945.2</td></tr>
+  </tbody>
+</table></div>
+<div class="note">本土与国际游戏两行来自各年年报的管理层讨论，相加等于游戏合计，游戏合计加社交网络等于增值服务合计，六期全部吻合。
+  <b>1H26 中报只披露游戏合计与社交网络，不拆本土与国际</b>（只在单季评论里给了 2026 年第二季度的本土 473 亿、国际 186 亿），
+  因此前两行在 1H26 标「未拆分」而不是留空。<br/>
+  <b>国际游戏是五年里增长最快的一块</b>：从 455 亿涨到 774 亿，占游戏收入的比重从 26.1% 升到 32.0%，
+  FY2025 全年收入超过 100 亿美元。社交网络五年只从 1,173.0 亿走到 1,277.0 亿，最近十二个月回落到 1,272.6 亿
+  （1H26 半年同比 −0.7%），是增值服务里唯一停滞的部分。</div>
+
+<h3 class="sub2" id="s3-3">3.3　分地区</h3>
+<div class="grid2">
+  <div class="card"><h3>分地区收入</h3><div class="cw"><canvas id="cGeo"></canvas></div></div>
+  <div class="card"><h3>分地区收入占比</h3><div class="cw"><canvas id="cGeoPct"></canvas></div></div>
+</div>
+<div class="note">年报只按「中国大陆」与「其他」两分，不再细分到国家，所以这里也只能两分。
+  1H26 中报不披露分地区收入，故本组图止于 FY2025。<br/>
+  海外收入五年从 464.3 亿涨到 896.5 亿（+93.1%），中国大陆同期 +28.9%；海外占比从 8.3% 升到 11.9%。
+  这条曲线与国际游戏收入的走势一致，说明海外增量主要来自游戏，而不是广告或云。</div>
+
+<h3 class="sub2" id="s3-4">3.4　用户基数与利润率</h3>
+<div class="grid2">
+  <div class="card"><h3>微信及 WeChat 合并月活</h3><div class="cw"><canvas id="cMau"></canvas></div></div>
+  <div class="card"><h3>单月活年收入</h3><div class="cw"><canvas id="cArpu"></canvas></div></div>
+</div>
+<div class="card" style="margin-top:18px"><h3>毛利率与经营利润率</h3><div class="cw"><canvas id="cMgn"></canvas></div>
+  <div class="note">月活五年只增长 13.5%（12.68 亿 → 14.39 亿），已经接近中国网民总数的上限，
+    所以增长不可能再来自用户数。单月活年收入同期从 441.7 元提到 548.0 元（+24.1%，末值为最近十二个月收入除以 2026-06-30 月活），
+    这是五年增长的主要来源。<b>毛利率提升 13.3 个百分点、经营利润率提升 11.3 个百分点，
+    都发生在用户数几乎不动的五年里</b>——变现效率而不是用户扩张在驱动利润。<br/>
+    QQ 移动端月活是反向的：1H26 为 5.20 亿，同比 −2%。集团的用户基本盘集中在微信这一个入口上。</div>
+</div>
+
+<h3 class="sub2" id="s3-5">3.5　未披露的拆解维度</h3>
+<div class="note" style="border-top:none;margin-top:0">逐条检查披露后，以下维度没有数据，不做推测：
+  <b>客群分层</b>（年龄、城市层级、付费档位）各期均不披露；
+  <b>渠道</b>（应用商店分发与自有渠道的比例）不披露，只在评论里提到渠道分成成本下降；
+  <b>金融科技及企业服务的内部拆分</b>（支付、理财、云各自多少）从未给过金额，只给定性描述；
+  <b>分部经营利润</b>只披露集团合计，不按分部披露，所以无法算出各业务的利润贡献率。
+  最后一项限制最实质：本报告能说清收入来自哪里，<b>说不清利润来自哪里</b>。</div>
+
+<h3 class="sub2" id="s3-6">3.6　护城河</h3>
+<div class="grid2">
+  <div class="card"><h3>护城河五维</h3><div class="cw"><canvas id="cMoat"></canvas></div></div>
+  <div class="card">
+    <h4>宽，且在变宽</h4>
+    <div class="note" style="border:none;padding:0;margin:0">
+      <b>用户网络效应 5 分。</b>微信合并月活 14.39 亿，社交关系链无法迁移，五年里没有任何竞品动摇过这个基数。<br/>
+      <b>转换成本 4 分。</b>支付、小程序、公众号都挂在同一套身份体系上，换平台要放弃的不止聊天记录。
+      扣 1 分是因为支付侧存在成熟替代品，用户可以并行使用。<br/>
+      <b>内容与 IP 4 分。</b>常青游戏（王者荣耀、和平精英、无畏契约）叠加 Supercell 与 PUBG MOBILE，
+      国际游戏收入五年 +70.1%。扣 1 分是因为新品成败仍有波动，FY2023 本土游戏只增长 2.3%。<br/>
+      <b>定价权 4 分。</b>毛利率五年从 43.9% 提到 57.2%，在收入同时增长 34.2% 的情况下实现，不是靠缩减投入换来的。<br/>
+      <b>成本优势 3 分。</b>这是唯一在变弱的一维：资本开支占经营现金流的比重从 FY2023 的 9.5% 升到 1H26 的 62.1%，
+      算力投入尚未转化为规模效应。评分依据是可验证的数据，不是定性印象。</div>
+  </div>
+</div>
+
+<!-- ============ s4 行业现状 ============ -->
+<h2 id="s4">四、行业现状<span class="lead">两个主赛道的总量与增速、AI 资本开支周期、竞对同期表现</span></h2>
+
+<h3 class="sub2" id="s4-1">4.1　赛道总量</h3>
+<div class="card"><h3>国内游戏市场与中国互联网广告市场规模</h3><div class="cw"><canvas id="cInd"></canvas></div>
+  <div class="note">国内游戏市场实际销售收入来自中国音数协游戏工委《中国游戏产业报告》：
+    2,965.1 → 2,658.8 → 3,029.6 → 3,257.8 → 3,507.9 亿元，增速 +6.40%、−10.33%、+13.95%、+7.53%、+7.68%。
+    中国互联网广告市场规模来自中关村互动营销实验室《中国互联网广告数据报告》：
+    5,435 → 5,088 → 5,732 → 6,509 → 7,257 亿元，增速 +9.32%、−6.38%、+12.66%、+13.55%、+11.50%。<br/>
+    <b>两个赛道都在 FY2022 见底、之后修复，但修复后的增速不同。</b>游戏赛道连续两年停在 7.5% 上下，
+    广告赛道仍在 11.5%。这解释了腾讯内部的结构变化：营销服务是占比唯一持续上升的分部，
+    因为它所在的赛道本身更快。<br/>
+    游戏赛道 FY2022 的 −10.33% 对应版号发放收紧，当年国产网络游戏版号 468 个，比上年少 31%；
+    FY2024 恢复到 1,306 个。政策是这个赛道最直接的变量，且方向已经转向宽松。</div>
+</div>
+
+<h3 class="sub2" id="s4-2">4.2　AI 资本开支周期</h3>
+<div class="tscroll"><table>
+  <thead><tr><th>公司</th><th>期间</th><th>资本开支<span class="uu">亿元</span></th><th>同比</th><th>经营活动现金流<span class="uu">亿元</span></th><th>自由现金流<span class="uu">亿元</span></th></tr></thead>
+  <tbody>
+    <tr class="hl"><td>腾讯控股</td><td>2026 年第二季度</td><td>593.0</td><td>—</td><td>527.0</td><td class="neg">−138.0</td></tr>
+    <tr><td>阿里巴巴</td><td>2026 年第二季度</td><td>676.8</td><td class="neg">+75%</td><td>229.5</td><td class="neg">−446.7</td></tr>
+    <tr><td>腾讯控股</td><td>1H26 六个月</td><td>956.1</td><td class="neg">+109.9%</td><td>1,540.6</td><td>368.5</td></tr>
+    <tr><td>腾讯控股</td><td>最近十二个月</td><td>1,375.4</td><td class="neg">+57.2%</td><td>3,058.5</td><td>1,235.2</td></tr>
+  </tbody>
+</table></div>
+<div class="note">两家都在同一个 AI 资本开支周期里，<b>但缓冲垫厚度差一个量级</b>。
+  阿里 2026 年第二季度资本开支 676.8 亿元同比 +75%，而当季经营活动现金流只有 229.5 亿元，
+  自由现金流净流出 446.7 亿元，是上年同期 188.2 亿流出的 2.4 倍；它公布的三年 3,800 亿投资计划已投入约 1,900 亿。
+  腾讯同季资本开支 593.0 亿元、经营活动现金流 527.0 亿元，自由现金流 −138.0 亿元，缺口只有阿里的 31%；
+  拉到十二个月口径腾讯的真实自由现金流仍有 1,235.2 亿元。<br/>
+  <b>所以「自由现金流转负」这件事是赛道属性，不是腾讯单独出的问题</b>——这一点改变的是风险的性质：
+  它是行业竞争必须付的入场费，而不是公司经营失灵的信号。腾讯自报口径另给了一个参照：
+  剔除算力采购预付款后，2026 年第二季度自由现金流本应为正的 376 亿元。<br/>
+  两行季度数与一行半年数分开列示，口径不同不可直接相除。阿里财年在 3 月结束，
+  只有自然年第二季度这一段与腾讯可比，故不并入下面的半年对照。</div>
+
+<h3 class="sub2" id="s4-3">4.3　竞对同期表现</h3>
+<div class="grid2">
+  <div class="card"><h3>1H26 收入同比</h3><div class="cw"><canvas id="cPeer"></canvas></div></div>
+  <div class="card"><h3>1H26 归母净利同比</h3><div class="cw"><canvas id="cPeerP"></canvas></div></div>
+</div>
+<div class="tscroll" style="margin-top:18px"><table>
+  <thead><tr><th>1H26 六个月</th><th>收入<span class="uu">亿元</span></th><th>收入同比</th><th>毛利率<span class="uu">%</span></th><th>归母净利<span class="uu">亿元</span></th><th>净利同比</th></tr></thead>
+  <tbody>
+    <tr class="hl"><td>腾讯控股</td><td>4,012.4</td><td class="pos">+10.1%</td><td>57.2</td><td>1,141.2</td><td class="pos">+10.3%</td></tr>
+    <tr><td>网易</td><td>607.0</td><td class="pos">+7.0%</td><td>69.9</td><td>177.0</td><td class="neg">−6.3%</td></tr>
+    <tr><td>快手科技</td><td>692.5</td><td class="pos">+2.4%</td><td>51.4</td><td>60.6</td><td class="neg">−32.0%</td></tr>
+  </tbody>
+</table></div>
+<div class="note"><b>三家里只有腾讯同时做到收入加速和利润增长。</b>网易收入 +7.0% 但归母净利 −6.3%，
+  它自己归因于投资亏损；快手收入 +2.4%、毛利率从 55.1% 掉到 51.4%、归母净利 −32.0%。
+  网易的毛利率 69.9% 仍高于腾讯，因为它几乎是纯游戏公司，不承担支付与云的成本。<br/>
+  <b>分赛道对照更能说明份额在往哪边移动。</b>游戏方面，腾讯 1H26 游戏收入 1,301.2 亿元同比 +9.7%，
+  网易游戏及相关增值服务 507.4 亿元同比 +8.3%，两家接近，都跑在赛道 7.68% 的增速之上。
+  广告方面差距是量级的：2026 年第二季度腾讯营销服务收入 435.7 亿元同比 +21.8%，
+  快手线上营销服务收入 206.4 亿元同比 +4.4%。<b>广告赛道整体增速 11.5%，腾讯跑出近两倍、快手只有零头，
+  份额转移正在发生</b>，这与 <a class="xr" href="#s5">五、行业地位</a> 里广告份额五年上升 3.7 个百分点相互印证。</div>
+
+<!-- ============ s5 行业地位 ============ -->
+<h2 id="s5">五、行业地位<span class="lead">在游戏与互联网广告两个市场分别占多少份额</span></h2>
+
+<div class="flag ok"><b class="ft">本节总结</b>
+  腾讯在两个主赛道的份额五年都在提升：本土游戏从 43.4% 升到 46.8%，创五年新高；
+  互联网广告从 16.3% 升到 20.0%，五年连续每年递增。两个市场的分母彼此独立，不能加总。
+  份额能做趋势，所以一律用折线，本节不用扇形图。</div>
+
+<h3 class="sub2" id="s5-1">5.1　本土游戏市场份额</h3>
+<div class="card"><h3>本土游戏市场份额</h3><div class="cw"><canvas id="cShrG"></canvas></div>
+  <div class="note">分子 ÷ 分母逐年可验算：1,288 ÷ 2,965.1 = 43.4%、1,239 ÷ 2,658.8 = 46.6%、
+    1,267 ÷ 3,029.6 = 41.8%、1,397 ÷ 3,257.8 = 42.9%、1,642 ÷ 3,507.9 = 46.8%。
+    分子是腾讯年报披露的本土市场游戏收入，分母是游戏工委的国内游戏市场实际销售收入，单位均为人民币亿元。<br/>
+    <b>份额趋势比份额切面重要。</b>只看 FY2025 的 46.8% 会以为地位稳固且单调；
+    拉成五年才看出 FY2023 掉到 41.8% 的低点——那一年赛道回升 13.95%，而腾讯本土游戏只增长 2.3%，
+    是五年里唯一一次明显跑输大盘。FY2024 与 FY2025 连续两年反超，靠的是三角洲行动等新品与常青游戏的运营改造。
+    FY2022 份额升到 46.6% 是分母塌陷造成的（赛道 −10.33%，腾讯 −3.8%），不是竞争力提升。</div>
+</div>
+
+<h3 class="sub2" id="s5-2">5.2　中国互联网广告市场份额</h3>
+<div class="card"><h3>中国互联网广告市场份额</h3><div class="cw"><canvas id="cShrA"></canvas></div>
+  <div class="note">分子 ÷ 分母逐年可验算：886.7 ÷ 5,435 = 16.3%、827.3 ÷ 5,088 = 16.3%、
+    1,014.8 ÷ 5,732 = 17.7%、1,213.7 ÷ 6,509 = 18.6%、1,449.7 ÷ 7,257 = 20.0%。
+    分子是腾讯营销服务收入，分母是中关村互动营销实验室的中国互联网广告市场规模。<br/>
+    <b>这是全篇最干净的一条上升曲线</b>：五年每一年都比上一年高，累计 3.7 个百分点，
+    且 FY2022 赛道负增长那年腾讯份额没有下滑。增量来自视频号广告的加载率提升——
+    它把一个已有 14 亿用户的入口变成新的广告位，不需要先获取用户。<br/>
+    同期赛道集中度也在上升：前十大平台份额从 2021 年的 94.85% 升到 2025 年的 96.6%。
+    腾讯的份额提升发生在一个本来就在集中的市场里，所以它抢的是中小平台而不是头部同业的份额。</div>
+</div>
+
+<details class="fold">
+  <summary><b>两个赛道的分母都来自行业协会而不是国家统计局，分子口径也略偏大</b></summary>
+  <div class="fb"><div class="note" style="border:none">
+    <b>分母的来源与限制。</b>国家层面没有「互联网广告市场规模」和「游戏市场销售收入」的单独统计，
+    因此两个分母都取自行业口径：游戏用中国音数协游戏工委（伽马数据提供数据服务）的《中国游戏产业报告》，
+    广告用中关村互动营销实验室联合秒针营销科学院的《中国互联网广告数据报告》。
+    两者都是连续发布多年的同一套方法，年度之间可比，这是做趋势的前提；
+    但与国家统计口径之间没有对照关系，所以本节的份额绝对水平有系统性误差，<b>趋势可信、水位只能当参考</b>。<br/><br/>
+    市场监管总局《中国广告业发展指数报告》给的 2025 年全国广告业务收入是 20,502.1 亿元，
+    覆盖全媒体而非互联网，口径大得多，不能用作本节分母。<br/><br/>
+    <b>分子的口径偏差。</b>两个分子都会让份额略微高估：<br/>
+    一是腾讯「营销服务」收入含海外部分，而分母只统计中国市场。年报不拆分营销服务的地区构成，
+    无法剥离；从分地区收入看海外合计只占集团 11.9%，且主要是游戏，所以这项偏差量级不大。<br/>
+    二是游戏工委的「实际销售收入」是市场零售口径，腾讯的「本土市场游戏收入」是公司确认收入口径，
+    两者在渠道分成的处理上不完全等价。业内长期用这一对数字比较，本报告沿用，但不宣称它们精确可比。<br/><br/>
+    <b>为什么份额趋势止于 FY2025。</b>2026 年上半年国内游戏市场实际销售收入 1,884.5 亿元已公布，
+    但腾讯 1H26 中报不拆游戏的本土与国际，分子取不到同口径值，所以不做 1H26 的份额点，
+    也不用第二季度的单季数字硬凑半年。广告份额同理：分母的半年数未按同一套方法发布。
+  </div></div>
+</details>
+
+<!-- ============ s6 质量与现金 ============ -->
+<h2 id="s6">六、质量与现金<span class="lead">ROE 的分母来源、真实自由现金流、派息覆盖倍数</span></h2>
+
+<h3 class="sub2" id="s6-1">6.1　ROE 与它的分母</h3>
+<div class="grid2">
+  <div class="card"><h3>ROE</h3><div class="cw"><canvas id="cRoe"></canvas></div></div>
+  <div class="card"><h3>归母权益</h3><div class="cw"><canvas id="cEq"></canvas></div></div>
+</div>
+<div class="note"><b>这个 ROE 建立在扩大的分母上，不是缩小的分母上。</b>归母权益五年从 8,063.0 亿增到 11,541.5 亿（+43.1%），
+  ROE 同期从 27.9% 降到 19.5%。分母扩张造成的 ROE 下行与盈利恶化造成的 ROE 下行含义完全不同，
+  前者不影响估值，后者影响。用分母缩水制造的高 ROE 不值高市净率，腾讯是反面情形：
+  ROE 在降、分母在涨、市净率 3.01 倍是六期最低。<br/>
+  FY2023 的 14.2% 是异常点，由投资减值压低 IFRS 净利造成，不反映经营。末值 20.7% 用最近十二个月归母净利
+  2,355.1 亿元除以 2026-06-30 归母权益，不是把半年数乘二得来的。
+  归母权益图的末列是 2026-06-30 时点值，与 ROE 图的十二个月口径不同，两图不要横向对读单点。<br/>
+  <b>1H26 归母权益比 FY2025 年末减少 183.0 亿</b>，尽管半年赚了 1,141.2 亿——差额来自其他储备减少 846.0 亿
+  （上市投资公允值下跌计入其他综合收益），加上派息 415.9 亿与回购 222.6 亿。
+  留存收益本身是增加的（+563.3 亿）。</div>
+
+<h3 class="sub2" id="s6-2">6.2　真实自由现金流</h3>
+<div class="card">
+  <h3>最近十二个月自由现金流瀑布</h3>
+  <p class="wfhint">首尾两根柱是<b>绝对金额</b>，中间四根表示<b>扣减量</b>，每根从上一根的终点起跳，因此不落地。
+    IFRS 16 下<b>租赁本金付款计入筹资活动，不减少经营现金流</b>，只算「经营现金流 − 资本开支」会系统性高估。
+    算式：3,058.5 − 1,375.4 − 250.5 − 71.5 − 125.9 = 1,235.2</p>
+  <div class="cw"><canvas id="cWfFcf"></canvas></div>
+  <div class="note"><b>真实自由现金流 = 经营活动现金流 − 资本开支 − 购建无形资产 − 租赁本金付款 − 已付利息。</b>
+    与常见的「经营现金流 − 资本开支」口径相比，最近十二个月前者是 1,235.2 亿、后者是 1,683.1 亿，<b>高估 36.3%</b>。
+    腾讯的已付利息在筹资活动而非经营活动里（经营活动现金流净额 3,030.5 亿 = 经营产生现金 3,477.5 亿 − 已付所得税 447.0 亿，
+    不含已付利息 131.8 亿），不单独扣就会漏掉。</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <h3>经营现金流、资本开支与真实自由现金流</h3>
+  <div class="cw"><canvas id="cFcf5"></canvas></div>
+  <div class="note">经营活动现金流五年翻了 0.73 倍（1,751.9 → 3,030.5 亿），从未下滑过一年以上；
+    但真实自由现金流在 FY2023 见顶 1,567.8 亿后，FY2024 反而回落到 1,504.1 亿，
+    <b>差别全部来自资本开支从 210.1 亿跳到 629.3 亿</b>。<br/>
+    最近十二个月这个背离拉到了最大：经营活动现金流只增长 0.9%（3,030.5 → 3,058.5 亿），
+    资本开支增长 57.2%（874.8 → 1,375.4 亿），<b>真实自由现金流因此倒退 27.4% 至 1,235.2 亿</b>。
+    单看 1H26 半年，资本开支 956.1 亿一项就超过 FY2025 全年。</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <h3>资本开支占经营活动现金流的比重</h3>
+  <div class="cw"><canvas id="cCapex"></canvas></div>
+  <div class="note">从 FY2023 的 9.5% 升到最近十二个月的 45.0%，是全篇变化最剧烈的一个比率；
+    只看 1H26 半年已经到 62.1%，说明抬升发生在最近两个季度而不是均匀铺开。
+    这个数字决定了自由现金流的方向：只要它停在 60% 以上，经营现金流的增长就无法转化成股东可分配的现金。
+    <b>跟踪它比跟踪净利更有意义</b>，因为净利不受资本开支节奏影响，自由现金流受。</div>
+</div>
+
+<h3 class="sub2" id="s6-3">6.3　派息覆盖倍数</h3>
+<div class="card"><h3>派息与派息加回购的覆盖倍数</h3><div class="cw"><canvas id="cCov"></canvas></div>
+  <div class="note">分母是真实自由现金流，不是「经营现金流 − 资本开支」。
+    <b>只看派息，覆盖倍数从 FY2021 的 8.22 倍降到最近十二个月的 2.97 倍，掉了 64%，但仍有余量。</b>
+    腾讯的股息率只有 0.88%（FY2025 每股 5.30 港元 ÷ 年末股价 599.00），派息不是这只股票的买入理由，
+    所以覆盖倍数在这里的作用是衡量现金流余量，不是支撑股息叙事。<br/>
+    <b>加上回购，余量就很薄了。</b>派息加回购的覆盖倍数 FY2024 是 1.15 倍、FY2025 回到 1.54 倍、
+    最近十二个月 1.20 倍——三年里两次贴近 1.0。腾讯五年回购 2,509.6 亿元，
+    已发行股本从 96.08 亿股减到 90.92 亿股（−5.4%），这是实实在在的每股价值提升，
+    但它消耗的现金已经占到真实自由现金流的 49.4%，派息再占 33.7%，两项合计 83.1%。<br/>
+    <b>这里必须用十二个月口径，半年数会给出错误结论。</b>腾讯不派中期息，末期股息全额在上半年支付，
+    所以 1H26 半年算出来的派息覆盖只有 0.89 倍、派息加回购只有 0.58 倍，看着像已经入不敷出。
+    按十二个月口径分别是 2.97 倍和 1.20 倍，都在 1.0 以上。差别纯粹来自派息的时点分布，不是经营变化。</div>
+</div>
+
+<details class="fold">
+  <summary><b>IFRS 净利五年里两次与经营表现背离，用它算市盈率会在不同年份得出相反结论</b></summary>
+  <div class="fb"><div class="card" style="border:none;padding:0">
+    <div class="cw"><canvas id="cProf"></canvas></div>
+    <div class="note" style="border:none">
+      两个口径的差额就是投资相关损益（公允值变动、减值、分占联营公司损益）与股份支付。
+      <b>FY2021 IFRS 净利 2,248.2 亿比 Non-IFRS 的 1,237.9 亿高出 81.6%</b>，因为当年计入了大额投资收益；
+      <b>FY2023 反了过来</b>，IFRS 1,152.2 亿比 Non-IFRS 的 1,576.9 亿低 26.9%，因为投资减值。
+      同一家公司同一段经营，两个口径一个说净利腰斩、一个说净利增长 36.4%。<br/><br/>
+      用 IFRS 净利算出来的市盈率因此在 FY2021 被压到 14.7 倍、在 FY2023 被推到 21.7 倍，
+      而这两年的经营利润率分别是 22.3% 和 26.3%，方向与市盈率相反。<br/><br/>
+      本报告的处理：<b>估值表里的三个口径都用 IFRS 归母净利做分母</b>，保持与公开可比数据一致、可被读者复核；
+      同时在结论里以 Non-IFRS 与经营利润判断趋势方向。1H26 分占联营公司损益为 −63.7 亿元，
+      上年同期是 +90.5 亿元，这一项的摆动会在 FY2026 继续放大两个口径的差距。
+    </div>
+  </div></div>
+</details>
+
+<!-- ============ s7 操作与风险 ============ -->
+<h2 id="s7">七、操作与风险<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
+
+<h3 class="sub2" id="s7-1">7.1　五年转折点</h3>
+<div class="tl">
+  <div class="ti"><div class="d">FY2021</div><div class="t">上市投资公允值见五年峰值，年末仍是净负债</div>
+    <div class="x">上市投资 9,828.4 亿元为六期最高；净负债 202.4 亿元；分派京东股份作为实物特别股息；
+      IFRS 归母净利 2,248.2 亿元中含大额投资收益，Non-IFRS 仅 1,237.9 亿元。</div></div>
+  <div class="ti crit"><div class="d">FY2022</div><div class="t">收入首次负增长，游戏版号收紧</div>
+    <div class="x">收入 5,545.5 亿元同比 −1.0%，五年唯一一次下滑；国内游戏市场 −10.33%，国产版号 468 个比上年少 31%；
+      分派美团 B 类股份；回购从 21.7 亿提到 293.1 亿元。</div></div>
+  <div class="ti"><div class="d">FY2023</div><div class="t">两个净利口径首次反向，净现金由负转正</div>
+    <div class="x">IFRS 归母净利腰斩至 1,152.2 亿元，Non-IFRS 同期 +36.4% 至 1,576.9 亿元；
+      本土游戏份额掉到五年低点 41.8%；净现金 547.4 亿元，结束连续两年净负债；资本开支占经营现金流仅 9.5%，为六期最低。</div></div>
+  <div class="ti"><div class="d">FY2024</div><div class="t">回购见五年峰值，资本开支开始起跳</div>
+    <div class="x">回购 1,023.3 亿元为六期最高，派息加回购的覆盖倍数降到 1.15 倍；
+      资本开支从 210.1 亿跳到 629.3 亿元（+199.5%）；毛利率 52.9%。</div></div>
+  <div class="ti good"><div class="d">FY2025</div><div class="t">收入与利润率同创新高，股价见五年峰值</div>
+    <div class="x">收入 7,517.7 亿元同比 +13.9%，毛利率 56.2%，Non-IFRS 归母净利 2,596.3 亿元；
+      本土游戏份额回到 46.8% 的五年高点；年末股价 599.00 港元为五年峰值，主业市盈率 16.8 倍。</div></div>
+  <div class="ti crit"><div class="d">1H26</div><div class="t">资本开支半年超上年全年，第二季度自由现金流转负</div>
+    <div class="x">资本开支 956.1 亿元，半年超过 FY2025 全年的 874.8 亿；第二季度自由现金流 −138.0 亿元；
+      净现金从 2026-03-31 的 1,468.6 亿降到 6 月末的 581.9 亿；上市投资公允值从 6,727.0 亿降到 4,872.0 亿；
+      归母权益减少 183.0 亿。同期经营面反向：收入 +10.1%、经营利润 +14.4%、毛利率 57.2% 创新高。</div></div>
+</div>
+
+<h3 class="sub2" id="s7-2">7.2　买入框架</h3>
+<div class="pill"><span>价格条件：主业市盈率回到 10 倍以内</span><span class="s u">HK$420 以下</span></div>
+<div class="pill"><span>价格条件：区间上沿，可分批建仓</span><span class="s u">HK$400–440</span></div>
+<div class="pill"><span>基本面条件：连续两个季度自由现金流转正，且资本开支同比增速回落到 30% 以内</span><span class="s g">更重要</span></div>
+<div class="pill"><span>退出条件：主业市盈率回到 16 倍以上</span><span class="s r">HK$720 以上</span></div>
+<div class="note"><b>基本面条件比价格条件更重要。</b>现价对应的主业市盈率 10.6 倍，只比五年最低的 9.4 倍高 13%，
+  价格上的安全边际已经不多；真正决定这笔投资成败的是资本开支能不能在两年内转化成收入。
+  如果资本开支停在占经营活动现金流 60% 以上的水平而云与 AI 收入不起量，
+  10.6 倍会变成合理估值而不是便宜估值。<br/>
+  价格条件按现价基准换算：市值 ＝ 90.92 亿股 × 股价 × 0.85577，主业企业价值 ＝ 市值 − 581.9 − 8,751.0，
+  再除以 TTM 归母净利 2,355.1 亿元。读者可用同一算式代入任意股价自行复算。</div>
+
+<h3 class="sub2" id="s7-3">7.3　风险</h3>
+<div class="flag"><b class="ft">资本开支挤掉自由现金流</b>
+  最近十二个月资本开支 1,375.4 亿元，同比 FY2025 全年增长 57.2%，而经营活动现金流只增长 0.9%，
+  真实自由现金流因此倒退 27.4% 至 1,235.2 亿元。1H26 半年资本开支 956.1 亿一项就超过 FY2025 全年，
+  占经营活动现金流的 62.1%。若这个比重在下半年维持，下一个十二个月的真实自由现金流会落到 800–900 亿元，
+  低于同期派息加回购的 1,026.4 亿元。<b>这是本报告唯一可能推翻买入结论的风险。</b></div>
+<div class="flag"><b class="ft">扣减项自身在剧烈波动，主业市盈率不是固定折价</b>
+  上市投资公允值半年从 6,727.0 亿降到 4,872.0 亿（−27.6%）。主业市盈率的分子里扣掉了 8,751.0 亿投资组合，
+  这个数字每季都在变：若投资组合再跌 20%（−1,750 亿），同一股价下的主业市盈率会从 10.6 倍升到 11.4 倍，
+  便宜的程度被削掉一部分。</div>
+<div class="flag"><b class="ft">股东回报的余量只剩两成</b>
+  最近十二个月派息 415.9 亿加回购 610.4 亿，合计 1,026.4 亿元，对真实自由现金流 1,235.2 亿元覆盖 1.20 倍，
+  余量 208.8 亿元；FY2024 全年可比口径是 1.15 倍。<b>尚未超过自由现金流，但两成余量经不起资本开支再上一个台阶。</b>
+  继续以这个强度回购就要动用净现金——净现金已从 2026-03-31 的 1,468.6 亿降到 6 月末的 581.9 亿。</div>
+<div class="flag"><b class="ft">联营公司由盈转亏</b>
+  1H26 分占联营公司损益 −63.7 亿元，上年同期 +90.5 亿元，单项摆动 154.2 亿元。
+  这一项不进经营利润但进 IFRS 归母净利，会让名义市盈率的分母失真。</div>
+<div class="flag warn"><b class="ft">游戏赛道的分母在放缓</b>
+  国内游戏市场增速 +13.95%（FY2023）→ +7.53%（FY2024）→ +7.68%（FY2025）。
+  腾讯本土游戏份额已到 46.8% 的五年高点，继续提份额的空间小于前两年，
+  这一块的增长将更依赖赛道本身而不是份额转移。国际游戏和营销服务不受此限制。</div>
+
+<h3 class="sub2" id="s7-4">7.4　跟踪点</h3>
+<div class="flag warn"><b class="ft">2026 年第三季度业绩（约 2026 年 11 月）</b>
+  看两个数：资本开支绝对额是否低于第二季度的 593.0 亿元；自由现金流是否转正。
+  腾讯自报剔除算力采购预付款后第二季度自由现金流本应为 +376 亿元，
+  所以还要看预付款是否继续发生——若预付款消失而自由现金流仍为负，说明是经常性支出而非时点因素。</div>
+<div class="flag warn"><b class="ft">FY2026 年报（约 2027 年 4 月）</b>
+  看末期股息宣派额、全年回购金额，以及两者之和对全年真实自由现金流的覆盖倍数是否跌破 1.0 倍。
+  同时核对本土游戏与国际游戏的全年拆分，以更新 <a class="xr" href="#s5">五、行业地位</a> 里止于 FY2025 的份额趋势。</div>
+<div class="flag warn"><b class="ft">每季：上市投资公允值</b>
+  它是主业市盈率里最大的扣减项，也是波动最大的一项。中报与年报都在管理层讨论里直接给出这个数字，
+  不需要自己估算。</div>
+
+<footer>
+  本报告基于公开披露信息，不构成投资建议。财务数据截至 2026-06-30 中期报告，股价与汇率截至 2026-09-28 收盘，会随市场变化。
+</footer>
+
+</div>
+
+<script>
+const C='#4aa8ff',C2='#7aa2f7',DIM='#8b949e',LINE='#30363d',TXT='#e6edf3';
+const GOOD='#3fb950',WARN='#d29922',BAD='#f85149',GOLD='#ffd93d',PUR='#bc8cff',CY='#39d0d8',PK='#f7768e';
+Chart.defaults.color=DIM;
+Chart.defaults.font.family='-apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.font.size=11;
+Chart.defaults.plugins.legend.labels.boxWidth=12;
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+Chart.defaults.maintainAspectRatio=false;
+
+const grid={grid:{color:LINE,drawBorder:false},ticks:{color:DIM}};
+const gridNo={grid:{display:false},ticks:{color:DIM}};
+const ax=(t)=>({...grid,title:{display:true,text:t,color:DIM}});
+/* tension 必须为 0：样条在 5–6 个点之间会造出不存在的峰谷，份额与覆盖倍数两张图都被它扭曲过 */
+const L=(o)=>Object.assign({tension:0,pointRadius:4,borderWidth:2.5,fill:false},o);
+const Y5=['FY2021','FY2022','FY2023','FY2024','FY2025'],Y6=[...Y5,'1H26'];
+const YQ=[...Y5,'现价·TTM'];
+/* 绝对值流量指标不能把半年数与完整财年画在一条线上——末端陡降会被读成业务萎缩。
+   统一换成最近十二个月 = FY2025 − 1H25 + 1H26，与前五列同为十二个月口径。 */
+const YT=[...Y5,'最近12个月'],YP=[...Y5,'现价'];
+
+/* ---------- 通用趋势图 ---------- */
+function trend(id,labels,ds,unit,digits,opt){
+  const d=digits==null?1:digits;
+  new Chart(document.getElementById(id),{type:'line',
+    data:{labels,datasets:ds.map(x=>L(x))},
+    options:Object.assign({interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:TXT,padding:10}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: `+
+          (c.parsed.y==null?'—':c.parsed.y.toFixed(d))+` ${unit}`}}},
+      scales:{x:gridNo,y:ax(unit)}},opt||{})});
+}
+
+/* ---------- 构成趋势：占比分母＝当年各分项之和 ---------- */
+function mkTrend(id,labels,src,cols,pct,unit,digits){
+  const ks=Object.keys(src), d=digits==null?1:digits, u=unit||'亿元';
+  const sum=labels.map((_,j)=>ks.reduce((a,k)=>a+src[k][j],0));
+  const fmt=v=>v.toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
+  new Chart(document.getElementById(id),{type:'line',
+    data:{labels,datasets:ks.map((k,i)=>L({label:k,borderColor:cols[i],borderWidth:3,
+      data:pct?src[k].map((v,j)=>+(v/sum[j]*100).toFixed(1)):src[k]}))},
+    options:{interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:TXT,padding:12}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+'：'+
+          (pct?c.parsed.y+'%':fmt(c.parsed.y)+' '+u)}}},
+      scales:{x:gridNo,y:{...grid,beginAtZero:true,
+        ticks:{color:DIM,callback:v=>pct?v+'%':v.toLocaleString(undefined,{maximumFractionDigits:0})}}}}});
+}
+
+/* ---------- 基准线：线在数据下层，标签在上层 ---------- */
+function baseline(id,val,txt,side){return{id,
+  beforeDatasetsDraw(c){
+    const ys=c.scales.y; if(!ys) return;
+    const y=ys.getPixelForValue(val),{left,right}=c.chartArea,x=c.ctx;
+    x.save();x.strokeStyle=DIM;x.lineWidth=1;x.setLineDash([3,3]);x.globalAlpha=.6;
+    x.beginPath();x.moveTo(left,y);x.lineTo(right,y);x.stroke();x.restore();},
+  afterDatasetsDraw(c){
+    const ys=c.scales.y; if(!ys) return;
+    const y=ys.getPixelForValue(val),{left,right}=c.chartArea,x=c.ctx;
+    x.save();x.font='500 9.5px -apple-system,"PingFang SC",sans-serif';
+    const w=x.measureText(txt).width;
+    const bx=side==='below'?right-w-8:left+3, by=side==='below'?y+1:y-14;
+    x.fillStyle='#0d1117';x.fillRect(bx,by,w+5,13);
+    x.globalAlpha=.85;x.fillStyle=DIM;x.textAlign='left';x.textBaseline='top';
+    x.fillText(txt,bx+2,by+2);x.restore();}};}
+const base100=baseline('base100',100,'FY2021 基准 = 100','below');
+
+/* ---------- 桥式图：连接线 + 增减标签 ---------- */
+function wfMeta(d){let r=null;return d.map(v=>{
+  if(v[0]===0){r=v[1];return{tot:true,lv:v[1],delta:v[1]};}
+  const s=(v[0]===r)?v[0]:v[1],e=(v[0]===r)?v[1]:v[0];r=e;
+  return{tot:false,lv:e,delta:e-s};});}
+const wfAid={id:'wfAid',afterDatasetsDraw(c,_a,o){
+  const m=c.getDatasetMeta(0),d=c.data.datasets[0].data,M=wfMeta(d),ys=c.scales.y,x=c.ctx;
+  x.save();
+  x.strokeStyle=TXT;x.lineWidth=1.4;x.globalAlpha=.5;
+  x.font='500 9.5px -apple-system,"PingFang SC",sans-serif';x.textBaseline='bottom';
+  for(let i=0;i<d.length-1;i++){
+    const B=d[i+1],lv=M[i].lv;
+    if(lv!==B[0]&&lv!==B[1])continue;
+    const dup=M[i].tot||M[i+1].tot;
+    const a=m.data[i],b=m.data[i+1],yy=ys.getPixelForValue(lv);
+    const x1=a.x+(a.width||0)/2,x2=b.x-(b.width||0)/2;
+    x.beginPath();x.moveTo(x1,yy);x.lineTo(x2,yy);x.stroke();
+    x.globalAlpha=.75;x.fillStyle=DIM;x.textAlign='center';
+    if(!dup) x.fillText(lv.toFixed(1),(x1+x2)/2,yy-3);
+    x.globalAlpha=.5;
+  }
+  x.globalAlpha=1;x.textAlign='center';x.textBaseline='bottom';
+  x.font='600 10.5px -apple-system,"PingFang SC",sans-serif';
+  M.forEach((s,i)=>{const el=m.data[i];
+    x.fillStyle=s.tot?TXT:(s.delta>0?BAD:GOOD);
+    x.fillText((s.tot?'':(s.delta>0?'+':'−'))+o.fmt(Math.abs(s.delta)),el.x,Math.min(el.y,el.base)-4);});
+  x.restore();}};
+const wfTip=u=>({callbacks:{label:c=>{
+  const M=wfMeta(c.chart.data.datasets[0].data)[c.dataIndex];
+  return M.tot?` ${M.delta.toFixed(1)} ${u}`
+   :` 该步 ${M.delta>0?'+':'−'}${Math.abs(M.delta).toFixed(1)} ${u}　→ 累计 ${M.lv.toFixed(1)}`;}}});
+function waterfall(id,labels,data,cols,unit){
+  new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[{data,backgroundColor:cols,borderRadius:3,borderSkipped:false}]},
+    options:{layout:{padding:{top:22}},
+      plugins:{legend:{display:false},tooltip:wfTip(unit),wfAid:{fmt:v=>v.toFixed(0)}},
+      scales:{x:gridNo,y:ax(unit)}},
+    plugins:[wfAid]});
+}
+
+/* ======== s1 核心指标归一化合并趋势 ======== */
+const RAW={'股价':[421.10,317.23,293.60,419.80,599.00,439.80],
+ '营业收入':[5601.2,5545.5,6090.1,6602.6,7517.7,7884.8],
+ '归母净利':[2248.2,1882.4,1152.2,1940.7,2248.4,2355.1],
+ 'Non-IFRS 归母净利':[1237.9,1156.5,1576.9,2227.0,2596.3,2715.7],
+ '每股股息':[1.60,2.40,3.40,4.50,5.30,5.30],
+ '市盈率':[14.7,14.2,21.7,18.8,21.8,14.5],
+ '市净率':[4.10,3.71,3.10,3.74,4.26,3.01]};
+const UNIT={'股价':'HK$','营业收入':'亿元','归母净利':'亿元','Non-IFRS 归母净利':'亿元',
+ '每股股息':'HK$','市盈率':'倍','市净率':'倍'};
+const DEC={'每股股息':2,'市净率':2,'股价':2};
+/* tension 必须为 0：样条在 5–6 个点之间会造出不存在的峰谷 */
+const CORE=v=>Object.assign({tension:0,pointRadius:3.5,borderWidth:2.5,fill:false},v);
+new Chart(document.getElementById('cCore'),{type:'line',
+ data:{labels:YQ,datasets:[
+  CORE({label:'股价（指数）',              data:[100,75.3,69.7,99.7,142.2,104.4],borderColor:C,borderWidth:3.4}),
+  CORE({label:'营业收入（指数）',          data:[100,99.0,108.7,117.9,134.2,140.8],borderColor:CY}),
+  CORE({label:'归母净利（指数）',          data:[100,83.7,51.2,86.3,100.0,104.8],borderColor:GOLD}),
+  CORE({label:'Non-IFRS 归母净利（指数）', data:[100,93.4,127.4,179.9,209.7,219.4],borderColor:GOOD,borderWidth:3.4}),
+  CORE({label:'每股股息（指数）',          data:[100,150.0,212.5,281.3,331.3,331.3],borderColor:PK,borderWidth:3.4}),
+  CORE({label:'市盈率（指数）',            data:[100,96.6,147.6,127.9,148.3,98.6],borderColor:PUR,borderDash:[6,4],borderWidth:2}),
+  CORE({label:'市净率（指数）',            data:[100,90.5,75.6,91.2,103.9,73.4],borderColor:BAD,borderDash:[6,4],borderWidth:2})]},
+ options:{interaction:{mode:'index',intersect:false},
+  plugins:{legend:{labels:{color:TXT,padding:9}},
+   tooltip:{callbacks:{label:c=>{
+     const n=c.dataset.label.replace('（指数）',''),r=RAW[n][c.dataIndex];
+     const d=DEC[n]==null?1:DEC[n];
+     return ` ${n}: ${r.toFixed(d)} ${UNIT[n]}　（指数 ${c.parsed.y}）`;}}}},
+  /* ticks 必须排在 ax() 之后：ax() 自己也带 ticks，Object.assign 后者覆盖前者，
+     写在前面会被吃掉，对数轴就只剩两个刻度标签 */
+  scales:{x:gridNo,y:Object.assign({},ax('指数（FY2021 = 100，对数刻度）'),
+    {type:'logarithmic',min:40,max:400,
+     afterBuildTicks:a=>{a.ticks=[40,60,100,150,220,330].map(v=>({value:v}));},
+     ticks:{color:DIM,autoSkip:false,callback:v=>v}})}},
+ plugins:[base100]});
+
+/* ======== s2 估值 ======== */
+waterfall('cEv',['总市值','− 净现金','− 上市投资','− 非上市投资','主业企业价值'],
+  [[0,34220.2],[33638.3,34220.2],[28766.3,33638.3],[24887.3,28766.3],[0,24887.3]],
+  [C,GOOD,PUR,CY,GOLD],'亿元');
+
+trend('cVal',YP,[
+  {label:'名义市盈率',data:[14.7,14.2,21.7,18.8,21.8,14.5],borderColor:C},
+  {label:'真实市盈率',data:[14.8,14.3,21.3,18.4,21.4,14.3],borderColor:CY},
+  {label:'主业市盈率',data:[null,9.4,13.6,13.7,16.8,10.6],borderColor:GOLD,borderWidth:3.4}
+],'倍',1,{spanGaps:false});
+
+trend('cPb',YP,[{label:'市净率',data:[4.10,3.71,3.10,3.74,4.26,3.01],borderColor:PUR,borderWidth:3.4}],'倍',2);
+
+/* ======== s3 生意结构 ======== */
+const SEG={'增值服务':[2915.7,2875.7,2983.8,3191.7,3692.8,3803.0],
+ '营销服务':[886.7,827.3,1014.8,1213.7,1449.7,1590.9],
+ '金融科技及企业服务':[1722.0,1770.6,2037.6,2119.6,2294.3,2391.6],
+ '其他':[76.8,71.9,54.0,77.6,80.8,99.2]};
+mkTrend('cSeg',YT,SEG,[C,GOLD,CY,PUR],false,'亿元');
+mkTrend('cSegPct',YT,SEG,[C,GOLD,CY,PUR],true);
+
+const VAS={'游戏':[1742.7,1706.7,1798.8,1976.7,2415.8,2530.4],
+ '社交网络':[1173.0,1169.0,1185.0,1215.0,1277.0,1272.6]};
+mkTrend('cVas',YT,VAS,[GOLD,C],false,'亿元');
+mkTrend('cVasPct',YT,VAS,[GOLD,C],true);
+
+const GEOG={'中国大陆':[5136.9,5025.3,5507.8,5954.6,6621.2],'其他':[464.3,520.2,582.4,648.0,896.5]};
+mkTrend('cGeo',Y5,GEOG,[GOLD,C],false,'亿元');
+mkTrend('cGeoPct',Y5,GEOG,[GOLD,C],true);
+
+/*时点*/trend('cMau',Y6,[{label:'微信及 WeChat 合并月活',data:[1268,1313,1343,1385,1418,1439],
+  borderColor:GOOD,borderWidth:3.4}],'百万',0);
+trend('cArpu',YT,[{label:'单月活年收入',data:[441.7,422.4,453.5,476.7,530.2,548.0],
+  borderColor:GOLD,borderWidth:3.4}],'元',1);
+trend('cMgn',Y6,[
+  {label:'毛利率',data:[43.9,43.1,48.1,52.9,56.2,57.2],borderColor:C,borderWidth:3.4},
+  {label:'经营利润率',data:[22.3,20.0,26.3,31.5,32.1,33.6],borderColor:GOLD,borderWidth:3.4}
+],'%',1);
+
+new Chart(document.getElementById('cMoat'),{type:'radar',
+ data:{labels:['用户网络效应','转换成本','内容与 IP','定价权','成本优势'],
+  datasets:[{label:'评分',data:[5,4,4,4,3],borderColor:C,backgroundColor:C+'33',pointBackgroundColor:C}]},
+ options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.parsed.r+' / 5'}}},
+  scales:{r:{min:0,max:5,ticks:{stepSize:1,color:DIM,backdropColor:'transparent',font:{size:9}},
+   grid:{color:LINE},angleLines:{color:LINE},pointLabels:{color:TXT,font:{size:12}}}}}});
+
+/* ======== s4 行业现状 ======== */
+trend('cInd',Y5,[
+  {label:'中国互联网广告市场',data:[5435,5088,5732,6509,7257],borderColor:GOLD,borderWidth:3.4},
+  {label:'国内游戏市场',data:[2965.1,2658.8,3029.6,3257.8,3507.9],borderColor:C,borderWidth:3.4}
+],'亿元',0);
+
+new Chart(document.getElementById('cPeer'),{type:'bar',
+ data:{labels:['腾讯控股','网易','快手科技'],
+  datasets:[{label:'1H26 收入同比',data:[10.1,7.0,2.4],
+   backgroundColor:[C+'ee',GOLD+'bb',BAD+'cc'],borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>' 收入同比 +'+c.parsed.x+'%'}}},
+  scales:{y:{...gridNo,ticks:{color:DIM,font:{size:11}}},
+   x:{...grid,title:{display:true,text:'1H26 收入同比'},ticks:{color:DIM,callback:v=>v+'%'}}}}});
+
+new Chart(document.getElementById('cPeerP'),{type:'bar',
+ data:{labels:['腾讯控股','网易','快手科技'],
+  datasets:[{label:'1H26 归母净利同比',data:[10.3,-6.3,-32.0],
+   backgroundColor:[C+'ee',WARN+'bb',BAD+'cc'],borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>' 归母净利同比 '+(c.parsed.x>0?'+':'')+c.parsed.x+'%'}}},
+  scales:{y:{...gridNo,ticks:{color:DIM,font:{size:11}}},
+   x:{...grid,title:{display:true,text:'1H26 归母净利同比'},ticks:{color:DIM,callback:v=>v+'%'}}}}});
+
+/* ======== s5 行业地位：份额能做趋势，一律折线 ======== */
+trend('cShrG',Y5,[{label:'本土游戏市场份额',data:[43.4,46.6,41.8,42.9,46.8],
+  borderColor:GOLD,borderWidth:3.4}],'%',1,{scales:{x:gridNo,y:{...ax('%'),min:38,max:50}}});
+trend('cShrA',Y5,[{label:'中国互联网广告市场份额',data:[16.3,16.3,17.7,18.6,20.0],
+  borderColor:C,borderWidth:3.4}],'%',1,{scales:{x:gridNo,y:{...ax('%'),min:14,max:22}}});
+
+/* ======== s6 质量与现金 ======== */
+trend('cRoe',YT,[{label:'ROE',data:[27.9,26.1,14.2,19.9,19.5,20.7],borderColor:C,borderWidth:3.4}],'%',1);
+/*时点*/trend('cEq',Y6,[{label:'归母权益',data:[8063.0,7213.9,8085.9,9735.5,11541.5,11358.5],
+  borderColor:GOOD,borderWidth:3.4}],'亿元',1);
+
+waterfall('cWfFcf',['经营活动现金流','− 资本开支','− 购建无形资产','− 租赁本金','− 已付利息','真实自由现金流'],
+  [[0,3058.5],[1683.1,3058.5],[1432.6,1683.1],[1361.1,1432.6],[1235.2,1361.1],[0,1235.2]],
+  [C,BAD,BAD,BAD,BAD,GOOD],'亿元');
+
+trend('cFcf5',YT,[
+  {label:'经营活动现金流',data:[1751.9,1460.9,2219.6,2585.2,3030.5,3058.5],borderColor:C,borderWidth:3.4},
+  {label:'资本开支',data:[293.0,226.8,210.1,629.3,874.8,1375.4],borderColor:BAD,borderWidth:3.4},
+  {label:'真实自由现金流',data:[1027.8,804.6,1567.8,1504.1,1702.1,1235.2],borderColor:GOOD,borderWidth:3.4}
+],'亿元',1);
+
+trend('cCapex',YT,[{label:'资本开支占经营活动现金流',data:[16.7,15.5,9.5,24.3,28.9,45.0],
+  borderColor:BAD,borderWidth:3.4}],'%',1);
+
+trend('cCov',YT,[
+  {label:'派息覆盖倍数',data:[8.22,6.21,7.47,5.21,4.53,2.97],borderColor:GOOD,borderWidth:3.4},
+  {label:'派息加回购覆盖倍数',data:[7.00,1.90,2.42,1.15,1.54,1.20],borderColor:WARN,borderWidth:3.4}
+],'倍',2,{plugins:{legend:{labels:{color:TXT,padding:10}}},
+  scales:{x:gridNo,y:{...ax('倍'),beginAtZero:true}}});
+
+trend('cProf',YT,[
+  {label:'IFRS 归母净利',data:[2248.2,1882.4,1152.2,1940.7,2248.4,2355.1],borderColor:C,borderWidth:3.4},
+  {label:'Non-IFRS 归母净利',data:[1237.9,1156.5,1576.9,2227.0,2596.3,2715.7],borderColor:GOOD,borderWidth:3.4}
+],'亿元',1);
+
+/* ---------- 折叠块展开必须重算画布 ---------- */
+document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle',()=>{
+  if(!d.open) return;
+  d.querySelectorAll('canvas').forEach(c=>{const ch=Chart.getChart(c); if(ch) ch.resize();});
+}));
+
+/* ---------- 吸顶目录跟随高亮 ---------- */
+(function(){
+  const links=[...document.querySelectorAll('.toc a')];
+  const secs=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if(secs.length!==links.length) return;
+  const mark=()=>{let i=0;secs.forEach((s,k)=>{if(s.getBoundingClientRect().top<=90)i=k;});
+    links.forEach((a,k)=>a.classList.toggle('on',k===i));};
+  mark(); addEventListener('scroll',mark,{passive:true});
+})();
+</script>
+</body>
+</html>

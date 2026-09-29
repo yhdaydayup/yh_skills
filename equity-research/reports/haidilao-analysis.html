@@ -508,7 +508,8 @@ const wfTip=u=>({callbacks:{label:c=>{const M=wfMeta(c.chart.data.datasets[0].da
 
 const grid={grid:{color:LINE,drawBorder:false},ticks:{color:DIM}};
 const gridNo={grid:{display:false},ticks:{color:DIM}};
-const L=(o)=>Object.assign({tension:.32,pointRadius:4,borderWidth:2.5,fill:false},o);
+/* tension 必须为 0：样条在 5–6 个点之间会造出不存在的峰谷（charting.md「五条红线」第 4 条） */
+const L=(o)=>Object.assign({tension:0,pointRadius:4,borderWidth:2.5,fill:false},o);
 
 /* ---- 0. 同业相对表现（横向比较） ---- */
 new Chart(document.getElementById('cPeer'),{type:'bar',
