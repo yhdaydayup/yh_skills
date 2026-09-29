@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "页面批注 Page Comment",
+  "version": "1.0.0",
+  "description": "在网页上选中文字或点击元素直接写评论，导出成带章节、选择器和原文的反馈清单，不用再描述位置。",
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "页面批注（点击开关面板）"
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+Y",
+        "mac": "Alt+Shift+Y"
+      },
+      "description": "打开 / 关闭批注面板"
+    },
+    "toggle-element-mode": {
+      "suggested_key": {
+        "default": "Alt+Shift+E",
+        "mac": "Alt+Shift+E"
+      },
+      "description": "切换元素点选模式"
+    }
+  }
+}
