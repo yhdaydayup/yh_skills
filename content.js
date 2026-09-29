@@ -352,6 +352,8 @@
 
   .bub{position:fixed;pointer-events:auto;background:#1f6feb;color:#fff;border:none;border-radius:6px;
     padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;display:none;box-shadow:0 3px 12px rgba(0,0,0,.4)}
+  .bub .k{display:inline-block;margin-left:5px;padding:0 4px;border-radius:3px;
+    background:rgba(255,255,255,.22);font-weight:700;font-size:11px;line-height:15px}
   .bub.on{display:block}
 
   .ed{position:fixed;width:310px;pointer-events:auto;background:#161b22;border:1px solid #388bfd;
@@ -388,13 +390,13 @@
 <div class="hl"></div>
 <div class="marks"></div>
 <div class="undo"><span class="ut"></span><button class="b pri ub">撤销</button></div>
-<div class="tip">元素点选模式 — 点击任意元素添加批注，Esc 退出</div>
+<div class="tip">元素点选模式 — 点击元素或按 c 添加批注，Esc 退出</div>
 <div class="pins"></div>
-<button class="bub">＋ 评论</button>
+<button class="bub">＋ 评论 <span class="k">c</span></button>
 
 <div class="ed">
   <div class="t"></div>
-  <textarea placeholder="写下你的意见…（⌘/Ctrl + Enter 保存）"></textarea>
+  <textarea placeholder="写下你的意见…（Enter 保存，Shift + Enter 换行）"></textarea>
   <div class="row"><span class="sp"></span>
     <button class="b cancel">取消</button><button class="b pri save">保存</button></div>
 </div>
@@ -610,8 +612,10 @@
 
   async function save(text) {
     if (!pending) return;
-    text = text.trim();
-    if (!text) return;
+    text = (text || '').trim();
+    /* 判空收在这一处：保存按钮、Enter、⌘/Ctrl+Enter 三条路径都经过这里，
+       分头判会漏。原来是静默 return，用户按了没反应也不知道为什么。 */
+    if (!text) { toast('批注内容不能为空'); el.ta.focus(); return; }
     const before = items.slice();
     if (pending.editIndex != null) items[pending.editIndex] = { ...items[pending.editIndex], text };
     else items.push({ loc: pending.loc, text, at: Date.now() });
@@ -675,22 +679,32 @@
   /* ── 选中文字 → 气泡 ── */
 
   let selRect = null, selLoc = null;
+  let hoverEl = null;       // 元素模式下鼠标底下的元素，给 c 键用
 
   function hideBubble() { el.bub.classList.remove('on'); }
+
+  /* 从**当前**选区现算定位，拿不到就返回 null。
+     鼠标和 c 键两条路径都走这里：键盘选区（Shift+方向键）不触发 mouseup，
+     c 键要是复用 selLoc 就会拿到上一次的旧定位，批注挂到错的地方。 */
+  function selectionLoc() {
+    const s = getSelection();
+    if (!s || s.isCollapsed || !s.toString().trim()) return null;
+    const rng = s.getRangeAt(0);
+    if (host.contains(rng.commonAncestorContainer)) return null;   // 选中的是插件自己的界面
+    const r = rng.getBoundingClientRect();
+    if (!r.width && !r.height) return null;                        // 折叠区里的不可见选区
+    return { rect: r, loc: makeTextLocator(rng, s.toString()) };
+  }
 
   document.addEventListener('mouseup', () => {
     if (mode === 'element') return;
     setTimeout(() => {
-      const s = getSelection();
-      if (!s || s.isCollapsed || !s.toString().trim()) return hideBubble();
-      const rng = s.getRangeAt(0);
-      if (host.contains(rng.commonAncestorContainer)) return;
-      const r = rng.getBoundingClientRect();
-      if (!r.width && !r.height) return hideBubble();
-      selRect = r;
-      selLoc = makeTextLocator(rng, s.toString());
-      el.bub.style.left = Math.min(r.left, innerWidth - 90) + 'px';
-      el.bub.style.top = Math.max(4, r.top - 32) + 'px';
+      const sel = selectionLoc();
+      if (!sel) return hideBubble();
+      selRect = sel.rect;
+      selLoc = sel.loc;
+      el.bub.style.left = Math.min(sel.rect.left, innerWidth - 90) + 'px';
+      el.bub.style.top = Math.max(4, sel.rect.top - 32) + 'px';
       el.bub.classList.add('on');
     }, 10);
   });
@@ -708,13 +722,14 @@
     mode = m;
     el.elem.classList.toggle('on', m === 'element');
     el.tip.classList.toggle('on', m === 'element');
-    if (m !== 'element') el.hl.classList.remove('on');
+    if (m !== 'element') { el.hl.classList.remove('on'); hoverEl = null; }
     document.documentElement.style.cursor = m === 'element' ? 'crosshair' : '';
   }
 
   document.addEventListener('mousemove', (e) => {
     if (mode !== 'element') return;
     if (host.contains(e.target)) return;
+    hoverEl = e.target;
     const r = e.target.getBoundingClientRect();
     el.hl.style.cssText =
       `left:${r.left - 2}px;top:${r.top - 2}px;width:${r.width + 4}px;height:${r.height + 4}px`;
@@ -771,7 +786,7 @@
     el.tip.classList.add('on');
     setTimeout(() => {
       el.tip.classList.remove('on');
-      el.tip.textContent = '元素点选模式 — 点击任意元素添加批注，Esc 退出';
+      el.tip.textContent = '元素点选模式 — 点击元素或按 c 添加批注，Esc 退出';
     }, 2600);
   }
 
@@ -795,11 +810,44 @@
   $('.save').onclick = () => save(el.ta.value);
   $('.cancel').onclick = closeEditor;
   el.ta.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); save(el.ta.value); }
-    if (e.key === 'Escape') { e.preventDefault(); closeEditor(); }
+    if (e.key === 'Escape') { e.preventDefault(); closeEditor(); return; }
+    if (e.key !== 'Enter') return;
+    /* 中文输入法选词也是敲回车。不挡住 composing，打一半的拼音会被当成确认存进去。
+       Safari 有时不给 isComposing，所以补一个 keyCode 229 的判断。 */
+    if (e.isComposing || e.keyCode === 229) return;
+    if (e.shiftKey) return;                    // Shift+Enter 留给换行
+    e.preventDefault();
+    save(el.ta.value);                         // 空内容由 save() 拦下并提示
   });
+
+  /* 光标在输入框里就不能抢键——用户可能正在页面自己的搜索框里打字。
+     contenteditable 也算，富文本编辑器都是这种。 */
+  const typing = (t) => !!t && (t.isContentEditable ||
+    /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName || ''));
+
   addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mode === 'element') setMode(null);
+    if (e.key !== 'c' && e.key !== 'C') return;
+    // ⌘C / Ctrl+C 是复制，Alt+C 可能是页面或输入法的组合键，一律不接管
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (pending) return;                       // 编辑框开着，c 是正文里的一个字符
+    if (typing(e.target) || host.contains(e.target)) return;
+
+    if (mode === 'element') {
+      if (!hoverEl || !hoverEl.isConnected || host.contains(hoverEl)) {
+        return toast('把鼠标移到要批注的元素上，再按 c');
+      }
+      e.preventDefault();
+      const t = hoverEl;
+      openEditor(makeLocator(t, norm(t.textContent).slice(0, MAX_QUOTE)), t.getBoundingClientRect());
+      setMode(null);
+      return;
+    }
+
+    const sel = selectionLoc();
+    if (!sel) return toast('先选中一段文字，再按 c 批注');
+    e.preventDefault();
+    openEditor(sel.loc, sel.rect);
   });
 
   if (hasExt && chrome.runtime?.onMessage) {
