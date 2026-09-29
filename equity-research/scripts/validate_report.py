@@ -89,7 +89,7 @@ class Report:
     def check_skeleton(self):
         ids = [sid for sid, _ in self.blocks()]
         if ids != SECTIONS:
-            self.err('骨架', f'h2 的 id 必须是 {SECTIONS}，实际是 {ids}（见 report-structure.md 一）')
+            self.err('骨架', f'h2 的 id 必须是 {SECTIONS}，实际是 {ids}（见 report-structure.md「七区块骨架」）')
         toc = re.findall(r'<a href="#(s\d)"', self.body)
         if toc and toc != ids:
             self.err('骨架', f'吸顶目录与区块不一致：目录 {toc} vs 区块 {ids}')
@@ -197,7 +197,7 @@ class Report:
                 continue
             if "yAxisID:'y1'" in blk.replace(' ', '') or 'yAxisID:"y1"' in blk.replace(' ', ''):
                 self.err('图表', '同一张图里既有「（指数）」序列又有 y1 右轴：'
-                                 '要么全部归一化，要么不要合并（charting.md 三）')
+                                 '要么全部归一化，要么不要合并（charting.md「合并趋势图」）')
             if re.search(r'tension:\s*\.?\d', blk) and not re.search(r'tension:\s*0\b', blk):
                 self.err('图表', '归一化合并趋势图的 tension 必须为 0：'
                                  '样条在 5–6 个点之间会造出不存在的峰谷')
@@ -218,7 +218,7 @@ class Report:
                 continue
             if re.search(r'(构成|占比分布|收入结构|业务结构)', blk):
                 self.warn('图表', '构成类用了饼图：改成「绝对值＋占比」两张并排折线，'
-                                  '饼图只给静态切面（charting.md 一）')
+                                  '饼图只给静态切面（charting.md「选型表」）')
 
     def split_charts(self):
         """粗粒度切分每个 new Chart(...) 调用的源码。"""
@@ -277,9 +277,63 @@ class Report:
         if not re.search(r'(市占率|份额)', text):
             return
         if not re.search(r'(÷|/)', text):
-            self.warn('份额', '份额没有给出「分子 ÷ 分母」，读者无法自行验算（market-share.md 三）')
+            self.warn('份额', '份额没有给出「分子 ÷ 分母」，读者无法自行验算（market-share.md「分子分母必须同口径」）')
         if '吨' in text and '头' in text and not re.search(r'(头数口径|物理量口径|胴体重)', text):
             self.warn('份额', '同时出现吨与头但未声明口径：分子分母单位必须一致')
+        # 份额留白由 check_share_blanks 单独负责；run() 会自动发现它，
+        # 这里不要再显式调一次，否则同一处会报两遍。
+
+    def check_share_blanks(self):
+        """份额列留「—」且未说明原因：读者的第一反应是「为什么这家公司的份额看不到」。
+
+        必须按列名判断。只要表里出现过「份额」二字就报，会把「年报自述」这类
+        无关列的「—」和亏损年份的「不适用」一起误伤。
+        已写明「未查到」「无可靠分母」等原因的行是合规做法，不报。
+        """
+        explained = r'(未查到|未披露|无可靠分母|无公开|不估算|不适用|n\.?a\.?|n\.?m\.?)'
+        for tb in re.finditer(r'<table\b.*?</table>', self.body, re.S | re.I):
+            t = tb.group(0)
+            rows = re.findall(r'<tr\b.*?</tr>', t, re.S | re.I)
+            if len(rows) < 2:
+                continue
+            heads = [self.text_of(h) for h in re.findall(r'<th\b.*?</th>', rows[0], re.S | re.I)]
+            share_cols = {i for i, h in enumerate(heads) if re.search(r'(市占率|份额)', h)}
+            if not share_cols:
+                continue
+            for row in rows[1:]:
+                cells = re.findall(r'<t[dh]\b.*?</t[dh]>', row, re.S | re.I)
+                if len(cells) != len(heads):
+                    continue                        # 有 colspan/rowspan，列对不上就不猜
+                if re.search(explained, self.text_of(row), re.I):
+                    continue                        # 已说明原因，是合规做法
+                for i in share_cols:
+                    if re.fullmatch(r'\s*[—–-]\s*', self.text_of(cells[i]) or ''):
+                        label = self.text_of(cells[0])[:20]
+                        self.warn('份额', f'「{heads[i]}」列在「{label}」行留了「—」且未说明原因：'
+                                          f'查不到现成数字要自己用产销量 ÷ 官方行业总量算，'
+                                          f'算不出则写明原因'
+                                          f'（market-share.md「查不到现成数字不等于可以留白」）')
+
+    def check_color_reference(self):
+        """不要用颜色指代序列：改配色即失效，打印与色觉障碍下不成立。"""
+        text = self.text_of(self.body)
+        for m in re.finditer(r'[（(](红|橙|黄|绿|青|蓝|紫|粉|灰|金)色[）)]', text):
+            ctx = text[max(0, m.start() - 16):m.end() + 4]
+            self.err('图注', f'用颜色指代序列「{m.group(0)}」，改写成序列名。'
+                             f'上下文：…{ctx}…（曾把粉色写成绿色）')
+
+    def check_term_definition(self):
+        """年报附注的术语首次出现要给定义，否则读者会卡住。"""
+        text = self.text_of(self.body)
+        need = {
+            '对外收入': r'(分部间|抵消|集团外部)',
+            '经常性股息': r'(特别|一次性)',
+            '真实自由现金流': r'租赁',
+        }
+        for term, ctx_pat in need.items():
+            if term in text and not re.search(ctx_pat, text):
+                self.warn('术语', f'用了「{term}」但全文没有解释它和常规口径的差别'
+                                  f'（wording.md「专业术语首次出现必须给定义」）')
 
     def run(self):
         for name in dir(self):

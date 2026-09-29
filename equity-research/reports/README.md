@@ -25,10 +25,15 @@
 | `byd-analysis.html` | `nav.toc` 的 HTML 在，但目录跟随高亮的脚本整段没写 | `render_check.js` |
 | `byd-analysis.html` | 全文零折叠块，考据类内容全在常态可见层 | `validate_report.py` |
 | `byd-analysis.html` | 正文用股息率作论据，但没给派息覆盖倍数 | `validate_report.py` |
+| `byd-analysis.html` | 出口份额表里吉利、零跑两格留「—」且未说明原因，而用报告自己的分母 425.4 万辆可直接算出 11.1% 和 2.3% | `validate_report.py` |
+| `haidilao-analysis.html` | 3 处用颜色指代序列（「翻台率（绿色）」「门店数（橙色）」「客单价（红色）」），改配色即失效 | `validate_report.py` |
 | `whgroup-analysis.html` | 10 处 `h3` 用 inline style 覆盖字号，应改用 `h3.sub2` | `validate_report.py` |
 | `haidilao-analysis.html` | 9 处同上，其中 3 处是 `15px` 真覆盖 | `validate_report.py` |
 
-前三条的根因是比亚迪报告没有从 `../assets/report-skeleton.html` 起稿，而是手工拼装。
+比亚迪前三条的根因是没有从 `../assets/report-skeleton.html` 起稿，而是手工拼装。
 这也是骨架文件存在的理由。
+
+两处**不是**缺陷、已确认为合规做法：万洲「欧洲」行与海底捞「呷哺呷哺／湊湊」行的份额留「—」，
+但同行写明了「未查到」「无可靠分母，不估算」——这正是 `market-share.md` 要求的写法，校验器不报。
 
 重修时注意：重新上传会换 URL，而浏览器批注按「域名＋路径」绑定，**先让读者导出批注再出新版本**。

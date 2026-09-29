@@ -49,8 +49,9 @@ node    scripts/render_check.js  <报告.html>     # 零 FAIL
 `render_check.js` 需要 Playwright 的 chromium；环境里常只装了完整 chromium 而没有 headless shell，
 脚本会自动从 `~/.cache/ms-playwright` 里找可执行文件。
 
-这两个脚本不是形式检查。它们在已交付的三份报告上抓到过：报告缺少目录高亮脚本（`nav.toc` 的
-HTML 在、脚本整段没写）、全文零折叠块、缺派息覆盖倍数、以及 19 处 `h3` 用 inline style 覆盖字号。
+这两个脚本不是形式检查。它们在已交付的三份报告上抓到 7 类真实缺陷：缺目录高亮脚本（`nav.toc` 的
+HTML 在、脚本整段没写）、全文零折叠块、缺派息覆盖倍数、份额表留白且未说明原因、
+3 处用颜色指代序列、19 处 `h3` 用 inline style 覆盖字号。清单见 [`reports/README.md`](reports/README.md)。
 
 ## 为什么有 `assets/report-skeleton.html`
 
