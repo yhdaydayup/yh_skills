@@ -109,7 +109,6 @@ details.fold>.fb{padding:0 15px 15px}
 details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;padding:0}
 </style>
 </head>
-<!-- legacy-7block：本报告写于「七区块」时期，尚未补第七章「未来判断」。腾讯那份被评「通篇聚焦过去的总结，缺少对未来企业发展的判断」后结构升为八区块，此报告需补一章前瞻判断（领先指标 + 显式假设的情景推演）后删除本标记。 -->
 <body><div class="wrap">
 <header>
   <h1>比亚迪股份</h1>
@@ -122,7 +121,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="sub"><b>本报告金额一律用「人民币亿元」；股价与每股股息用交易所报价货币（H 股 HK$、A 股人民币元）。</b>比亚迪 2025 年 7 月完成每 10 股送 8 股转增 12 股，股本由 30.39 亿股变为 91.17 亿股，所有每股指标与历史股价均已按送转后口径还原。<br/>表内金额由财报的「千元」原值换算并保留一位小数，因此分项相加与合计之间可能相差 0.1 亿元，属四舍五入，不是错数。</div>
 </header>
 
-<nav class="toc"><a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a><a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a><a href="#s7">七、操作与风险</a></nav>
+<nav class="toc"><a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a><a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a><a href="#s7">七、未来判断</a><a href="#s8">八、操作与风险</a></nav>
 
 <h2 id="s1">一、投资结论<span class="lead">评级、估值锚点、判断依据</span></h2>
 
@@ -552,9 +551,133 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   </details>
 </div>
 
-<h2 id="s7">七、操作与风险<span class="lead">买什么价、看什么信号、最可能出错的地方</span></h2>
+<h2 id="s7">七、未来判断<span class="lead">在手订单、已经锁定的折旧、三年后的市盈率</span></h2>
 
-<h3 class="sub2" id="s7-1">7.1　如果要买，什么价格</h3>
+<div class="note"><b>先说这一章的证据标准。</b>比亚迪的年报和中报<b>不提供正式业绩指引</b>，
+  所以下面没有任何一句「公司预计……」是我替它说的。这一章只用两类东西：
+  <b>①报表里已经发生、但尚未进入损益表的领先指标</b>；<b>②把已知数字按写明的假设往前推的算术</b>。
+  凡是假设，都在括号里写出来，读者可以换一个假设自己重算。判断可以错，但不能无从复核。</div>
+
+<h3 class="sub2" id="s7-1">7.1　领先指标：在手订单</h3>
+<div class="card">
+  <h3>合同负债与它相当于几个月的收入</h3>
+  <p class="wfhint">合同负债是<b>客户（经销商、出口买方、个人订车用户）已经付钱、但车还没交、
+    公司还不能确认为收入</b>的部分，记在流动负债里。它是整张报表上少数几个能提前看到收入的科目。
+    <b>把鼠标停在柱子或圆点上，会浮出该点的原始数值。</b></p>
+  <div class="grid2">
+    <div class="card" style="border:none;padding:0"><h3>合同负债（亿元）</h3>
+      <div class="cw"><canvas id="cOrd"></canvas></div></div>
+    <div class="card" style="border:none;padding:0"><h3>相当于几个月的收入</h3>
+      <div class="cw"><canvas id="cOrdM"></canvas></div></div>
+  </div>
+  <div class="note"><b>这是全篇唯一一条明确向上、且方向与收入相反的指标。</b>
+    合同负债六个月从 514.7 亿涨到 798.0 亿，<b>增长 55.0%</b>；
+    而同期收入是 3,448.2 亿，<b>同比下降 7.1%</b>。
+    换算成月数，它从 0.77 个月升到 1.23 个月，是六期里的最高值。<br/>
+    <b>为什么这条比收入增速更靠前：</b>收入要等整车交付才能确认，合同负债在收到钱的当期就入账。
+    <b>收入在降而预收在涨，意味着现在的交付量并不代表现在的订单量。</b><br/>
+    <b>这条指标的边界（很重要）：</b>年报<b>没有把合同负债拆成出口订单与境内经销商预付</b>。
+    出口是真实的在手订单，但境内经销商预付在价格战里也可能是渠道压货，
+    两者记在同一个科目里，从公开披露无法分辨。<b>这只能算待确认的向上信号，不等于增长已经兑现。</b></div>
+</div>
+
+<h3 class="sub2" id="s7-2">7.2　已经锁定的折旧：过去两年新增的折旧比一年利润还多</h3>
+<div class="card">
+  <h3>资本开支与折旧摊销（分部口径，亿元）</h3>
+  <div class="cw tall"><canvas id="cDep"></canvas></div>
+  <div class="note"><b>这张图不需要任何假设，它已经发生了。</b>
+    折旧摊销从 FY2023 的 435.5 亿涨到最近十二个月的 797.4 亿，
+    <b>两年多新增 361.8 亿；而公司最近十二个月的利润总额只有 354.6 亿。</b>
+    也就是说，<b>这段时间新长出来的折旧，比它现在一整年赚的税前利润还多</b>。<br/>
+    同时资本开支正在急刹车：最近十二个月 950.5 亿，其中 1H26 只有 327.2 亿、
+    <b>同比下降 58.0%</b>。资本开支与折旧的倍数从 FY2023 的 3.23 倍降到 1.19 倍。
+    产能扩张这一轮基本结束了，但它留下的折旧账单还要付好几年。<br/>
+    <b>口径：</b>两条线同取分部附注的「资本性支出」与「折旧及摊销」。FY2021、FY2022 不画，是因为
+    这两年分部划分不同、数字不可比。末列为最近十二个月 ＝ FY2025 − 1H25 + 1H26。</div>
+</div>
+
+<div class="card">
+  <h3>这一笔资本开支要挣回多少收入</h3>
+  <div class="tscroll"><table>
+    <thead><tr><th>折旧年限假设</th><th>年化新增折旧<span class="uu">亿元</span></th><th>占 TTM 利润总额</th><th>需新增收入<span class="uu">亿元</span></th><th>相当于收入增长</th></tr></thead>
+    <tbody>
+      <tr><td>3 年（激进）</td><td>316.8</td><td class="neg">89.4%</td><td>1,680.7</td><td class="neg">21.6%</td></tr>
+      <tr class="hl"><td>5 年（基准）</td><td>190.1</td><td class="neg">53.6%</td><td>1,008.4</td><td class="neg">13.0%</td></tr>
+      <tr><td>8 年（保守）</td><td>118.8</td><td class="neg">33.5%</td><td>630.3</td><td class="neg">8.1%</td></tr>
+    </tbody>
+  </table></div>
+  <details class="fold"><summary>这张表的算法，以及为什么它不是净增负担</summary><div class="fb">
+  <div class="note" style="border:none"><b>算法写全，读者可自行换假设重算：</b>只计最近十二个月这一笔资本开支 950.5 亿元，
+    直线折旧、不留残值，年化新增折旧 ＝ 950.5 ÷ 年限；再用 1H26 毛利率 18.85%
+    （＝（3,448.2 − 2,798.3）÷ 3,448.2）倒推「需新增收入 ＝ 新增折旧 ÷ 18.85%」；
+    最后除以 TTM 收入 7,774.9 亿得到所需增速。基准取 5 年，是因为整车产线与模具的折旧年限
+    通常短于厂房而长于电子设备。<br/>
+    <b>这张表算的不是净增负担。</b>老资产的折旧会陆续提完退出，真实净增会小于表上的数；
+    这里算的是「这一笔新钱本身要挣回的量」，衡量投入门槛，不是预测折旧总额。<br/>
+    <b>难点不在投得多，在毛利率低。</b>同样是重投入，毛利率 18.85% 意味着
+    每一块钱资本开支要 5.3 块钱收入才摊得平，而毛利率 50% 的生意只要 2 块。</div>
+  </div></details>
+</div>
+
+<h3 class="sub2" id="s7-3">7.3　钱正在变成什么：已验证与未验证</h3>
+<div class="note" style="margin-bottom:12px">把管理层的说法拆成<b>已经出现在数字里的</b>和<b>还只是叙事的</b>两堆。
+  下面每一条都标了出处与证据强度。</div>
+
+<div class="flag good"><b class="ft">已验证：出口是真实的第二增长曲线</b>
+  1H26 出口 76.93 万辆、<b>同比 +73.6%</b>，境外收入占比 52.6%、境外毛利率 21.71%
+  且反超境内 6 个百分点（见第三、五章）。泰国、乌兹别克斯坦、巴西整车厂已投产，匈牙利工厂即将投产。
+  <b>销量、收入占比、毛利率三重印证，不是叙事。</b></div>
+
+<div class="flag good"><b class="ft">已验证：在手订单在涨</b>
+  合同负债半年 +55.0% 到 798.0 亿，相当于 1.23 个月收入，六期最高（见 7.1）。
+  在收入 −7.1% 的同期出现，<b>订单端比交付端先转向</b>。</div>
+
+<div class="flag warn"><b class="ft">未验证：订单里出口占多少，没有披露</b>
+  年报与中报都<b>没有把合同负债按出口／境内拆分</b>，也没披露在手订单台数。
+  如果这 798 亿里很大一块是境内压货，它不会变成利润，只会变成明年的折扣。
+  <b>要等年报的分地区收入才能回答。</b></div>
+
+<div class="flag warn"><b class="ft">未验证：资本开支砍到什么程度为止</b>
+  1H26 资本开支 −58.0%，公司<b>没有给出任何资本开支指引</b>。砍投入短期利好自由现金流，
+  但持续低于折旧就是在消耗产能。目前倍数 1.19 还没跌破 1，这是下一期必须看的数。</div>
+
+<div class="flag"><b class="ft">反向信号：研发费用五年来第一次下降</b>
+  1H26 研发费用 233.1 亿，<b>同比 −21.2%</b>（1H25 为 296.0 亿）。
+  比亚迪一直把研发强度当成核心竞争力叙事。
+  <b>在技术迭代最快的时点主动降研发，这是年报没有解释的信号。</b></div>
+
+<div class="flag"><b class="ft">反向信号：利润下滑快于收入</b>
+  1H26 收入 −7.1%，利润总额 146.1 亿、<b>−22.7%</b>，降幅是收入的三倍多。
+  境内毛利率已经从 FY2023 的 22.87% 降到 15.67%。<b>价格战的成本还在损益表里，没有停。</b></div>
+
+<h3 class="sub2" id="s7-4">7.4　三年情景：现价对应的市盈率会走到哪</h3>
+<div class="card">
+  <h3>三种情景下的 FY2029 市盈率（现价不变）</h3>
+  <div class="cw tall"><canvas id="cScn"></canvas></div>
+  <div class="note"><b>这张图的结论和腾讯那份正好相反。</b>腾讯即便在悲观情景下，三年后的市盈率仍低于今天；
+    比亚迪的悲观情景是 30.3 倍，<b>明显高于今天的 22.0 倍，更高于五年区间下沿的 18.9 倍</b>——<b>现价没有给盈利下滑留任何余地</b>——只有在净利年化两位数增长的假设下，
+    三年后的估值才回到历史正常区间，这是本报告给「观望」的算术依据。<br/>
+    <b>基准情景要成立，需要三件事同时发生：</b>在手订单转化为交付、出口毛利率守住 20% 以上、
+    境内价格战停火。任意两件不发生，结果就落在悲观与基准之间。</div>
+  <details class="fold">
+    <summary>三种情景各自假设了什么，以及怎么算的</summary>
+    <div class="fb"><div class="note" style="border:none">
+      <b>公共假设：</b>H 股价保持 HK$78.10 不变、股本 91.17 亿股与汇率 0.9105 不变，
+      故市值恒为 6,483 亿元；三年指 FY2026 至 FY2029 共三个完整年度；
+      起点用最近十二个月归母净利 294 亿元。<br/>
+      <b>悲观（净利年化 −10%）：</b>294 × 0.90³ ＝ 214.3 亿 → 6,483 ÷ 214.3 ＝ 30.3 倍。
+      对应境内份额继续流失、出口增速回落到个位数。<br/>
+      <b>基准（+10%）：</b>294 × 1.10³ ＝ 391.3 亿 → 16.6 倍，对应出口维持中双位数增长、境内企稳。<br/>
+      <b>乐观（+20%）：</b>294 × 1.20³ ＝ 508.0 亿 → 12.8 倍，对应在手订单全部转化且毛利率继续修复。<br/>
+      <b>两根参照柱：</b>「今天」是现价除以最近十二个月净利；「五年区间下沿」取 FY2022 以来
+      年末市盈率最低值 18.9 倍（FY2024 年末，见<a class="xr" href="#s2">二、估值</a>）。
+      FY2021 的 217.4 倍是净利基数极低造成的，不纳入区间。</div></div>
+  </details>
+</div>
+
+<h2 id="s8">八、操作与风险<span class="lead">买什么价、看什么信号、最可能出错的地方</span></h2>
+
+<h3 class="sub2" id="s8-1">8.1　如果要买，什么价格</h3>
 <div class="card">
   <div class="tscroll"><table>
     <thead><tr><th>情景</th><th>FY2026E 归母净利<span class="uu"> 亿元</span></th><th>给予市盈率</th><th>对应市值<span class="uu"> 亿元</span></th><th>对应 H 股价<span class="uu"> HK$</span></th><th>相对现价</th></tr></thead>
@@ -569,7 +692,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <b>结论：现价已经对应乐观情景。</b>市场给的 22 倍市盈率，隐含的是「FY2026 净利回到 300 亿」这个假设，而上半年实际只有 123.25 亿、年化 246 亿。要证明现价合理，下半年净利必须达到 177 亿、比上半年高 44%。这在国内销量仍在下滑的背景下需要很强的证据。</div>
 </div>
 
-<h3 class="sub2" id="s7-2">7.2　跟踪清单</h3>
+<h3 class="sub2" id="s8-2">8.2　跟踪清单</h3>
 <div class="card">
   <div class="pill"><div><b>自由现金流是否回正</b>　看季报的经营活动现金流净额与购建长期资产支出。FY2025 −977 亿、1H26 −73.7 亿，缺口在收窄。</div><div class="s" style="color:var(--bad)">未达成</div></div>
   <div class="pill"><div><b>国内新能源市占率是否企稳</b>　看乘联会月度批发份额。FY2024 峰值 33.2%，1H26 已降到 26.2%，需要连续两个季度不再下滑。</div><div class="s" style="color:var(--bad)">未达成</div></div>
@@ -579,7 +702,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="pill"><div><b>派息率是否回到 30%</b>　这是管理层对自身现金状况最直接的表态。FY2025 已砍到 10%。</div><div class="s" style="color:var(--bad)">未达成</div></div>
 </div>
 
-<h3 class="sub2" id="s7-3">7.3　风险</h3>
+<h3 class="sub2" id="s8-3">8.3　风险</h3>
 <div class="flag"><b class="ft">国内份额继续流失</b>1H26 国内零售 −38.5%，是主要厂商中跌幅最大的，吉利已在零售口径上反超。国内市场贡献 1H26 收入的 47.4%，若份额继续下滑，海外增长不足以对冲。</div>
 <div class="flag"><b class="ft">汇率</b>1H26 财务费用从上年同期的净收益 32.5 亿变为净支出 51.0 亿，前后相差 83.4 亿，其中汇兑由收益 31.6 亿转为损失 47.0 亿。境外收入占比已过半，汇率对利润的影响只会更大。这也是归母净利下滑 20.5%、而扣除非经常性损益后只下滑 9.0% 的主要原因。</div>
 <div class="flag"><b class="ft">电子业务失速</b>电子分部利润总额从 1H25 的 13.3 亿降到 1H26 的 1.9 亿，降幅 85%；毛利率从 7.71% 降到 5.04%。该分部仍占收入 20%，但已基本不贡献利润。年报归因为「大客户个别机型需求变化」。</div>
@@ -784,6 +907,44 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
   d.querySelectorAll('canvas').forEach(c=>{const ch=Chart.getChart(c); if(ch) ch.resize();});
 }));
 
+/* ---- 第七章 未来判断 ---- */
+/* 末列是最近十二个月 ＝ FY2025 − 1H25 + 1H26，绝对值流量指标不能把半年数画在年度线上 */
+const YT=[...Y5,'最近12个月'];
+
+/* 合同负债是时点存量（资产负债表日余额），不是流量，可以直接用 1H26 的时点值 */
+/*时点*/
+new Chart(document.getElementById('cOrd'),{type:'bar',
+ data:{labels:Y6,datasets:[{label:'合同负债',
+   data:[149.33,355.17,346.99,437.30,514.71,797.97],
+   backgroundColor:C+'88',borderColor:C,borderWidth:1.5,borderRadius:4}]},
+ options:{plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>` 合同负债: ${c.parsed.y.toFixed(2)} 亿元`}}},
+  scales:{x:gridNo,y:ax('亿元')}}});
+
+/* 比率指标，分子是时点余额、分母是当期收入，末列用 TTM 收入 7,774.9 亿 */
+/*比率*/
+trend('cOrdM',Y6,[{label:'相当于几个月的收入',
+  data:[0.83,1.01,0.69,0.68,0.77,1.23],borderColor:GOLD,borderWidth:3.4}],'个月',2,
+ {plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>` 相当于 ${c.parsed.y.toFixed(2)} 个月收入`}}}});
+
+/* 只画有可比数据的四期：FY2021、FY2022 分部划分不同，画成空白会白占三分之一画幅 */
+trend('cDep',['FY2023','FY2024','FY2025','最近12个月'],[
+  {label:'资本性支出',data:[1407.43,925.34,1402.22,950.46],borderColor:BAD,borderWidth:3.4},
+  {label:'折旧及摊销',data:[435.53,642.63,778.66,797.37],borderColor:GOLD,borderWidth:3.4}
+],'亿元',1);
+
+new Chart(document.getElementById('cScn'),{type:'bar',
+ data:{labels:['今天（现价 · 最近12个月）','五年区间下沿（历史最低）',
+   '悲观　净利年化 −10%','基准　净利年化 +10%','乐观　净利年化 +20%'],
+  datasets:[{label:'市盈率',data:[22.0,18.9,30.3,16.6,12.8],
+   backgroundColor:[DIM+'cc',DIM+'44',BAD+'cc',WARN+'ee',GOOD+'cc'],
+   borderColor:[DIM,DIM+'99',BAD,WARN,GOOD],borderWidth:1,borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>` ${c.parsed.x.toFixed(1)} 倍`}}},
+  scales:{x:ax('市盈率（倍）'),y:gridNo}}});
+
+
 /* ---- 目录跟随当前区块高亮 ---- */
 (function(){
   const links=[...document.querySelectorAll('.toc a')];
@@ -792,7 +953,8 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
   const mark=()=>{let i=0;secs.forEach((sc,k)=>{if(sc.getBoundingClientRect().top<=90)i=k;});
     links.forEach((a,k)=>a.classList.toggle('on',k===i));};
   mark(); addEventListener('scroll',mark,{passive:true});
+
 })();
 </script>
 
-<div id="bgwmcolor" style="width: 100%; height: 100%; z-index: 9999999; left: 0px; top: 0px; position: fixed; background-image: url(&#34;https://lf16-img-sign.bytehwm-row.com/obj/eesecsvc-maliva/v5/2.0/1/7eaa3d109f63434aa9935f3dcd067349.png?algorithm=V5&amp;app_id=0&amp;tenant_id=&amp;version=2.0&amp;x-expires=1790877428&amp;x-signature=FLmkgWP9tbVC6chJj00qUOWr7c4%3D&#34;); background-repeat: repeat; pointer-events: none;"></div></body></html>
+</body></html>

@@ -100,7 +100,6 @@ details.fold>.fb{padding:0 15px 15px}
 details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;padding:0}
 </style>
 </head>
-<!-- legacy-7block：本报告写于「七区块」时期，尚未补第七章「未来判断」。腾讯那份被评「通篇聚焦过去的总结，缺少对未来企业发展的判断」后结构升为八区块，此报告需补一章前瞻判断（领先指标 + 显式假设的情景推演）后删除本标记。 -->
 <body><div class="wrap">
 
 <header>
@@ -112,7 +111,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
     <div class="pxb" style="color:var(--dim)">2026-09-22 收盘 · USD/HKD 7.844 · 总股本 128.30 亿股</div>
   </div>
 </header>
-<nav class="toc"><a href="#s1">一、投资结论</a><a href="#s2">二、估值与套利</a><a href="#s3">三、生意结构</a><a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a><a href="#s7">七、操作与风险</a></nav>
+<nav class="toc"><a href="#s1">一、投资结论</a><a href="#s2">二、估值与套利</a><a href="#s3">三、生意结构</a><a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a><a href="#s7">七、未来判断</a><a href="#s8">八、操作与风险</a></nav>
 <h2 id="s1">一、投资结论<span class="lead">评级、估值锚点、三条买入理由</span></h2>
 <div class="vc">
   <span class="tag">可买 · 但需降价买</span>
@@ -722,12 +721,40 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
     FY2025 的 18.1 亿股息看起来超过了 16.9 亿的 FCF，<b>但这是合理的</b>：其中<b>三笔特别股息合计 8.2 亿</b>（HK$0.18 特别息、Smithfield 实物分派、HK$0.30 进一步特别息），而同期筹资活动有「附属公司独立上市所得款项净额 <b class="g">+10.4 亿</b>」。<b>一次性所得派一次性特别息，逻辑自洽，动的不是存量现金。</b><br/><br/>
     按经常性口径（黄色虚线）：常规年股息 HK$0.61 × 128.3 亿股 ≈ <b>10.0 亿美元</b>，被 16.9 亿覆盖 <b class="g">1.69 倍</b>。</div>
   </div>
-  <div class="card"><h3>⚠️ 前瞻情景：1.69 倍覆盖是静态的</h3><div class="cw tall"><canvas id="cFwd"></canvas></div>
-    <div class="note">黄色虚线为经常性股息 10.0 亿。三种情景下覆盖倍数从 1.69x 降到 <b class="w">1.26x / 1.06x / 0.96x</b>。<br/>
-    这印证了花旗把派息率假设从 66% 下调到 50% 的合理性：每股股息 HK$0.61 → <b>HK$0.48</b>，现价对应股息率 9.3% → <b class="w">7.3%</b>。</div>
-  </div>
 </div>
 
+<h2 id="s7">七、未来判断<span class="lead">资本开支对折旧的覆盖、Sioux Falls 的账、股息能不能派下去</span></h2>
+
+<div class="note"><b>先说这一章的证据标准。</b>万洲国际本身<b>不提供业绩指引</b>，
+  但它的美国子公司 Smithfield 在纳斯达克独立上市，<b>受美国披露规则约束、必须给全年指引</b>——
+  这是这份报告比另外三份多出来的一手前瞻证据。下面用三类东西：
+  <b>①报表里已经发生的领先指标</b>；<b>②Smithfield 公开披露的指引原文与其修订</b>；
+  <b>③把已知数字按写明的假设往前推的算术</b>。凡是假设都在括号里，读者可以换一个自己重算。</div>
+
+<h3 class="sub2" id="s7-1">7.1　领先指标：它已经在少花钱了</h3>
+<div class="card">
+  <h3>资本开支与折旧，以及两者的覆盖倍数</h3>
+  <p class="wfhint">肉制品生意没有预收款可看，它的领先指标是<b>资本开支对折旧的覆盖倍数</b>。
+    折旧是老资产每年磨损掉的价值，资本开支是补回去的钱。<b>倍数低于 1，就意味着补回去的
+    比磨损掉的少，产能基数在缩</b>——这在当期会美化自由现金流，账要留到以后还。
+    <b>把鼠标停在圆点上，会浮出该点的原始数值。</b></p>
+  <div class="grid2">
+    <div class="card" style="border:none;padding:0"><h3>资本开支与折旧（亿美元）</h3>
+      <div class="cw"><canvas id="cCap"></canvas></div></div>
+    <div class="card" style="border:none;padding:0"><h3>资本开支 ÷ 折旧（倍）</h3>
+      <div class="cw"><canvas id="cCapR"></canvas></div></div>
+  </div>
+  <div class="note"><b>覆盖倍数连降五年：1.38 → 1.20 → 1.04 → 1.00 → 0.85 → 0.79。</b>
+    FY2024 刚好踩在 1.00 上，FY2025 起跌破，最近十二个月降到 0.79——
+    <b>公司现在每年磨损掉 7.44 亿美元的资产，只补回去 5.85 亿。</b><br/>
+    <b>不要把这条读成「已经在吃老本很久了」。</b>五年累计资本开支 39.9 亿、累计折旧 36.6 亿，
+    <b>整体仍是 1.09 倍</b>，跌破 1 只发生在最近两期。真正的信息是方向：
+    它在稳定地、连续地把投入往下压，而这正是 FY2024–FY2025 自由现金流和股息好看的一部分原因。<br/>
+    <b>口径：</b>折旧 ＝ 物业厂房及设备折旧 ＋ 使用权资产折旧（附注 4）；
+    资本开支取现金流量表的「购置物业、厂房及设备」。末列为最近十二个月 ＝ FY2025 − 1H25 + 1H26。</div>
+</div>
+
+<h3 class="sub2" id="s7-2">7.2　少花的钱要还：Sioux Falls 把倍数打回 1.37</h3>
 <div class="grid2" style="margin-top:18px">
   <div class="card"><div class="flag warn"><b class="ft">Sioux Falls 新厂：13 亿美元 / 3 年</b>
   年报披露 Smithfield 将新建工厂替换一座 117 年的老厂，2027 上半年开工、2028 年底投产。年均新增资本开支约 <b>4.33 亿美元</b>，把 capex 从 FY2025 的 6.11 亿抬到约 <b>10.4 亿</b>。<b>用 FY2025 的 capex 外推 FCF 会明显偏高。</b></div></div>
@@ -736,8 +763,80 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <b class="r">9/8</b>（Barclays 会议前 8-K）披露 Q3 生鲜猪肉预计调整后经营<b>亏损 0.70–0.90 亿</b>，Q3 公司整体仅 1.15–1.75 亿，并表示要等 Q3 业绩才更新全年数——<b>即 8 月那份全年指引已实质撤回</b>。</div></div>
 </div>
 
-<h2 id="s7">七、操作与风险：怎么买<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
-<h3 class="sub2" id="s7-1">7.1　五年中的转折点</h3>
+<div class="card">
+  <h3>四种资本开支与盈利组合下的股息覆盖</h3>
+  <div class="tscroll"><table>
+    <thead><tr><th>情景</th><th>年均资本开支<span class="uu">亿美元</span></th><th>对折旧覆盖</th><th>真实自由现金流<span class="uu">亿美元</span></th><th>经常性股息覆盖</th></tr></thead>
+    <tbody>
+      <tr><td>维持现状（最近十二个月口径）</td><td>5.85</td><td>0.79×</td><td>16.9</td><td class="pos">1.69×</td></tr>
+      <tr class="hl"><td>＋ Sioux Falls 年均 4.33</td><td>10.18</td><td>1.37×</td><td>12.6</td><td>1.26×</td></tr>
+      <tr><td>＋ Sioux Falls，且 Smithfield 经营利润 −2.0 亿</td><td>10.18</td><td>1.37×</td><td>10.6</td><td>1.06×</td></tr>
+      <tr><td>＋ Sioux Falls，且 Smithfield 经营利润 −3.0 亿</td><td>10.18</td><td>1.37×</td><td>9.6</td><td class="neg">0.96×</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>这张表说明 0.79 倍不是常态，而是一个即将结束的窗口。</b>
+    Sioux Falls 一开工，覆盖倍数就回到 1.37 倍——比 FY2021 的 1.38 倍还高，
+    <b>五年省下来的投入要在三年里集中补回去</b>。这笔钱直接从自由现金流里出，
+    经常性股息覆盖从 1.69 倍降到 1.26 倍；如果同时赶上 Smithfield 盈利下滑，就跌破 1。<br/>
+    <b>算法：</b>经常性股息 ＝ 每股 HK$0.61 × 128.3 亿股 ≈ 10.0 亿美元；
+    真实自由现金流 ＝ 经营现金流 − 资本开支 − 租赁本金 − 已付利息，基数取 FY2025 的 16.9 亿；
+    Sioux Falls 13 亿美元摊三年 ＝ 年均 4.33 亿。Smithfield 的两档减利取自它自己的指引下修幅度（见 7.3）。</div>
+</div>
+
+<h3 class="sub2" id="s7-3">7.3　钱正在变成什么：已验证与未验证</h3>
+<div class="note" style="margin-bottom:12px">把说法拆成<b>已经出现在数字里的</b>和<b>还只是计划的</b>两堆。
+  万洲的特殊之处是：坏消息这一侧证据很硬，因为 Smithfield 必须公开下修指引。</div>
+
+<div class="flag good"><b class="ft">已验证：中国区在变重要，而且是靠利润不是靠收入</b>
+  1H26 中国区贡献集团收入 30.6%、但贡献<b>经营利润 36.8%</b>（上年同期 30.0% / 34.6%）。
+  利润占比升得比收入占比快，<b>说明中国区的包装肉制品利润率在改善</b>，
+  这是对冲北美猪周期的实打实的一块。</div>
+
+<div class="flag good"><b class="ft">已验证：股息没有下调</b>
+  2026 年中期股息维持每股 HK$0.20，<b>与上年同期持平</b>。
+  在经营利润 −2.2%、经营现金流 −11.3% 的半年里维持派息，说明董事会目前没有转向。</div>
+
+<div class="flag warn"><b class="ft">未验证：Sioux Falls 的时间表和金额都可能变</b>
+  年报只给了「2027 上半年开工、2028 年底投产、约 13 亿美元」这三个数，
+  <b>没有给分年度的资本开支拆分</b>。7.2 里「三年平摊」是我做的假设，不是公司说的。
+  如果实际是前低后高，2027 的现金流压力会小于表上的数。</div>
+
+<div class="flag warn"><b class="ft">未验证：存货涨了 9.7%，但看不出是备货还是滞销</b>
+  存货从 28.22 亿美元升到 30.97 亿，生物资产公允价值 12.55 亿（上年末 12.67 亿）、
+  生猪 1,080 万头基本持平。<b>存货增加在猪周期里既可能是低价囤原料的主动行为、
+  也可能是终端走货变慢</b>，中报没有拆分冻品与在产品，从公开披露无法判断是哪一种。</div>
+
+<div class="flag"><b class="ft">反向信号：Smithfield 一年内两次下调指引，第二次实质是撤回</b>
+  8 月 11 日把全年调整后经营利润从 13.25–14.75 亿下调到 12.25–13.75 亿（约 −7%），
+  <b>其中养猪业务从 1.50–2.00 亿腰斩到 0.75–1.25 亿</b>；
+  9 月 8 日的 8-K 进一步披露 Q3 生鲜猪肉预计<b>亏损 0.70–0.90 亿</b>，
+  并表示要等 Q3 业绩才更新全年数。<b>这是 7.2 表里两档减利假设的来源，不是我拍的。</b></div>
+
+<div class="flag"><b class="ft">反向信号：经营现金流降得比利润快</b>
+  1H26 经营利润 12.31 亿、<b>同比 −2.2%</b>，但经营活动现金流净额 6.80 亿、<b>−11.3%</b>。
+  利润还基本守住了，现金流已经先松动。<b>在一门靠现金流派息的生意里，这一条比利润更值得盯。</b></div>
+
+<h3 class="sub2" id="s7-4">7.4　三年情景：股息还能不能按 9.3% 算</h3>
+<div class="grid2">
+  <div class="card"><h3>⚠️ 前瞻情景：1.69 倍覆盖是静态的</h3><div class="cw tall"><canvas id="cFwd"></canvas></div>
+    <div class="note">黄色虚线为经常性股息 10.0 亿。三种情景下覆盖倍数从 1.69x 降到 <b class="w">1.26x / 1.06x / 0.96x</b>。<br/>
+    这印证了花旗把派息率假设从 66% 下调到 50% 的合理性：每股股息 HK$0.61 → <b>HK$0.48</b>，现价对应股息率 9.3% → <b class="w">7.3%</b>。</div>
+  </div>
+  <div class="card"><h3>这张图该怎么用</h3>
+    <div class="note"><b>本报告把「股息」从三条买入理由里降级，靠的就是这张图。</b>
+      1.69 倍覆盖是 FY2025 的静态值，它同时假设了「资本开支停在 6.1 亿」和
+      「Smithfield 盈利不再下滑」——而这两个假设<b>各自都已经被证伪了一半</b>：
+      Sioux Falls 已公告，Smithfield 已两次下修。<br/><br/>
+      所以持有假设应该按<b>每股 HK$0.48、股息率 7.3%</b> 来做，而不是 HK$0.61、9.3%。
+      这也是<a class="xr" href="#s1">投资结论</a>里参考买入区间定在 HK$5.8–6.3 的算术依据：
+      按常态化股息 HK$0.48 计，这个区间对应 7.6%–8.3% 的股息率。<br/><br/>
+      <b>最坏的一档（0.96 倍）不等于会减派。</b>公司账上有净现金，短期完全可以借钱维持派息；
+      但那已经不是「被自由现金流覆盖的股息」，投资逻辑会从「现金牛」变成「等周期」。</div>
+  </div>
+</div>
+
+<h2 id="s8">八、操作与风险：怎么买<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
+<h3 class="sub2" id="s8-1">8.1　五年中的转折点</h3>
 <div class="card"><div class="tl">
   <div class="ti"><div class="d">2021–2022</div><div class="t">反垄断集体诉讼和解</div><div class="x">累计支付约 1.94 亿美元了结三类集体诉讼。目前仍有 14 宗选择退出的个案未决（未披露拨备）</div></div>
   <div class="ti crit"><div class="d">2023</div><div class="t">猪周期底部：北美 Pork 分部亏损 6.24 亿美元</div><div class="x">经营利润率跌至 5.6%，ROE 6.5%（五年低点），收入 −6.8%。<b class="g">但集团整体仍盈利 6.29 亿，且每股股息维持 HK$0.30 未下调</b></div></div>
@@ -746,7 +845,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="ti"><div class="d">2026 H1</div><div class="t">经营利润转跌，欧洲及中国养猪业务拖累</div><div class="x">收入 +3.3%，经营利润 −2.2%。<b>但肉制品分部利润仍 +5.1%</b>，跌幅全部来自猪肉分部（−31.0%）。净负债从近零升至 11.47 亿美元</div></div>
   <div class="ti crit"><div class="d">2026.08–09</div><div class="t">Smithfield 两次下调指引，全年数实质撤回</div><div class="x">8/11 全年调整后经营利润 13.25–14.75 亿 → 12.25–13.75 亿；<b class="r">9/8 披露 Q3 生鲜猪肉预亏 0.70–0.90 亿</b>，须等 Q3 业绩重新给出全年指引</div></div>
 </div></div>
-<h3 class="sub2" id="s7-2">7.2　操作框架与风险</h3>
+<h3 class="sub2" id="s8-2">8.2　操作框架与风险</h3>
 <div class="card">
   <h3 class="lt">买入逻辑的三条理由与当前状态</h3>
   <div class="pill"><span>① <b>0.96 倍 PB 资产底</b> — 低于账面净资产买入，重资产制造业的清算价值提供下方保护</span><span class="s g">完好</span></div>
@@ -1018,13 +1117,13 @@ new Chart(document.getElementById('cFcf'),{type:'line',
 
 /* ---- 7. 前瞻情景（横向比较） ---- */
 new Chart(document.getElementById('cFwd'),{type:'bar',
- data:{labels:['FY2025 实际','仅 capex 上升','+SFD −2.0亿','+SFD −3.0亿'],
+ data:{labels:['FY2025 实际','仅资本开支上升','＋Smithfield 减利 2.0 亿','＋Smithfield 减利 3.0 亿'],
   datasets:[
    {type:'bar',label:'真实自由现金流',data:[16.9,12.6,10.6,9.6],
     backgroundColor:[GOOD+'cc',WARN+'cc',WARN+'dd',BAD+'cc'],borderRadius:5,order:2},
    {type:'line',label:'经常性股息 10.0 亿美元',data:[10.0,10.0,10.0,10.0],
     borderColor:GOLD,borderDash:[7,4],borderWidth:2.5,pointRadius:0,order:1}]},
- options:{plugins:{tooltip:{callbacks:{afterLabel:c=>c.datasetIndex===0?'覆盖 '+(c.parsed.y/1002).toFixed(2)+' 倍':''}}},
+ options:{plugins:{tooltip:{callbacks:{afterLabel:c=>c.datasetIndex===0?'覆盖 '+(c.parsed.y/10.0).toFixed(2)+' 倍':''}}},
   scales:{x:{...gridNo,ticks:{color:DIM,font:{size:10}}},
    y:{...grid,title:{display:true,text:'亿美元'}}}}});
 
@@ -1060,6 +1159,30 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
   d.querySelectorAll('canvas').forEach(c=>{const ch=Chart.getChart(c); if(ch) ch.resize();});
 }));
 
+/* ---- 第七章 未来判断 ---- */
+const YT=[...Y5,'最近12个月'];   /* 流量指标末列用 TTM = FY2025 − 1H25 + 1H26 */
+
+new Chart(document.getElementById('cCap'),{type:'line',
+ data:{labels:YT,datasets:[
+  L({label:'资本开支',data:[9.2,9.5,8.0,7.1,6.1,5.85],borderColor:C,borderWidth:3.4}),
+  L({label:'折旧（含使用权资产）',data:[6.68,7.91,7.68,7.13,7.16,7.44],borderColor:GOLD,borderWidth:3.4})]},
+ options:{interaction:{mode:'index',intersect:false},
+  plugins:{legend:{labels:{color:TXT,padding:10}},
+   tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toFixed(2)} 亿美元`}}},
+  scales:{x:gridNo,y:{...grid,title:{display:true,text:'亿美元'}}}}});
+
+/* 比率指标，分子分母同期，不存在半年数混入年度线的问题 */
+/*比率*/
+new Chart(document.getElementById('cCapR'),{type:'line',
+ data:{labels:YT,datasets:[L({label:'资本开支 ÷ 折旧',
+   data:[1.38,1.20,1.04,1.00,0.85,0.79],borderColor:WARN,borderWidth:3.4})]},
+ options:{interaction:{mode:'index',intersect:false},
+  plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>` 覆盖 ${c.parsed.y.toFixed(2)} 倍`}}},
+  scales:{x:gridNo,y:{...grid,title:{display:true,text:'倍'},
+   ticks:{color:DIM,callback:v=>v.toFixed(1)}}}}});
+
+
 /* ---- 目录跟随当前区块高亮 ---- */
 (function(){
   const links=[...document.querySelectorAll('.toc a')];
@@ -1068,7 +1191,8 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
   const mark=()=>{let i=0;secs.forEach((s,k)=>{if(s.getBoundingClientRect().top<=90)i=k;});
     links.forEach((a,k)=>a.classList.toggle('on',k===i));};
   mark(); addEventListener('scroll',mark,{passive:true});
+
 })();
 </script>
 
-<div id="bgwmcolor" style="width: 100%; height: 100%; z-index: 9999999; left: 0px; top: 0px; position: fixed; background-image: url(&#34;https://lf16-img-sign.bytehwm-row.com/obj/eesecsvc-maliva/v5/2.0/1/7eaa3d109f63434aa9935f3dcd067349.png?algorithm=V5&amp;app_id=0&amp;tenant_id=&amp;version=2.0&amp;x-expires=1790877428&amp;x-signature=FLmkgWP9tbVC6chJj00qUOWr7c4%3D&#34;); background-repeat: repeat; pointer-events: none;"></div></body></html>
+</body></html>

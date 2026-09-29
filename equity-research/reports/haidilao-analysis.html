@@ -85,7 +85,6 @@ details.fold>.fb{padding:0 15px 15px}
 details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;padding:0}
 </style>
 </head>
-<!-- legacy-7block：本报告写于「七区块」时期，尚未补第七章「未来判断」。腾讯那份被评「通篇聚焦过去的总结，缺少对未来企业发展的判断」后结构升为八区块，此报告需补一章前瞻判断（领先指标 + 显式假设的情景推演）后删除本标记。 -->
 <body><div class="wrap">
 
 <header>
@@ -97,7 +96,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
     <div class="pxb" style="color:var(--dim)">2026-09-22 收盘 · HKD/CNY 0.8531 · 总股本 55.74 亿股</div>
   </div>
 </header>
-<nav class="toc"><a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a><a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a><a href="#s7">七、操作与风险</a></nav>
+<nav class="toc"><a href="#s1">一、投资结论</a><a href="#s2">二、估值</a><a href="#s3">三、生意结构</a><a href="#s4">四、行业现状</a><a href="#s5">五、行业地位</a><a href="#s6">六、质量与现金</a><a href="#s7">七、未来判断</a><a href="#s8">八、操作与风险</a></nav>
 <h2 id="s1">一、投资结论<span class="lead">评级、估值锚点、入场条件</span></h2>
 <div class="vc">
   <span class="tag">观望 · 现价不买</span>
@@ -417,8 +416,137 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
 <div class="flag" style="margin-top:18px"><b class="ft">7.7% 的股息率是这笔投资里最危险的部分</b>
 它很容易被误读为「安全垫」，但实际覆盖倍数只有 0.66 倍。<b>一旦公司下调股息，股价和股息率会同时崩塌</b>——这是典型的股息陷阱结构。FY2025 末期息已从上年的每股 0.507 港元降到 0.384 港元（−24%），下调已经开始。</div>
 
-<h2 id="s7">七、操作与风险：怎么买<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
-<h3 class="sub2" id="s7-1">7.1　五年中的转折点</h3>
+<h2 id="s7">七、未来判断<span class="lead">储值卡余额、重新开闸的资本开支、三年后的市盈率</span></h2>
+
+<div class="note"><b>先说这一章的证据标准。</b>海底捞的年报和中报<b>不提供正式业绩指引</b>，
+  所以下面没有任何一句「公司预计……」是我替它说的。这一章只用两类东西：
+  <b>①报表里已经发生、但收入尚未确认的领先指标</b>；<b>②把已知数字按写明的假设往前推的算术</b>。
+  凡是假设，都在括号里写出来，读者可以换一个假设自己重算。</div>
+
+<h3 class="sub2" id="s7-1">7.1　领先指标：顾客还愿不愿意提前把钱交给它</h3>
+<div class="card">
+  <h3>合同负债（储值卡与会员预付）与它相当于几天的收入</h3>
+  <p class="wfhint">合同负债是<b>顾客已经充值、但还没来吃、公司还不能确认为收入</b>的部分。
+    餐饮行业没有订单簿，这个科目是少数几个能提前看到客流意愿的数字——
+    <b>顾客肯预付，说明他还打算再来。</b><b>把鼠标停在柱子或圆点上，会浮出该点的原始数值。</b></p>
+  <div class="grid2">
+    <div class="card" style="border:none;padding:0"><h3>合同负债（亿元）</h3>
+      <div class="cw"><canvas id="cPre"></canvas></div></div>
+    <div class="card" style="border:none;padding:0"><h3>相当于几天的收入</h3>
+      <div class="cw"><canvas id="cPreD"></canvas></div></div>
+  </div>
+  <div class="note"><b>这条指标在 FY2024 见顶，之后连续两期回落。</b>
+    余额从 9.38 亿降到 8.67 亿，<b>降幅 7.6%</b>；换算成天数，从 8.01 天降到 7.06 天，
+    <b>是 FY2022 以来的最低值</b>（更低的只有 FY2021 的 6.61 天，那一年门店和收入结构都不可比）。
+    而同期公司收入是增长的（TTM 448.7 亿）。<br/>
+    <b>为什么这条比同店数据更靠前：</b>充值发生在消费之前，退坡先出现在余额上、
+    再出现在客流上。收入增长目前靠外卖补（见 7.3），
+    <b>但预付意愿的退坡说明到店这一端的顾客黏性还在减弱。</b><br/>
+    <b>这条指标的边界：</b>余额同时受促销节奏影响——公司加大充值赠送时余额会跳升，
+    中报<b>没有披露充值活动的力度</b>，所以单期波动不能过度解读，看的是连续两期的方向。</div>
+</div>
+
+<h3 class="sub2" id="s7-2">7.2　资本开支重新开闸，但它压不垮利润</h3>
+<div class="card">
+  <h3>资本开支与物业厂房及设备折旧（亿元）</h3>
+  <div class="cw tall"><canvas id="cCap"></canvas></div>
+  <div class="note"><b>两条线在 FY2025 交叉，这是五年来第一次。</b>
+    资本开支从 FY2023 的谷底 4.5 亿回升到最近十二个月的 17.3 亿，
+    而折旧一路从 33.8 亿降到 11.7 亿——<b>倍数从 0.21 倍升到 1.47 倍，公司重新开始投钱了。</b><br/>
+    <b>钱投到哪里，中报说得很清楚：</b>外卖业务（1H26 收入 20.5 亿、<b>同比 +121.2%</b>，
+    占集团收入从 4.5% 升到 9.2%）和新品牌矩阵（21 个品牌、183 家门店）。
+    同期海底捞主品牌餐厅收入 178.4 亿、<b>同比 −4.0%</b>，上半年关店 32 家。
+    <b>这是一次明确的资源再配置：从主品牌开店，转向外卖与新品牌。</b></div>
+</div>
+
+<div class="card">
+  <h3>这一笔资本开支要挣回多少</h3>
+  <div class="tscroll"><table>
+    <thead><tr><th>折旧年限假设</th><th>年化新增折旧<span class="uu">亿元</span></th><th>占 TTM 归母净利</th><th>占 TTM 收入</th></tr></thead>
+    <tbody>
+      <tr><td>5 年（激进）</td><td>3.45</td><td class="neg">8.5%</td><td>0.77%</td></tr>
+      <tr class="hl"><td>8 年（基准）</td><td>2.16</td><td class="neg">5.3%</td><td>0.48%</td></tr>
+      <tr><td>10 年（保守）</td><td>1.73</td><td class="neg">4.3%</td><td>0.38%</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>结论和前两份报告都不一样：海底捞的风险不在资本开支上。</b>
+    最重的假设下，这一笔投入一年也只多出 3.45 亿折旧，占归母净利 8.5%。
+    <b>作为对照，同样做这道算术，比亚迪的基准值占利润总额 53.6%、腾讯占经营利润 13.3%。</b>
+    这门生意的资本强度本来就低，<b>它的风险全在同店——客单价和翻台率，不在折旧表上。</b></div>
+  <details class="fold">
+    <summary>这张表的算法</summary>
+    <div class="fb"><div class="note" style="border:none">
+      只计最近十二个月这一笔资本开支 17.25 亿元（＝ FY2025 的 16.73 − 1H25 的 7.26 + 1H26 的 7.78），
+      直线折旧、不留残值，年化新增折旧 ＝ 17.25 ÷ 年限；分母取最近十二个月归母净利 40.58 亿
+      与收入 448.7 亿。基准取 8 年，是因为餐厅装修与厨房设备的折旧年限通常在 5–10 年之间。
+      <b>这里不做「需新增收入」一列</b>：餐饮新增收入的边际利润率与平均利润率差异很大，
+      公司未披露门店层面的边际贡献率，硬倒推会给出一个看起来精确、实则无据的数。<br/>
+      折旧线只取「物业、厂房及设备折旧」，<b>不含使用权资产折旧</b>（租金的会计化，
+      与资本开支不对应）。末列为最近十二个月，不是半年数。</div></div>
+  </details>
+</div>
+
+<h3 class="sub2" id="s7-3">7.3　钱正在变成什么：已验证与未验证</h3>
+<div class="note" style="margin-bottom:12px">把管理层的说法拆成<b>已经出现在数字里的</b>和<b>还只是叙事的</b>两堆。</div>
+
+<div class="flag good"><b class="ft">已验证：外卖是真实的增量，而且是当期最大的增量</b>
+  1H26 外卖收入 20.5 亿、<b>同比 +121.2%</b>，占集团收入从 4.5% 升到 9.2%。
+  中报归因于单人餐品类扩充与单店外卖能力建设。
+  <b>集团收入 +7.9% 而主品牌餐厅 −4.0%，中间的差额基本就是外卖填的。</b></div>
+
+<div class="flag good"><b class="ft">已验证：翻台率止跌回升</b>
+  自营海底捞餐厅翻台率 1H26 为每天 3.9 次，<b>高于上年同期的 3.8 次</b>。
+  这是五年里第一次同比回升，说明关掉 32 家低效店之后，留下来的店在变密。</div>
+
+<div class="flag warn"><b class="ft">未验证：21 个新品牌没有一个披露了收入</b>
+  中报只给出「21 个其他餐饮品牌、合计 183 家门店」这一句，
+  <b>没有披露这 183 家店的收入、亏损、单店模型或开店计划</b>。
+  资本开支的一大块流向这里，但它现在赚不赚钱、几年能跑通，公开信息答不了。</div>
+
+<div class="flag warn"><b class="ft">未验证：外卖的单位经济性没有披露</b>
+  外卖增速很亮，但中报<b>没有给外卖的毛利率、履约成本或平台抽佣</b>。
+  外卖客单价天然低于堂食，且要付平台费。<b>在拿到分部盈利数据之前，
+  这 121% 的增速只能确认它在做大收入，不能确认它在做大利润。</b></div>
+
+<div class="flag"><b class="ft">反向信号：预付意愿在退</b>
+  合同负债从 FY2024 的 9.38 亿降到 8.67 亿，折合天数 7.06 天为 FY2022 以来最低（见 7.1）。
+  <b>顾客在减少对这个品牌的提前承诺。</b></div>
+
+<div class="flag"><b class="ft">反向信号：客单价还在跌，一线城市跌得更快</b>
+  1H26 人均消费 97.0 元，五年连降；分城市看，
+  <b>一线 104.2（上年 105.2）、二线 96.0（96.9）、三线及以下 90.9（91.6）</b>，三档齐跌。
+  翻台率回升靠的是更低的客单价换来的客流，<b>定价权尚未恢复</b>——
+  这正是<a class="xr" href="#s1">投资结论</a>里那条「基本面入场条件」还没满足的原因。</div>
+
+<h3 class="sub2" id="s7-4">7.4　三年情景：现价对应的市盈率会走到哪</h3>
+<div class="card">
+  <h3>三种情景下的 FY2029 市盈率（现价不变）</h3>
+  <div class="cw tall"><canvas id="cScn"></canvas></div>
+  <div class="note"><b>这张图给出的是一个和本报告评级看似矛盾、实则互补的结果：</b>
+    即便在悲观情景下，三年后的市盈率 15.1 倍<b>仍然低于五年区间下沿的 16.3 倍</b>。
+    单看市盈率这一个维度，现价确实已经把盈利下滑计入了。<br/>
+    <b>那为什么评级还是「观望」？</b>因为本报告的锚不是市盈率。
+    PB 仍有 4.58 倍，说明市场付的是成长溢价而不是资产价格；
+    7.7% 的股息只被真实自由现金流覆盖 0.66 倍，派的是存量现金。
+    <b>市盈率便宜是盈利见顶后的估值回归，它不构成安全边际</b>——
+    这张图恰恰量化了「便宜」这件事能走多远，以及它为什么不够。</div>
+  <details class="fold">
+    <summary>三种情景各自假设了什么，以及怎么算的</summary>
+    <div class="fb"><div class="note" style="border:none">
+      <b>公共假设：</b>股价保持 HK$9.415 不变、股本 55.74 亿股与汇率不变，故市值恒为 447.7 亿元；
+      三年指 FY2026 至 FY2029 共三个完整年度；起点用最近十二个月归母净利 40.58 亿元。<br/>
+      <b>悲观（净利年化 −10%）：</b>40.58 × 0.90³ ＝ 29.6 亿 → 447.7 ÷ 29.6 ＝ 15.1 倍。
+      对应主品牌继续负增长、外卖增速回落到个位数、新品牌不盈利。<br/>
+      <b>基准（+5%）：</b>40.58 × 1.05³ ＝ 47.0 亿 → 9.5 倍，对应外卖的增量刚好补上主品牌的缺口。<br/>
+      <b>乐观（+12%）：</b>40.58 × 1.12³ ＝ 57.0 亿 → 7.9 倍，对应外卖维持高增长且新品牌开始贡献利润。<br/>
+      <b>两根参照柱：</b>「今天」是现价除以最近十二个月净利 11.0 倍；「五年区间下沿」取 16.3 倍
+      （FY2023 年末，见<a class="xr" href="#s2">二、估值</a>）。FY2021 因亏损无市盈率、
+      FY2022 的 81.0 倍是净利基数极低造成的，两者都不纳入区间。</div></div>
+  </details>
+</div>
+
+<h2 id="s8">八、操作与风险：怎么买<span class="lead">五年转折点、买入框架、风险与跟踪点</span></h2>
+<h3 class="sub2" id="s8-1">8.1　五年中的转折点</h3>
 <div class="card"><div class="tl">
   <div class="ti"><div class="d">2021</div><div class="t">「啄木鸟计划」关店 276 家</div><div class="x">为 2020–21 激进扩张买单 → 归母净亏 41.63 亿，股价年内 −70.4%</div></div>
   <div class="ti"><div class="d">2022.12</div><div class="t">特海国际分拆上市</div><div class="x">收入口径断裂 → <b>2021 年 85.80 港元高点与今日股价不可直接比较</b></div></div>
@@ -427,7 +555,7 @@ details.fold>.fb>.card,details.fold>.fb>.tscroll{background:none;border:none;pad
   <div class="ti crit"><div class="d">2025</div><div class="t">真正的转折点：主品牌收入首次负增长</div><div class="x">门店 1,355 → 1,304（首次净减少），<b>主品牌收入 −7.1%</b>（二线城市 −11.8%、净关 44 家），归母 −14.0%，核心经营利润 62.30 → 54.03（−13.3%），末期息下调 24%</div></div>
   <div class="ti crit"><div class="d">1H26</div><div class="t">净利「持平」是会计假象；主品牌占比跌破 80%</div><div class="x">表观归母 +0.5%，<b class="r">税前利润 −2.7%</b>，靠折旧摊销减少 2.48 亿（一次性）和所得税减少 0.79 亿抵消掉了。主品牌收入占比从 89.8% 掉到 79.9%，毛利率 −1.8pct</div></div>
 </div></div>
-<h3 class="sub2" id="s7-2">7.2　操作框架与风险</h3>
+<h3 class="sub2" id="s8-2">8.2　操作框架与风险</h3>
 <div class="grid2">
   <div class="card">
     <h3 class="lt">为什么现价（HK$9.415）不买</h3>
@@ -653,6 +781,50 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
   d.querySelectorAll('canvas').forEach(c=>{const ch=Chart.getChart(c); if(ch) ch.resize();});
 }));
 
+/* ---- 第七章 未来判断 ---- */
+const LT=[...LB.slice(0,5),'最近12个月'];      /* 流量指标末列用 TTM */
+const LP=[...LB.slice(0,5),'1H26'];            /* 存量／比率指标末列用时点值 */
+
+/* 合同负债是资产负债表日余额（时点存量），不是流量，可直接用 1H26 时点值 */
+/*时点*/
+new Chart(document.getElementById('cPre'),{type:'bar',
+ data:{labels:LP,datasets:[{label:'合同负债',
+   data:[7.45,7.94,8.59,9.38,8.96,8.67],
+   backgroundColor:C+'88',borderColor:C,borderWidth:1.5,borderRadius:4}]},
+ options:{plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>` 合同负债: ${c.parsed.y.toFixed(2)} 亿元`}}},
+  scales:{x:gridNo,y:{...grid,title:{display:true,text:'亿元'}}}}});
+
+/* 比率：分子为时点余额、分母为当期收入（末列用 TTM 收入 448.7 亿） */
+/*比率*/
+new Chart(document.getElementById('cPreD'),{type:'line',
+ data:{labels:LP,datasets:[L({label:'相当于几天的收入',
+   data:[6.61,8.34,7.56,8.01,7.56,7.06],borderColor:GOLD,borderWidth:3.4})]},
+ options:{interaction:{mode:'index',intersect:false},
+  plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>` 相当于 ${c.parsed.y.toFixed(2)} 天收入`}}},
+  scales:{x:gridNo,y:{...grid,title:{display:true,text:'天'}}}}});
+
+new Chart(document.getElementById('cCap'),{type:'line',
+ data:{labels:LT,datasets:[
+  L({label:'资本开支',data:[44.30,8.25,4.52,12.99,16.73,17.25],borderColor:C,borderWidth:3.4}),
+  L({label:'物业厂房及设备折旧',data:[33.83,27.64,21.78,18.08,14.22,11.72],borderColor:GOLD,borderWidth:3.4})]},
+ options:{interaction:{mode:'index',intersect:false},
+  plugins:{legend:{labels:{color:TXT,padding:10}},
+   tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.y.toFixed(2)} 亿元`}}},
+  scales:{x:gridNo,y:{...grid,title:{display:true,text:'亿元'}}}}});
+
+new Chart(document.getElementById('cScn'),{type:'bar',
+ data:{labels:['今天（现价 · 最近12个月）','五年区间下沿（历史最低）',
+   '悲观　净利年化 −10%','基准　净利年化 +5%','乐观　净利年化 +12%'],
+  datasets:[{label:'市盈率',data:[11.0,16.3,15.1,9.5,7.9],
+   backgroundColor:[DIM+'cc',DIM+'44',BAD+'cc',WARN+'ee',GOOD+'cc'],
+   borderColor:[DIM,DIM+'99',BAD,WARN,GOOD],borderWidth:1,borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},
+   tooltip:{callbacks:{label:c=>` ${c.parsed.x.toFixed(1)} 倍`}}},
+  scales:{x:{...grid,title:{display:true,text:'市盈率（倍）'}},y:gridNo}}});
+
+
 /* ---- 目录跟随当前区块高亮 ---- */
 (function(){
   const links=[...document.querySelectorAll('.toc a')];
@@ -661,7 +833,8 @@ document.querySelectorAll('details.fold').forEach(d=>d.addEventListener('toggle'
   const mark=()=>{let i=0;secs.forEach((s,k)=>{if(s.getBoundingClientRect().top<=90)i=k;});
     links.forEach((a,k)=>a.classList.toggle('on',k===i));};
   mark(); addEventListener('scroll',mark,{passive:true});
+
 })();
 </script>
 
-<div id="bgwmcolor" style="width: 100%; height: 100%; z-index: 9999999; left: 0px; top: 0px; position: fixed; background-image: url(&#34;https://lf16-img-sign.bytehwm-row.com/obj/eesecsvc-maliva/v5/2.0/1/7eaa3d109f63434aa9935f3dcd067349.png?algorithm=V5&amp;app_id=0&amp;tenant_id=&amp;version=2.0&amp;x-expires=1790877428&amp;x-signature=FLmkgWP9tbVC6chJj00qUOWr7c4%3D&#34;); background-repeat: repeat; pointer-events: none;"></div></body></html>
+</body></html>
